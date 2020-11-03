@@ -23,7 +23,7 @@ import (
 // Паникует, если:
 // 1) TestCase.ChainCodeFunc не принимает на вход
 // contractapi.TransactionContextInterface первым аргументом и
-// TestCase.Request вторым аргументом.
+// TestCase.Request вторым аргументом (при TestCase.Request != nil).
 // 2) TestCase.ChainCodeFunc имеет менее двух возвращаемых значений.
 // 3) TestCase.ErrorCode != nil, но второе возвращенное значение не яв-ся ошибкой.
 func DefaultTests(t *testing.T, cases []*TestCase) {
@@ -37,10 +37,11 @@ func DefaultTests(t *testing.T, cases []*TestCase) {
 		ctx.SetClientIdentity(tc.ClientIdentity)
 		txID := uuid.New().String()
 		tc.Stub.MockTransactionStart(txID)
-		results := reflect.ValueOf(tc.ChainCodeFunc).Call([]reflect.Value{
-			reflect.ValueOf(ctx),
-			reflect.ValueOf(tc.Request),
-		})
+		args := []reflect.Value{reflect.ValueOf(ctx)}
+		if tc.Request != nil {
+			args = append(args, reflect.ValueOf(tc.Request))
+		}
+		results := reflect.ValueOf(tc.ChainCodeFunc).Call(args)
 		tc.Stub.MockTransactionEnd(txID)
 		if tc.ErrorCode != nil {
 			assert.False(t, results[1].IsNil())

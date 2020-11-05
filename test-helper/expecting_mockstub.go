@@ -3,6 +3,7 @@ package test_helper
 import (
 	"container/list"
 	"encoding/json"
+	"github.com/google/uuid"
 )
 
 // Хранит ожидаемые вызовы изменений состояния.
@@ -159,7 +160,10 @@ func (stub *ExpectingWritesMockStub) Put(
 	jsonSerializableOrBytes interface{},
 ) (out *ExpectingWritesMockStub) {
 	out = stub
+	txID := uuid.New().String()
+	stub.MockTransactionStart(txID)
 	_ = stub.MockStub.PutState(key, stub.asPayload(jsonSerializableOrBytes))
+	stub.MockTransactionEnd(txID)
 	return
 }
 
@@ -169,7 +173,10 @@ func (stub *ExpectingWritesMockStub) PutPvt(
 	jsonSerializableOrBytes interface{},
 ) (out *ExpectingWritesMockStub) {
 	out = stub
+	txID := uuid.New().String()
+	stub.MockTransactionStart(txID)
 	_ = stub.MockStub.PutPrivateData(collection, key, stub.asPayload(jsonSerializableOrBytes))
+	stub.MockTransactionEnd(txID)
 	return
 }
 
@@ -179,6 +186,9 @@ func (stub *ExpectingWritesMockStub) WithEvent(
 	jsonSerializableOrBytes interface{},
 ) (out *ExpectingWritesMockStub) {
 	out = stub
+	txID := uuid.New().String()
+	stub.MockTransactionStart(txID)
 	_ = stub.MockStub.SetEvent(name, stub.asPayload(jsonSerializableOrBytes))
+	stub.MockTransactionEnd(txID)
 	return
 }

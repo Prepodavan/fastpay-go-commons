@@ -1,5 +1,7 @@
 package test_helper
 
+import "bytes"
+
 type comparableExpectation interface {
 	Equals(other interface{}) bool
 }
@@ -12,9 +14,9 @@ type putStateExpectation struct {
 func (ex *putStateExpectation) Equals(other interface{}) (eq bool) {
 	switch casted := other.(type) {
 	case putStateExpectation:
-		eq = casted.Key == ex.Key && string(casted.Payload) == string(ex.Payload)
+		eq = casted.Key == ex.Key && bytes.Equal(casted.Payload, ex.Payload)
 	case *putStateExpectation:
-		eq = casted.Key == ex.Key && string(casted.Payload) == string(ex.Payload)
+		eq = casted.Key == ex.Key && bytes.Equal(casted.Payload, ex.Payload)
 	}
 	return
 }
@@ -28,9 +30,9 @@ type putPvtDataExpectation struct {
 func (ex *putPvtDataExpectation) Equals(other interface{}) (eq bool) {
 	switch casted := other.(type) {
 	case putPvtDataExpectation:
-		eq = casted.Collection == ex.Collection && casted.Key == ex.Key && string(casted.Payload) == string(ex.Payload)
+		eq = casted.Collection == ex.Collection && casted.Key == ex.Key && bytes.Equal(casted.Payload, ex.Payload)
 	case *putPvtDataExpectation:
-		eq = casted.Collection == ex.Collection && casted.Key == ex.Key && string(casted.Payload) == string(ex.Payload)
+		eq = casted.Collection == ex.Collection && casted.Key == ex.Key && bytes.Equal(casted.Payload, ex.Payload)
 	}
 	return
 }
@@ -43,9 +45,9 @@ type setEventExpectation struct {
 func (ex *setEventExpectation) Equals(other interface{}) (eq bool) {
 	switch casted := other.(type) {
 	case setEventExpectation:
-		eq = casted.Name == ex.Name && string(casted.Payload) == string(ex.Payload)
+		eq = casted.Name == ex.Name && bytes.Equal(casted.Payload, ex.Payload)
 	case *setEventExpectation:
-		eq = casted.Name == ex.Name && string(casted.Payload) == string(ex.Payload)
+		eq = casted.Name == ex.Name && bytes.Equal(casted.Payload, ex.Payload)
 	}
 	return
 }

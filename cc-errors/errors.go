@@ -104,6 +104,12 @@ const (
 	/** Изменение статуса неидентифицированного аккаунта доступно банку владельцу */
 	ErrorEditUnidentifiedAccountStatusForbidden = 60134
 
+	/** Некорректный код валюты отправителя */
+	ErrorIncorrectCurrencyCodeSenderAccount = 60135
+
+	/** Некорректный код валюты получателя */
+	ErrorIncorrectCurrencyCodeReceiverAccount = 60136
+
 	/** Ошибка проверки сигнатуры */
 	ErrorSignVerify = 60200
 
@@ -565,6 +571,8 @@ var ErrorCodeMessagesMap = map[int]string{
 	ErrorAccountSenderNotAvailable:                "Аккаунт отправителя недоступен",
 	ErrorAccountReceiverNotAvailable:              "Аккаунт получателя недоступен",
 	ErrorEditUnidentifiedAccountStatusForbidden:   "Изменение статуса неидентифицированного аккаунта доступно банку владельцу",
+	ErrorIncorrectCurrencyCodeSenderAccount:       "Некорректный код валюты отправителя",
+	ErrorIncorrectCurrencyCodeReceiverAccount:     "Некорректный код валюты получателя",
 	ErrorSignVerify:                               "Ошибка проверки сигнатуры",
 	ErrorFundsNotEnough:                           "Недостаточно средств",
 	ErrorValidateDefault:                          "Ошибка валидации",
@@ -742,6 +750,8 @@ var ErrorStringCodeMap = map[string]int{
 	"ErrorAccountSenderNotAvailable":                ErrorAccountSenderNotAvailable,
 	"ErrorAccountReceiverNotAvailable":              ErrorAccountReceiverNotAvailable,
 	"ErrorEditUnidentifiedAccountStatusForbidden":   ErrorEditUnidentifiedAccountStatusForbidden,
+	"ErrorIncorrectCurrencyCodeSenderAccount":       ErrorIncorrectCurrencyCodeSenderAccount,
+	"ErrorIncorrectCurrencyCodeReceiverAccount":     ErrorIncorrectCurrencyCodeReceiverAccount,
 	"ErrorSignVerify":                               ErrorSignVerify,
 	"ErrorFundsNotEnough":                           ErrorFundsNotEnough,
 	"ErrorValidateDefault":                          ErrorValidateDefault,

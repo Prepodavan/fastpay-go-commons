@@ -98,7 +98,7 @@ func GetSenderAddressFromCertificate(identity cid.ClientIdentity) (string, error
 	//address, isFound, _ = func() (string, bool, error) { return "263093b1c21f98c5f9b6433bf9bbb97bb87b6e79", true, nil }() // TODO Убрать
 
 	if !isFound {
-		return "", CreateError(cc_errors.ErrorCertificateNotValid, "Отсутвует атрибут address в сертификате")
+		return "", CreateDefaultError(cc_errors.ErrorCertificateBankAddressNotFound)
 	}
 
 	return address, nil
@@ -239,8 +239,7 @@ func CheckTechnicalAccountSignByAddress(ctx contractapi.TransactionContextInterf
 
 	// TODO Убрать проверку если в сертификате не будет указыватся адрес банка отправителя
 	if address != technicalSignRequest.TechnicalAddress {
-		return CreateError(cc_errors.ErrorAccountTechnicalNotEqlSender,
-			"Адрес банка отправителя не совпадает с адресом технического аккаунта")
+		return CreateDefaultError(cc_errors.ErrorAccountTechnicalNotEqlSender)
 	}
 
 	return nil
@@ -294,7 +293,7 @@ func CheckAccessWithBank(ctx contractapi.TransactionContextInterface, bank *mode
 	result := currentRoles & role
 
 	if result == 0 {
-		return CreateError(cc_errors.ErrorForbidden, "Недостаточно прав для вызова метода")
+		return CreateDefaultError(cc_errors.ErrorForbidden)
 	}
 
 	return nil
@@ -363,6 +362,27 @@ func CreateErrorWithData(code int, message, data string) error {
 	baseError := cc_errors.BaseError{
 		Code:    code,
 		Message: message,
+		Data:    data,
+	}
+
+	return createError(&baseError)
+}
+
+// Метод создания структуры ошибки с сообщением по умолчанию
+func CreateDefaultError(code int) error {
+	baseError := cc_errors.BaseError{
+		Code:    code,
+		Message: cc_errors.ErrorCodeMessagesMap[code],
+	}
+
+	return createError(&baseError)
+}
+
+// Метод создания структуры ошибки с сообщением по умолчанию с доп. информацией
+func CreateDefaultErrorWithData(code int, data string) error {
+	baseError := cc_errors.BaseError{
+		Code:    code,
+		Message: cc_errors.ErrorCodeMessagesMap[code],
 		Data:    data,
 	}
 
@@ -542,11 +562,11 @@ func CheckSign(address, msgHash string, sign requests.SignDto) error {
 	isSigned, err := crypto.IsSigned(address, msgHash, sign.R, sign.S, sign.V)
 
 	if err != nil {
-		return CreateError(cc_errors.ErrorSignVerify, fmt.Sprintf("Ошибка проверки сигнатуры. %s", err.Error()))
+		return CreateDefaultError(cc_errors.ErrorSignVerify)
 	}
 
 	if !isSigned {
-		return CreateError(cc_errors.ErrorSignVerify, "Ошибка проверки сигнатуры.")
+		return CreateDefaultError(cc_errors.ErrorSignVerify)
 	}
 
 	return nil
@@ -660,16 +680,16 @@ func DeleteExpirationSign(stub shim.ChaincodeStubInterface) error {
 
 // Обработка ошибки при валидации запроса
 func processValidationError(err error) error {
-	var errorData cc_errors.Error
+	var errorCode int
 
 	if strings.Contains(err.Error(), ";") {
-		errorData = cc_errors.ErrorMessages[strings.Split(err.Error(), ";")[0]]
+		errorCode = cc_errors.ErrorStringCodeMap[strings.Split(err.Error(), ";")[0]]
 	} else {
-		errorData = cc_errors.ErrorMessages[err.Error()]
+		errorCode = cc_errors.ErrorStringCodeMap[err.Error()]
 	}
 
-	if errorData.Code != 0 {
-		return CreateError(errorData.Code, errorData.Message)
+	if errorCode != 0 {
+		return CreateError(errorCode, cc_errors.ErrorCodeMessagesMap[errorCode])
 	}
 
 	return CreateError(cc_errors.ErrorValidateDefault, fmt.Sprintf("Ошибка валидации: %s", err.Error()))

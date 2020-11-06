@@ -32,14 +32,14 @@ const (
 	/** Требуется передать идентификатор получателя */
 	ErrorReceiverIdentificatorRequired = 60106
 
-	/** Списание средств недоступно  */
-	ErrorWithdrawForbidden = 60107
+	/** Списание средств недоступно для клиентского банка  */
+	ErrorClientBankWithdrawForbidden = 60107
 
-	/** Операция отмены списания средств недоступна  */
-	ErrorWithdrawRejectForbidden = 60108
+	/** Операция отмены списания средств недоступна для клиентского банка */
+	ErrorClientBankWithdrawRejectForbidden = 60108
 
-	/** Операция подтверждения списания средств недоступна  */
-	ErrorWithdrawConfirmForbidden = 60109
+	/** Операция подтверждения списания средств недоступна для клиентского банка */
+	ErrorClientBankWithdrawConfirmForbidden = 60109
 
 	/** Аккаунт не существует */
 	ErrorAccountNotExist = 60110
@@ -542,9 +542,9 @@ var ErrorCodeMessagesMap = map[int]string{
 	ErrorCurrencyExist:                            "Валюта существует",
 	ErrorCurrencyCreateConflict:                   "Валюта не может быть созданна так как не существет чейнкодов для работы с ней",
 	ErrorReceiverIdentificatorRequired:            "Требуется передать идентификатор получателя",
-	ErrorWithdrawForbidden:                        "Списание средств недоступно",
-	ErrorWithdrawRejectForbidden:                  "Операция отмены списания средств недоступна",
-	ErrorWithdrawConfirmForbidden:                 "Операция подтверждения списания средств недоступна",
+	ErrorClientBankWithdrawForbidden:              "Списание средств недоступно для клиентского банка",
+	ErrorClientBankWithdrawRejectForbidden:        "Операция отмены списания средств недоступна для клиентского банка",
+	ErrorClientBankWithdrawConfirmForbidden:       "Операция подтверждения списания средств недоступна для клиентского банка",
 	ErrorAccountNotExist:                          "Аккаунт не существует",
 	ErrorIdentifierNotExist:                       "Идентификатор аккаунта не существует",
 	ErrorBankNotExist:                             "Банк не существует",
@@ -719,9 +719,9 @@ var ErrorStringCodeMap = map[string]int{
 	"ErrorCurrencyExist":                            ErrorCurrencyExist,
 	"ErrorCurrencyCreateConflict":                   ErrorCurrencyCreateConflict,
 	"ErrorReceiverIdentificatorRequired":            ErrorReceiverIdentificatorRequired,
-	"ErrorWithdrawForbidden":                        ErrorWithdrawForbidden,
-	"ErrorWithdrawRejectForbidden":                  ErrorWithdrawRejectForbidden,
-	"ErrorWithdrawConfirmForbidden":                 ErrorWithdrawConfirmForbidden,
+	"ErrorClientBankWithdrawForbidden":              ErrorClientBankWithdrawForbidden,
+	"ErrorClientBankWithdrawRejectForbidden":        ErrorClientBankWithdrawRejectForbidden,
+	"ErrorClientBankWithdrawConfirmForbidden":       ErrorClientBankWithdrawConfirmForbidden,
 	"ErrorAccountNotExist":                          ErrorAccountNotExist,
 	"ErrorIdentifierNotExist":                       ErrorIdentifierNotExist,
 	"ErrorBankNotExist":                             ErrorBankNotExist,

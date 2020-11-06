@@ -17,11 +17,29 @@ const (
 	/** Идентификатор аккаунта существует */
 	ErrorIdentifierExist = 60101
 
+	/** Изменение статуса идентифицированного аккаунта доступно банку, который определил его юридический тип */
+	ErrorEditIdentifiedAccountStatusForbidden = 60102
+
+	/** Банк с таким БИК уже существует */
+	ErrorBankWithSuchBikExist = 60103
+
 	/** Валюта существует */
 	ErrorCurrencyExist = 60104
 
 	/** Валюта не может быть созданна так как не существет чейнкодов для работы с ней */
 	ErrorCurrencyCreateConflict = 60105
+
+	/** Требуется передать идентификатор получателя */
+	ErrorReceiverIdentificatorRequired = 60106
+
+	/** Списание средств недоступно для клиентского банка  */
+	ErrorClientBankWithdrawForbidden = 60107
+
+	/** Операция отмены списания средств недоступна для клиентского банка */
+	ErrorClientBankWithdrawRejectForbidden = 60108
+
+	/** Операция подтверждения списания средств недоступна для клиентского банка */
+	ErrorClientBankWithdrawConfirmForbidden = 60109
 
 	/** Аккаунт не существует */
 	ErrorAccountNotExist = 60110
@@ -71,11 +89,32 @@ const (
 	/** Клиентский банк не доступен */
 	ErrorClientBankNotAvailable = 60129
 
+	/** Редактирование контракта недоступно */
+	ErrorEditExchangeContractForbidden = 60130
+
+	/** Требуется передать идентификатор клиента */
+	ErrorClientIdentifierRequired = 60131
+
+	/** Аккаунт отправителя не доступен */
+	ErrorAccountSenderNotAvailable = 60132
+
+	/** Аккаунт получателя не доступен */
+	ErrorAccountReceiverNotAvailable = 60133
+
+	/** Изменение статуса неидентифицированного аккаунта доступно банку владельцу */
+	ErrorEditUnidentifiedAccountStatusForbidden = 60134
+
+	/** Некорректный код валюты отправителя */
+	ErrorIncorrectCurrencyCodeSenderAccount = 60135
+
+	/** Некорректный код валюты получателя */
+	ErrorIncorrectCurrencyCodeReceiverAccount = 60136
+
 	/** Ошибка проверки сигнатуры */
-	ErrorSignVerify = 60200 //++
+	ErrorSignVerify = 60200
 
 	/** Недостаточно средств */
-	ErrorFundsNotEnough = 60240 //++
+	ErrorFundsNotEnough = 60240
 
 	/** Ошибка валидации */
 	ErrorValidateDefault = 60300
@@ -404,8 +443,8 @@ const (
 	/** Адреса отправителя и получателя совпадают */
 	ErrorAddressFromToEqual = 60461
 
-	/** Банк не может быть заблокирован */
-	ErrorBankCannotBeBlocked = 60462
+	/** Невозможно заблокировать банк, который является единственным владельцем системы */
+	ErrorSingleBankOwnerCannotBeBlocked = 60462
 
 	/** История по трансграничному переводу не найдена */
 	ErrorCrossTransactionHistoryNotFound = 60463
@@ -504,8 +543,14 @@ const (
 var ErrorCodeMessagesMap = map[int]string{
 	ErrorAccountExist:                             "Аккаунт существует",
 	ErrorIdentifierExist:                          "Идентификатор аккаунта существует",
+	ErrorEditIdentifiedAccountStatusForbidden:     "Изменение статуса идентифицированного аккаунта доступно банку, который определил его юридический тип",
+	ErrorBankWithSuchBikExist:                     "Банк с таким БИК уже существует",
 	ErrorCurrencyExist:                            "Валюта существует",
 	ErrorCurrencyCreateConflict:                   "Валюта не может быть созданна так как не существет чейнкодов для работы с ней",
+	ErrorReceiverIdentificatorRequired:            "Требуется передать идентификатор получателя",
+	ErrorClientBankWithdrawForbidden:              "Списание средств недоступно для клиентского банка",
+	ErrorClientBankWithdrawRejectForbidden:        "Операция отмены списания средств недоступна для клиентского банка",
+	ErrorClientBankWithdrawConfirmForbidden:       "Операция подтверждения списания средств недоступна для клиентского банка",
 	ErrorAccountNotExist:                          "Аккаунт не существует",
 	ErrorIdentifierNotExist:                       "Идентификатор аккаунта не существует",
 	ErrorBankNotExist:                             "Банк не существует",
@@ -521,6 +566,13 @@ var ErrorCodeMessagesMap = map[int]string{
 	ErrorContractExists:                           "Контракт уже существует",
 	ErrorCustomerNotFound:                         "Информация о клиенте банка не найдена",
 	ErrorClientBankNotAvailable:                   "Клиентский банк недоступен",
+	ErrorEditExchangeContractForbidden:            "Редактирование контракта недоступно",
+	ErrorClientIdentifierRequired:                 "Требуется передать идентификатор клиента",
+	ErrorAccountSenderNotAvailable:                "Аккаунт отправителя недоступен",
+	ErrorAccountReceiverNotAvailable:              "Аккаунт получателя недоступен",
+	ErrorEditUnidentifiedAccountStatusForbidden:   "Изменение статуса неидентифицированного аккаунта доступно банку владельцу",
+	ErrorIncorrectCurrencyCodeSenderAccount:       "Некорректный код валюты отправителя",
+	ErrorIncorrectCurrencyCodeReceiverAccount:     "Некорректный код валюты получателя",
 	ErrorSignVerify:                               "Ошибка проверки сигнатуры",
 	ErrorFundsNotEnough:                           "Недостаточно средств",
 	ErrorValidateDefault:                          "Ошибка валидации",
@@ -632,7 +684,7 @@ var ErrorCodeMessagesMap = map[int]string{
 	ErrorLimitMonthly:                             "Превышен месячный лимит перевода средств",
 	ErrorLimitBalance:                             "Превышен лимит баланса",
 	ErrorAddressFromToEqual:                       "Адреса отправителя и получателя совпадают",
-	ErrorBankCannotBeBlocked:                      "Банк не может быть заблокирован",
+	ErrorSingleBankOwnerCannotBeBlocked:           "Невозможно заблокировать банк, который является единственным владельцем системы",
 	ErrorCrossTransactionHistoryNotFound:          "История по трансграничному переводу не найдена",
 	ErrorStatusConflict:                           "Невозможно выполнить операцию с текущим статусом транзакции",
 	ErrorCrossTransactionWithdrawIncorrectAddress: "Неверный адрес аккаунта для выполнения вывода средств в рамках трансграничного перевода",
@@ -670,8 +722,14 @@ var ErrorCodeMessagesMap = map[int]string{
 var ErrorStringCodeMap = map[string]int{
 	"ErrorAccountExist":                             ErrorAccountExist,
 	"ErrorIdentifierExist":                          ErrorIdentifierExist,
+	"ErrorEditIdentifiedAccountStatusForbidden":     ErrorEditIdentifiedAccountStatusForbidden,
+	"ErrorBankWithSuchBikExist":                     ErrorBankWithSuchBikExist,
 	"ErrorCurrencyExist":                            ErrorCurrencyExist,
 	"ErrorCurrencyCreateConflict":                   ErrorCurrencyCreateConflict,
+	"ErrorReceiverIdentificatorRequired":            ErrorReceiverIdentificatorRequired,
+	"ErrorClientBankWithdrawForbidden":              ErrorClientBankWithdrawForbidden,
+	"ErrorClientBankWithdrawRejectForbidden":        ErrorClientBankWithdrawRejectForbidden,
+	"ErrorClientBankWithdrawConfirmForbidden":       ErrorClientBankWithdrawConfirmForbidden,
 	"ErrorAccountNotExist":                          ErrorAccountNotExist,
 	"ErrorIdentifierNotExist":                       ErrorIdentifierNotExist,
 	"ErrorBankNotExist":                             ErrorBankNotExist,
@@ -687,6 +745,13 @@ var ErrorStringCodeMap = map[string]int{
 	"ErrorContractExists":                           ErrorContractExists,
 	"ErrorCustomerNotFound":                         ErrorCustomerNotFound,
 	"ErrorClientBankNotAvailable":                   ErrorClientBankNotAvailable,
+	"ErrorEditExchangeContractForbidden":            ErrorEditExchangeContractForbidden,
+	"ErrorClientIdentifierRequired":                 ErrorClientIdentifierRequired,
+	"ErrorAccountSenderNotAvailable":                ErrorAccountSenderNotAvailable,
+	"ErrorAccountReceiverNotAvailable":              ErrorAccountReceiverNotAvailable,
+	"ErrorEditUnidentifiedAccountStatusForbidden":   ErrorEditUnidentifiedAccountStatusForbidden,
+	"ErrorIncorrectCurrencyCodeSenderAccount":       ErrorIncorrectCurrencyCodeSenderAccount,
+	"ErrorIncorrectCurrencyCodeReceiverAccount":     ErrorIncorrectCurrencyCodeReceiverAccount,
 	"ErrorSignVerify":                               ErrorSignVerify,
 	"ErrorFundsNotEnough":                           ErrorFundsNotEnough,
 	"ErrorValidateDefault":                          ErrorValidateDefault,
@@ -798,7 +863,7 @@ var ErrorStringCodeMap = map[string]int{
 	"ErrorLimitMonthly":                             ErrorLimitMonthly,
 	"ErrorLimitBalance":                             ErrorLimitBalance,
 	"ErrorAddressFromToEqual":                       ErrorAddressFromToEqual,
-	"ErrorBankCannotBeBlocked":                      ErrorBankCannotBeBlocked,
+	"ErrorSingleBankOwnerCannotBeBlocked":           ErrorSingleBankOwnerCannotBeBlocked,
 	"ErrorCrossTransactionHistoryNotFound":          ErrorCrossTransactionHistoryNotFound,
 	"ErrorStatusConflict":                           ErrorStatusConflict,
 	"ErrorCrossTransactionWithdrawIncorrectAddress": ErrorCrossTransactionWithdrawIncorrectAddress,

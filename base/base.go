@@ -834,7 +834,32 @@ func GetChaincodeName() string {
 	return name + "_" + currencyCode
 }
 
-// print the contents of the obj
+func ConcatAndPublicEvents(stub shim.ChaincodeStubInterface, events []models.EventBatchItem, event interface{}, eventName string) error {
+	events = ConcatEvents(events, event, eventName)
+
+	err := PublicEvents(stub, models.EventBatch{
+		Events: events,
+	})
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func ConcatEvents(events []models.EventBatchItem, event interface{}, eventName string) []models.EventBatchItem {
+	if events == nil || len(events) == 0 {
+		events = []models.EventBatchItem{}
+	}
+
+	events = append(events, models.EventBatchItem{
+		EventName: eventName,
+		Data:      event,
+	})
+
+	return events
+}
+
 func PrettyPrint(data interface{}) {
 	var p []byte
 	//    var err := error

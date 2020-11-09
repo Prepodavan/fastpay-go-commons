@@ -1,7 +1,7 @@
 package requests
 
 import (
-	"github.com/SolarLabRU/fastpay-go-commons/enums/currency-exchange-contracts-category-enum"
+	"github.com/SolarLabRU/fastpay-go-commons/enums/currency-exchange-contract-category-enum"
 )
 
 type GetContractPageByBankRequest struct {
@@ -10,7 +10,7 @@ type GetContractPageByBankRequest struct {
 }
 
 func (getContractPage *GetContractPageByBankRequest) SetDefaults() {
-	if getContractPage.Category == currency_exchange_contracts_category_enum.Undefined {
-		getContractPage.Category = currency_exchange_contracts_category_enum.CurrencyExchangeContract
+	if getContractPage.Category == currency_exchange_contract_category_enum.Undefined {
+		getContractPage.Category = currency_exchange_contract_category_enum.CurrencyExchangeContract
 	}
 }

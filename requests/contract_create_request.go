@@ -24,6 +24,7 @@ type ContractCreateRequest struct {
 	EndDate              int64                                                                     `json:"endDate" valid:"required~ErrorTimestampNotPassed,range(0|9223372036854775807)~ErrorTimestampNegative"`
 	BankAddress          string                                                                    `json:"bankAddress"`
 	Sig                  SignDto                                                                   `json:"sig"`
+	MsgHash              string                                                                    `json:"msgHash"`
 }
 
 func (createContract *ContractCreateRequest) SetDefaults() {

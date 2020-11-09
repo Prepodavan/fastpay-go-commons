@@ -1,6 +1,6 @@
 package requests
 
-import "github.com/SolarLabRU/fastpay-go-commons/enums/currency-exchange-contracts-category-enum"
+import "github.com/SolarLabRU/fastpay-go-commons/enums/currency-exchange-contract-category-enum"
 
 type GetBestRoutesRequest struct {
 	Amount             int64                                                                       `json:"amount" valid:"required~ErrorAmountNotPassed"`
@@ -9,11 +9,11 @@ type GetBestRoutesRequest struct {
 	CustomerIdentifier string                                                                      `json:"customerIdentifier" valid:"validHex64~ErrorIdentifierNotFolowingRegex"`
 	CountryCode        string                                                                      `json:"countryCode" valid:"stringlength(3|3)"`
 	To                 string                                                                      `json:"to" valid:"validHex40or64~ErrorAddressOrIdentifierNotFolowingRegex"`
-	Category           currency_exchange_contracts_category_enum.CurrencyExchangeContractsCategory `json:"category"`
+	Category           currency_exchange_contract_category_enum.CurrencyExchangeContractCategory `json:"category"`
 }
 
 func (getBestRoutes *GetBestRoutesRequest) SetDefaults() {
-	if getBestRoutes.Category == currency_exchange_contracts_category_enum.Undefined {
-		getBestRoutes.Category = currency_exchange_contracts_category_enum.CurrencyExchangeContract
+	if getBestRoutes.Category == currency_exchange_contract_category_enum.Undefined {
+		getBestRoutes.Category = currency_exchange_contract_category_enum.CurrencyExchangeContract
 	}
 }

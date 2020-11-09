@@ -1,19 +1,19 @@
-package currency_exchange_contracts_type_enum
+package currency_exchange_contract_type_enum
 
-type CurrencyExchangeContractsType int
+type CurrencyExchangeContractType int
 
 const (
-	Undefined CurrencyExchangeContractsType = iota
+	Undefined CurrencyExchangeContractType = iota
 	CurrencyExchangeConversionContract
 	CurrencyExchangeOutgoingCommissionContract
 	CurrencyExchangeIncomingCommissionContract
 )
 
-func (currencyExchangeContractsType CurrencyExchangeContractsType) Str() string {
+func (currencyExchangeContractsType CurrencyExchangeContractType) Str() string {
 	return [...]string{"Undefined", "CurrencyExchangeConversionContract", "CurrencyExchangeOutgoingCommissionContract", "CurrencyExchangeIncomingCommissionContract"}[currencyExchangeContractsType]
 }
 
-func Parse(stringCurrencyExchangeContractsType string) CurrencyExchangeContractsType {
+func Parse(stringCurrencyExchangeContractsType string) CurrencyExchangeContractType {
 	switch stringCurrencyExchangeContractsType {
 	case "CurrencyExchangeConversionContract":
 		return CurrencyExchangeConversionContract
@@ -26,6 +26,6 @@ func Parse(stringCurrencyExchangeContractsType string) CurrencyExchangeContracts
 	}
 }
 
-func GetCurrencyExchangeContractsType() []CurrencyExchangeContractsType {
-	return []CurrencyExchangeContractsType{Undefined, CurrencyExchangeConversionContract, CurrencyExchangeOutgoingCommissionContract, CurrencyExchangeIncomingCommissionContract}
+func GetCurrencyExchangeContractsType() []CurrencyExchangeContractType {
+	return []CurrencyExchangeContractType{Undefined, CurrencyExchangeConversionContract, CurrencyExchangeOutgoingCommissionContract, CurrencyExchangeIncomingCommissionContract}
 }

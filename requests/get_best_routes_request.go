@@ -9,11 +9,11 @@ type GetBestRoutesRequest struct {
 	CustomerIdentifier string                                                                      `json:"customerIdentifier" valid:"validHex64~ErrorIdentifierNotFolowingRegex"`
 	CountryCode        string                                                                      `json:"countryCode" valid:"stringlength(3|3)"`
 	To                 string                                                                      `json:"to" valid:"validHex40or64~ErrorAddressOrIdentifierNotFolowingRegex"`
-	Type               currency_exchange_contracts_category_enum.CurrencyExchangeContractsCategory `json:"type"`
+	Category           currency_exchange_contracts_category_enum.CurrencyExchangeContractsCategory `json:"category"`
 }
 
 func (getBestRoutes *GetBestRoutesRequest) SetDefaults() {
-	if getBestRoutes.Type == currency_exchange_contracts_category_enum.Undefined {
-		getBestRoutes.Type = currency_exchange_contracts_category_enum.CurrencyExchangeContract
+	if getBestRoutes.Category == currency_exchange_contracts_category_enum.Undefined {
+		getBestRoutes.Category = currency_exchange_contracts_category_enum.CurrencyExchangeContract
 	}
 }

@@ -470,9 +470,9 @@ type CurrencyDealInfo struct {
 }
 
 type CurrencyInfo struct {
-	Code int    `json:"code" valid:"range(0|999)~ErrorCurrencyCodeRange"`
-	Name string `json:"name" valid:"required"`
-	Unit string `json:"unit"`
+	Code   int    `json:"code" valid:"range(0|999)~ErrorCurrencyCodeRange"`
+	Symbol string `json:"symbol" valid:"required"`
+	Unit   string `json:"unit"`
 }
 
 type SafeDealEvent struct {

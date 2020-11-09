@@ -471,7 +471,7 @@ type CurrencyDealInfo struct {
 
 type CurrencyInfo struct {
 	Code   int    `json:"code" valid:"range(0|999)~ErrorCurrencyCodeRange"`
-	Symbol string `json:"symbol" valid:"required"`
+	Symbol string `json:"symbol"`
 	Unit   string `json:"unit"`
 }
 

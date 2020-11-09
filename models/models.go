@@ -7,7 +7,7 @@ import (
 	"github.com/SolarLabRU/fastpay-go-commons/enums/account-type-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/cross-transaction-payload-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/cross-transaction-status-enum"
-	"github.com/SolarLabRU/fastpay-go-commons/enums/currency-exchange-contracts-type-enum"
+	"github.com/SolarLabRU/fastpay-go-commons/enums/currency-exchange-contracts-category-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/currency-type-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/deal-state-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/deal-transfer-status-enum"
@@ -247,24 +247,20 @@ type Customer struct {
 }
 
 type CurrencyExchangeContractMutable struct {
-	Id                   string                                                              `json:"id" valid:"required"`
-	AddressAccountSell   string                                                              `json:"addressAccountSell" valid:"validHex40~ErrorAddressNotFollowingRegex"`
-	AddressAccountBuy    string                                                              `json:"addressAccountBuy" valid:"validHex40~ErrorAddressNotFollowingRegex"`
-	AddressCommission    string                                                              `json:"addressCommission" valid:"validHex40~ErrorAddressNotFollowingRegex"`
-	CurrencyCodeSell     int                                                                 `json:"currencyCodeSell" valid:"range(0|999)~ErrorCurrencyCodeRange"`
-	CurrencyCodeBuy      int                                                                 `json:"currencyCodeBuy" valid:"range(0|999)~ErrorCurrencyCodeRange"`
-	CurrencySymbolSell   string                                                              `json:"currencySymbolSell"`
-	CurrencySymbolBuy    string                                                              `json:"currencySymbolBuy"`
-	CurrencyUnitSell     string                                                              `json:"currencyUnitSell"`
-	CurrencyUnitBuy      string                                                              `json:"currencyUnitBuy"`
-	Type                 currency_exchange_contracts_type_enum.CurrencyExchangeContractsType `json:"type"`
-	Price                float64                                                             `json:"price" valid:"range(0|9223372036854775807)"`
-	FractionalCommission float64                                                             `json:"fractionalCommission" valid:"range(0|1)"`
-	MaxCommission        int64                                                               `json:"maxCommission" valid:"range(0|9223372036854775807)"`
-	MinAmount            int64                                                               `json:"minAmount" valid:"range(0|9223372036854775807)"`
-	MaxAmount            int64                                                               `json:"maxAmount" valid:"range(0|9223372036854775807)"`
-	StartDate            int64                                                               `json:"startDate" valid:"range(0|9223372036854775807)"`
-	EndDate              int64                                                               `json:"endDate" valid:"range(0|9223372036854775807)"`
+	Id                   string                                                                      `json:"id" valid:"required"`
+	AddressAccountSell   string                                                                      `json:"addressAccountSell" valid:"validHex40~ErrorAddressNotFollowingRegex"`
+	AddressAccountBuy    string                                                                      `json:"addressAccountBuy" valid:"validHex40~ErrorAddressNotFollowingRegex"`
+	AddressCommission    string                                                                      `json:"addressCommission" valid:"validHex40~ErrorAddressNotFollowingRegex"`
+	CurrencyInfoSell     CurrencyInfo                                                                `json:"currencyInfoSell"`
+	CurrencyInfoBuy      CurrencyInfo                                                                `json:"currencyInfoBuy"`
+	Category             currency_exchange_contracts_category_enum.CurrencyExchangeContractsCategory `json:"category"`
+	Price                float64                                                                     `json:"price" valid:"range(0|9223372036854775807)"`
+	FractionalCommission float64                                                                     `json:"fractionalCommission" valid:"range(0|1)"`
+	MaxCommission        int64                                                                       `json:"maxCommission" valid:"range(0|9223372036854775807)"`
+	MinAmount            int64                                                                       `json:"minAmount" valid:"range(0|9223372036854775807)"`
+	MaxAmount            int64                                                                       `json:"maxAmount" valid:"range(0|9223372036854775807)"`
+	StartDate            int64                                                                       `json:"startDate" valid:"range(0|9223372036854775807)"`
+	EndDate              int64                                                                       `json:"endDate" valid:"range(0|9223372036854775807)"`
 }
 
 type CurrencyExchangeContract struct {
@@ -466,10 +462,17 @@ type TermsDeal struct {
 	AmountAcceptor         int64                                      `json:"amountAcceptor" valid:"optional,range(0|9223372036854775807)~ErrorAmountNegative"`
 }
 
+// TODO: В случае, если CurrencyDealInfo не будет в дальнейшем расходится с CurrencyInfo - поправить сущности безопасных сделок
 type CurrencyDealInfo struct {
 	Code int    `json:"code" valid:"range(0|999)~ErrorCurrencyCodeRange"`
 	Name string `json:"name" valid:"required"`
 	Unit string `json:"unit"`
+}
+
+type CurrencyInfo struct {
+	Code   int    `json:"code" valid:"range(0|999)~ErrorCurrencyCodeRange"`
+	Symbol string `json:"symbol"`
+	Unit   string `json:"unit"`
 }
 
 type SafeDealEvent struct {

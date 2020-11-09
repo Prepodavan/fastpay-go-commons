@@ -4,25 +4,28 @@ type CurrencyExchangeContractsType int
 
 const (
 	Undefined CurrencyExchangeContractsType = iota
-	CurrencyExchangeContract
-	OfferExchangeContract
+	CurrencyExchangeConversionContract
+	CurrencyExchangeOutgoingCommissionContract
+	CurrencyExchangeIncomingCommissionContract
 )
 
 func (currencyExchangeContractsType CurrencyExchangeContractsType) Str() string {
-	return [...]string{"Undefined", "CurrencyExchangeContract", "OfferExchangeContract"}[currencyExchangeContractsType]
+	return [...]string{"Undefined", "CurrencyExchangeConversionContract", "CurrencyExchangeOutgoingCommissionContract", "CurrencyExchangeIncomingCommissionContract"}[currencyExchangeContractsType]
 }
 
 func Parse(stringCurrencyExchangeContractsType string) CurrencyExchangeContractsType {
 	switch stringCurrencyExchangeContractsType {
-	case "CurrencyExchangeContract":
-		return CurrencyExchangeContract
-	case "OfferExchangeContract":
-		return OfferExchangeContract
+	case "CurrencyExchangeConversionContract":
+		return CurrencyExchangeConversionContract
+	case "CurrencyExchangeOutgoingCommissionContract":
+		return CurrencyExchangeOutgoingCommissionContract
+	case "CurrencyExchangeIncomingCommissionContract":
+		return CurrencyExchangeIncomingCommissionContract
 	default:
 		return Undefined
 	}
 }
 
-func GetCurrencyExchangeContractsTypes() []CurrencyExchangeContractsType {
-	return []CurrencyExchangeContractsType{Undefined, CurrencyExchangeContract, OfferExchangeContract}
+func GetCurrencyExchangeContractsType() []CurrencyExchangeContractsType {
+	return []CurrencyExchangeContractsType{Undefined, CurrencyExchangeConversionContract, CurrencyExchangeOutgoingCommissionContract, CurrencyExchangeIncomingCommissionContract}
 }

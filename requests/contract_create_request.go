@@ -2,6 +2,7 @@ package requests
 
 import (
 	"github.com/SolarLabRU/fastpay-go-commons/enums/currency-exchange-contract-category-enum"
+	"github.com/SolarLabRU/fastpay-go-commons/enums/currency-exchange-contract-type-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/models"
 )
 
@@ -12,7 +13,8 @@ type ContractCreateRequest struct {
 	AddressCommission    string                                                                    `json:"addressCommission" valid:"validHex40~ErrorAddressNotFollowingRegex"`
 	CurrencyInfoSell     models.CurrencyInfo                                                       `json:"currencyInfoSell"`
 	CurrencyInfoBuy      models.CurrencyInfo                                                       `json:"currencyInfoBuy"`
-	Category             currency_exchange_contract_category_enum.CurrencyExchangeContractCategory `json:"category"`
+	Category             currency_exchange_contract_category_enum.CurrencyExchangeContractCategory `json:"category" valid:"required"`
+	Type                 currency_exchange_contract_type_enum.CurrencyExchangeContractType         `json:"type" valid:"required"`
 	Price                float64                                                                   `json:"price" valid:"required~ErrorAmountNotPassed,range(0|9223372036854775807)"`
 	FractionalCommission float64                                                                   `json:"fractionalCommission" valid:"range(0|1)"`
 	MaxCommission        int64                                                                     `json:"maxCommission" valid:"range(0|9223372036854775807)"`

@@ -8,6 +8,7 @@ import (
 	"github.com/SolarLabRU/fastpay-go-commons/enums/cross-transaction-payload-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/cross-transaction-status-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/currency-exchange-contract-category-enum"
+	"github.com/SolarLabRU/fastpay-go-commons/enums/currency-exchange-contract-type-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/currency-type-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/deal-state-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/deal-transfer-status-enum"
@@ -254,6 +255,7 @@ type CurrencyExchangeContractMutable struct {
 	CurrencyInfoSell     CurrencyInfo                                                              `json:"currencyInfoSell"`
 	CurrencyInfoBuy      CurrencyInfo                                                              `json:"currencyInfoBuy"`
 	Category             currency_exchange_contract_category_enum.CurrencyExchangeContractCategory `json:"category"`
+	Type                 currency_exchange_contract_type_enum.CurrencyExchangeContractType         `json:"type"`
 	Price                float64                                                                   `json:"price" valid:"range(0|9223372036854775807)"`
 	FractionalCommission float64                                                                   `json:"fractionalCommission" valid:"range(0|1)"`
 	MaxCommission        int64                                                                     `json:"maxCommission" valid:"range(0|9223372036854775807)"`

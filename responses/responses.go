@@ -2,8 +2,8 @@ package responses
 
 import (
 	"github.com/SolarLabRU/fastpay-go-commons/enums/state_enum"
-	transaction_type_enum "github.com/SolarLabRU/fastpay-go-commons/enums/transaction-type-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/models"
+	"github.com/SolarLabRU/fastpay-go-commons/requests"
 )
 
 type BankResponse struct {
@@ -12,19 +12,9 @@ type BankResponse struct {
 }
 
 type MakeSafeDealDepositResponse struct {
-	Data                     []models.EventBatchItem `json:"data"`
-	NeedMakeTransferRequests []TransferRequest       `json:"transferRequests"`
+	Data                     []models.EventBatchItem    `json:"data"`
+	NeedMakeTransferRequests []requests.TransferRequest `json:"transferRequests"`
 	BaseResponse
-}
-
-type TransferRequest struct {
-	AddressFrom  string                                `json:"addressFrom" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
-	To           string                                `json:"to" valid:"required~ErrorAddressNotPassed,validHex40or64~ErrorAddressOrIdentifierNotFolowingRegex"`
-	CurrencyCode int                                   `json:"currencyCode" valid:"required~ErrorCurrencyCodeNotPassed,range(0|999)~ErrorCurrencyCodeRange"`
-	Amount       int64                                 `json:"amount" valid:"required~ErrorAmountNotPassed"`
-	Payload      string                                `json:"payload"`
-	MsgHash      string                                `json:"msgHash"`
-	TxType       transaction_type_enum.TransactionType `json:"txType"`
 }
 
 type AccountResponse struct {

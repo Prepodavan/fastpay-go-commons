@@ -25,6 +25,7 @@ type ContractCreateRequest struct {
 	BankAddress          string                                                                    `json:"bankAddress"`
 	Sig                  SignDto                                                                   `json:"sig"`
 	MsgHash              string                                                                    `json:"msgHash"`
+	Exp                  int64                                                                     `json:"exp"`
 }
 
 func (createContract *ContractCreateRequest) SetDefaults() {

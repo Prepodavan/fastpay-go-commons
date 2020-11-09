@@ -7,4 +7,5 @@ type ContractUpdateRequest struct {
 	BankAddress string  `json:"bankAddress" valid:"required~ErrorBankAddressNotPassed"`
 	Sig         SignDto `json:"sig"`
 	MsgHash     string  `json:"msgHash"`
+	Exp         int64   `json:"exp"`
 }

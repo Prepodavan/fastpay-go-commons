@@ -13,6 +13,7 @@ import (
 	"github.com/SolarLabRU/fastpay-go-commons/cc-errors"
 	"github.com/SolarLabRU/fastpay-go-commons/crypto"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/access-role-enum"
+	"github.com/SolarLabRU/fastpay-go-commons/enums/currency-exchange-contract-type-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/state_enum"
 	"github.com/SolarLabRU/fastpay-go-commons/logger"
 	"github.com/SolarLabRU/fastpay-go-commons/models"
@@ -492,6 +493,18 @@ func GetContractCommission(contract models.CurrencyExchangeContract, amountOutpu
 	}
 
 	return math.Min(calcCommission, float64(contract.MaxCommission))
+}
+
+// Метод проверки, что список доступных типов контрактов содержит определенный
+func CheckContractTypesContains(contractTypes []currency_exchange_contract_type_enum.CurrencyExchangeContractType, contractType currency_exchange_contract_type_enum.CurrencyExchangeContractType) bool {
+
+	for _, itemType := range contractTypes {
+		if itemType == contractType {
+			return true
+		}
+	}
+
+	return false
 }
 
 func ParseError(err error) *cc_errors.BaseError {

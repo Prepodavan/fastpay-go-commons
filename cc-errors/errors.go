@@ -119,6 +119,9 @@ const (
 	/** Изменение доступных типов контрактов аккаунта доступно только клиентскому банку, который проставил его юридический тип */
 	ErrorUpdateAccountContractTypesForbidden = 60139
 
+	/** Изменение доступных типов контрактов клиентского банка доступно только его банку владельцу */
+	ErrorUpdateClientBankContractTypesForbidden = 60140
+
 	/** Ошибка проверки сигнатуры */
 	ErrorSignVerify = 60200
 
@@ -585,6 +588,7 @@ var ErrorCodeMessagesMap = map[int]string{
 	ErrorClientBankContractTypeForbidden:          "Переданный тип контракта не доступен указанному клиентскому банку",
 	ErrorAccountContractTypeForbidden:             "Переданный тип контракта не доступен указанному аккаунту",
 	ErrorUpdateAccountContractTypesForbidden:      "Изменение доступных типов контрактов аккаунта доступно только его клиентскому банку, который проставил его юридический тип",
+	ErrorUpdateClientBankContractTypesForbidden:   "Изменение доступных типов контрактов клиентского банка доступно только его банку владельцу",
 	ErrorSignVerify:                               "Ошибка проверки сигнатуры",
 	ErrorFundsNotEnough:                           "Недостаточно средств",
 	ErrorValidateDefault:                          "Ошибка валидации",
@@ -767,6 +771,7 @@ var ErrorStringCodeMap = map[string]int{
 	"ErrorClientBankContractTypeForbidden":          ErrorClientBankContractTypeForbidden,
 	"ErrorAccountContractTypeForbidden":             ErrorAccountContractTypeForbidden,
 	"ErrorUpdateAccountContractTypesForbidden":      ErrorUpdateAccountContractTypesForbidden,
+	"ErrorUpdateClientBankContractTypesForbidden":   ErrorUpdateClientBankContractTypesForbidden,
 	"ErrorSignVerify":                               ErrorSignVerify,
 	"ErrorFundsNotEnough":                           ErrorFundsNotEnough,
 	"ErrorValidateDefault":                          ErrorValidateDefault,

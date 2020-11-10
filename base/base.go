@@ -168,6 +168,27 @@ func GetBankByRemoteContract(stub shim.ChaincodeStubInterface, mspId string, add
 	return &bankResponse.Data, nil
 }
 
+// Метод получения банка по адресу
+func GetBankByAddress(stub shim.ChaincodeStubInterface, address string) (*models.Bank, error) {
+	request := requests.GetByAddressRequest{
+		Address: address,
+	}
+
+	response, err := InvokeChaincode(stub, ChaincodeBankName, "getByAddress", request)
+	if err != nil {
+		return nil, err
+	}
+
+	var bankResponse responses.BankResponse
+	err = json.Unmarshal(response, &bankResponse)
+
+	if err != nil {
+		return nil, CreateError(cc_errors.ErrorJsonUnmarshal, fmt.Sprintf("Ошибка десерилизации ответа после вызова чейнкода banks. %s", err.Error()))
+	}
+
+	return &bankResponse.Data, nil
+}
+
 // Метод проверки доступности банка отправителя
 func SenderBankIsAvailable(ctx contractapi.TransactionContextInterface) error {
 	bank, _ := GetSenderBank(ctx)

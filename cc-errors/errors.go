@@ -110,6 +110,12 @@ const (
 	/** Некорректный код валюты получателя */
 	ErrorIncorrectCurrencyCodeReceiverAccount = 60136
 
+	/** Переданный тип контракта не доступен указанному клиентскому банку */
+	ErrorClientBankContractTypeForbidden = 60137
+
+	/** Переданный тип контракта не доступен указанному аккаунту */
+	ErrorAccountContractTypeForbidden = 60138
+
 	/** Ошибка проверки сигнатуры */
 	ErrorSignVerify = 60200
 
@@ -573,6 +579,8 @@ var ErrorCodeMessagesMap = map[int]string{
 	ErrorEditUnidentifiedAccountStatusForbidden:   "Изменение статуса неидентифицированного аккаунта доступно банку владельцу",
 	ErrorIncorrectCurrencyCodeSenderAccount:       "Некорректный код валюты отправителя",
 	ErrorIncorrectCurrencyCodeReceiverAccount:     "Некорректный код валюты получателя",
+	ErrorClientBankContractTypeForbidden:          "Переданный тип контракта не доступен указанному клиентскому банку",
+	ErrorAccountContractTypeForbidden:             "Переданный тип контракта не доступен указанному аккаунту",
 	ErrorSignVerify:                               "Ошибка проверки сигнатуры",
 	ErrorFundsNotEnough:                           "Недостаточно средств",
 	ErrorValidateDefault:                          "Ошибка валидации",
@@ -752,6 +760,8 @@ var ErrorStringCodeMap = map[string]int{
 	"ErrorEditUnidentifiedAccountStatusForbidden":   ErrorEditUnidentifiedAccountStatusForbidden,
 	"ErrorIncorrectCurrencyCodeSenderAccount":       ErrorIncorrectCurrencyCodeSenderAccount,
 	"ErrorIncorrectCurrencyCodeReceiverAccount":     ErrorIncorrectCurrencyCodeReceiverAccount,
+	"ErrorClientBankContractTypeForbidden":          ErrorClientBankContractTypeForbidden,
+	"ErrorAccountContractTypeForbidden":             ErrorAccountContractTypeForbidden,
 	"ErrorSignVerify":                               ErrorSignVerify,
 	"ErrorFundsNotEnough":                           ErrorFundsNotEnough,
 	"ErrorValidateDefault":                          ErrorValidateDefault,

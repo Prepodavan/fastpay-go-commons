@@ -267,19 +267,23 @@ func CheckTechnicalAccountSignByAddress(ctx contractapi.TransactionContextInterf
 	return nil
 }
 
-func CheckClientBankTechnicalSignAndAvailable(ctx contractapi.TransactionContextInterface, request requests.TechnicalSignRequest) error {
+func CheckClientBankTechnicalSignAndAvailableWithBank(ctx contractapi.TransactionContextInterface, request requests.TechnicalSignRequest, senderClientBank *responses.ClientBankItemResponse) error {
 
 	err := CheckSign(request.TechnicalAddress, request.TechnicalMsgHash, request.TechnicalSig)
 	if err != nil {
 		return err
 	}
 
-	err = SenderClientBankIsAvailable(ctx, nil, request.TechnicalAddress)
+	err = SenderClientBankIsAvailable(ctx, senderClientBank, request.TechnicalAddress)
 	if err != nil {
 		return err
 	}
 
 	return nil
+}
+
+func CheckClientBankTechnicalSignAndAvailable(ctx contractapi.TransactionContextInterface, request requests.TechnicalSignRequest) error {
+	return CheckClientBankTechnicalSignAndAvailableWithBank(ctx, request, nil)
 }
 
 func CheckAccessAndAvailableWithBank(ctx contractapi.TransactionContextInterface, bank *models.Bank, role access_role_enum.AccessRole) error {

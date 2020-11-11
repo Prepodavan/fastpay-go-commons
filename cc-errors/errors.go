@@ -110,6 +110,21 @@ const (
 	/** Некорректный код валюты получателя */
 	ErrorIncorrectCurrencyCodeReceiverAccount = 60136
 
+	/** Переданный тип контракта не доступен указанному клиентскому банку */
+	ErrorClientBankContractTypeForbidden = 60137
+
+	/** Переданный тип контракта не доступен указанному аккаунту */
+	ErrorAccountContractTypeForbidden = 60138
+
+	/** БИК указанного клиентского банка не соответствует БИКу банка, который проставил юридический тип аккаунта */
+	ErrorClientBankBikNotMatchAccount = 60139
+
+	/** Изменение доступных типов контрактов клиентского банка доступно только его банку владельцу */
+	ErrorUpdateClientBankContractTypesForbidden = 60140
+
+	/** БИК клиентского банка не предоставлен */
+	ErrorClientBankBikNotPresent = 60141
+
 	/** Ошибка проверки сигнатуры */
 	ErrorSignVerify = 60200
 
@@ -573,6 +588,11 @@ var ErrorCodeMessagesMap = map[int]string{
 	ErrorEditUnidentifiedAccountStatusForbidden:   "Изменение статуса неидентифицированного аккаунта доступно банку владельцу",
 	ErrorIncorrectCurrencyCodeSenderAccount:       "Некорректный код валюты отправителя",
 	ErrorIncorrectCurrencyCodeReceiverAccount:     "Некорректный код валюты получателя",
+	ErrorClientBankContractTypeForbidden:          "Переданный тип контракта не доступен указанному клиентскому банку",
+	ErrorAccountContractTypeForbidden:             "Переданный тип контракта не доступен указанному аккаунту",
+	ErrorClientBankBikNotMatchAccount:             "БИК указанного клиентского банка не соответствует БИКу банка, который проставил юридический тип аккаунта",
+	ErrorUpdateClientBankContractTypesForbidden:   "Изменение доступных типов контрактов клиентского банка доступно только его банку владельцу",
+	ErrorClientBankBikNotPresent:                  "БИК клиентского банка не предоставлен",
 	ErrorSignVerify:                               "Ошибка проверки сигнатуры",
 	ErrorFundsNotEnough:                           "Недостаточно средств",
 	ErrorValidateDefault:                          "Ошибка валидации",
@@ -752,6 +772,11 @@ var ErrorStringCodeMap = map[string]int{
 	"ErrorEditUnidentifiedAccountStatusForbidden":   ErrorEditUnidentifiedAccountStatusForbidden,
 	"ErrorIncorrectCurrencyCodeSenderAccount":       ErrorIncorrectCurrencyCodeSenderAccount,
 	"ErrorIncorrectCurrencyCodeReceiverAccount":     ErrorIncorrectCurrencyCodeReceiverAccount,
+	"ErrorClientBankContractTypeForbidden":          ErrorClientBankContractTypeForbidden,
+	"ErrorAccountContractTypeForbidden":             ErrorAccountContractTypeForbidden,
+	"ErrorClientBankBikNotMatchAccount":             ErrorClientBankBikNotMatchAccount,
+	"ErrorUpdateClientBankContractTypesForbidden":   ErrorUpdateClientBankContractTypesForbidden,
+	"ErrorClientBankBikNotPresent":                  ErrorClientBankBikNotPresent,
 	"ErrorSignVerify":                               ErrorSignVerify,
 	"ErrorFundsNotEnough":                           ErrorFundsNotEnough,
 	"ErrorValidateDefault":                          ErrorValidateDefault,

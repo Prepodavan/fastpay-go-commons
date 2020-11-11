@@ -8,6 +8,7 @@ import (
 )
 
 type CreateAccountRequest struct {
+	TechnicalSignRequest
 	Address           string                            `json:"address" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
 	State             state_enum.State                  `json:"state"`
 	CurrencyCode      int                               `json:"currencyCode" valid:"required~ErrorCurrencyCodeNotPassed,range(0|999)"`

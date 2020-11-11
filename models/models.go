@@ -25,19 +25,20 @@ import (
 )
 
 type Account struct {
-	Address                    string                            `json:"address"`
-	State                      state_enum.State                  `json:"state"`
-	CurrencyCode               int                               `json:"currencyCode"`
-	JuridicalType              juridical_type_enum.JuridicalType `json:"juridicalType"`
-	BikBankSetterJuridicalType string                            `json:"bikBankSetterJuridicalType"`
-	IdentityType               identity_type_enum.IdentityType   `json:"identityType"`
-	Owner                      string                            `json:"owner"`
-	Type                       account_type_enum.AccountType     `json:"type"`
-	Identifiers                []string                          `json:"identifiers"`
-	Encrypted                  bool                              `json:"encrypted"`
-	Created                    int64                             `json:"created"`
-	PublicKey                  string                            `json:"publicKey"`
-	DocType                    string                            `json:"docType"`
+	Address                    string                                                              `json:"address"`
+	State                      state_enum.State                                                    `json:"state"`
+	CurrencyCode               int                                                                 `json:"currencyCode"`
+	JuridicalType              juridical_type_enum.JuridicalType                                   `json:"juridicalType"`
+	BikBankSetterJuridicalType string                                                              `json:"bikBankSetterJuridicalType"`
+	IdentityType               identity_type_enum.IdentityType                                     `json:"identityType"`
+	Owner                      string                                                              `json:"owner"`
+	Type                       account_type_enum.AccountType                                       `json:"type"`
+	AvailableContractTypes     []currency_exchange_contract_type_enum.CurrencyExchangeContractType `json:"availableContractTypes"`
+	Identifiers                []string                                                            `json:"identifiers"`
+	Encrypted                  bool                                                                `json:"encrypted"`
+	Created                    int64                                                               `json:"created"`
+	PublicKey                  string                                                              `json:"publicKey"`
+	DocType                    string                                                              `json:"docType"`
 }
 
 type Arbitrator struct {
@@ -47,16 +48,17 @@ type Arbitrator struct {
 }
 
 type Bank struct {
-	Address   string                        `json:"address"`
-	Name      string                        `json:"name"`
-	BIK       string                        `json:"bik"`
-	State     state_enum.State              `json:"state"`
-	CreatedBy string                        `json:"createdBy"`
-	Encrypted bool                          `json:"encrypted"`
-	MSPId     string                        `json:"mspId"`
-	Roles     []access_role_enum.AccessRole `json:"roles"`
-	Conf      string                        `json:"conf"`
-	DocType   string                        `json:"docType"`
+	Address                string                                                              `json:"address"`
+	Name                   string                                                              `json:"name"`
+	BIK                    string                                                              `json:"bik"`
+	State                  state_enum.State                                                    `json:"state"`
+	CreatedBy              string                                                              `json:"createdBy"`
+	Encrypted              bool                                                                `json:"encrypted"`
+	MSPId                  string                                                              `json:"mspId"`
+	Roles                  []access_role_enum.AccessRole                                       `json:"roles"`
+	AvailableContractTypes []currency_exchange_contract_type_enum.CurrencyExchangeContractType `json:"availableContractTypes"`
+	Conf                   string                                                              `json:"conf"`
+	DocType                string                                                              `json:"docType"`
 }
 
 type Currency struct {
@@ -219,13 +221,14 @@ type ClaimsAggregate struct {
 }
 
 type ClientBank struct {
-	Address         string            `json:"address"`
-	BankDisplayName string            `json:"bankDisplayName"`
-	State           state_enum.State  `json:"state"`
-	CountryCode     string            `json:"countryCode"`
-	Owner           string            `json:"owner"`
-	Params          map[string]string `json:"params"`
-	DocType         string            `json:"docType"`
+	Address                string                                                              `json:"address"`
+	BankDisplayName        string                                                              `json:"bankDisplayName"`
+	State                  state_enum.State                                                    `json:"state"`
+	CountryCode            string                                                              `json:"countryCode"`
+	Owner                  string                                                              `json:"owner"`
+	AvailableContractTypes []currency_exchange_contract_type_enum.CurrencyExchangeContractType `json:"availableContractTypes"`
+	Params                 map[string]string                                                   `json:"params"`
+	DocType                string                                                              `json:"docType"`
 }
 
 func (cb *ClientBank) GetSortParamsKeys() []string {

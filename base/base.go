@@ -13,6 +13,7 @@ import (
 	"github.com/SolarLabRU/fastpay-go-commons/cc-errors"
 	"github.com/SolarLabRU/fastpay-go-commons/crypto"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/access-role-enum"
+	"github.com/SolarLabRU/fastpay-go-commons/enums/currency-exchange-contract-type-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/state_enum"
 	"github.com/SolarLabRU/fastpay-go-commons/logger"
 	"github.com/SolarLabRU/fastpay-go-commons/models"
@@ -168,6 +169,27 @@ func GetBankByRemoteContract(stub shim.ChaincodeStubInterface, mspId string, add
 	return &bankResponse.Data, nil
 }
 
+// Метод получения банка по адресу
+func GetBankByAddress(stub shim.ChaincodeStubInterface, address string) (*models.Bank, error) {
+	request := requests.GetByAddressRequest{
+		Address: address,
+	}
+
+	response, err := InvokeChaincode(stub, ChaincodeBankName, "getByAddress", request)
+	if err != nil {
+		return nil, err
+	}
+
+	var bankResponse responses.BankResponse
+	err = json.Unmarshal(response, &bankResponse)
+
+	if err != nil {
+		return nil, CreateError(cc_errors.ErrorJsonUnmarshal, fmt.Sprintf("Ошибка десерилизации ответа после вызова чейнкода banks. %s", err.Error()))
+	}
+
+	return &bankResponse.Data, nil
+}
+
 // Метод проверки доступности банка отправителя
 func SenderBankIsAvailable(ctx contractapi.TransactionContextInterface) error {
 	bank, _ := GetSenderBank(ctx)
@@ -245,19 +267,23 @@ func CheckTechnicalAccountSignByAddress(ctx contractapi.TransactionContextInterf
 	return nil
 }
 
-func CheckClientBankTechnicalSignAndAvailable(ctx contractapi.TransactionContextInterface, request requests.TechnicalSignRequest) error {
+func CheckClientBankTechnicalSignAndAvailableWithBank(ctx contractapi.TransactionContextInterface, request requests.TechnicalSignRequest, senderClientBank *responses.ClientBankItemResponse) error {
 
 	err := CheckSign(request.TechnicalAddress, request.TechnicalMsgHash, request.TechnicalSig)
 	if err != nil {
 		return err
 	}
 
-	err = SenderClientBankIsAvailable(ctx, nil, request.TechnicalAddress)
+	err = SenderClientBankIsAvailable(ctx, senderClientBank, request.TechnicalAddress)
 	if err != nil {
 		return err
 	}
 
 	return nil
+}
+
+func CheckClientBankTechnicalSignAndAvailable(ctx contractapi.TransactionContextInterface, request requests.TechnicalSignRequest) error {
+	return CheckClientBankTechnicalSignAndAvailableWithBank(ctx, request, nil)
 }
 
 func CheckAccessAndAvailableWithBank(ctx contractapi.TransactionContextInterface, bank *models.Bank, role access_role_enum.AccessRole) error {
@@ -471,6 +497,18 @@ func GetContractCommission(contract models.CurrencyExchangeContract, amountOutpu
 	}
 
 	return math.Min(calcCommission, float64(contract.MaxCommission))
+}
+
+// Метод проверки, что список доступных типов контрактов содержит определенный
+func CheckContractTypesContains(contractTypes []currency_exchange_contract_type_enum.CurrencyExchangeContractType, contractType currency_exchange_contract_type_enum.CurrencyExchangeContractType) bool {
+
+	for _, itemType := range contractTypes {
+		if itemType == contractType {
+			return true
+		}
+	}
+
+	return false
 }
 
 func ParseError(err error) *cc_errors.BaseError {

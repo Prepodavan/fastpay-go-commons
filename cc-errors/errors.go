@@ -125,9 +125,6 @@ const (
 	/** БИК клиентского банка не предоставлен */
 	ErrorClientBankBikNotPresent = 60141
 
-	/** Адрес клиентского банка не соответствует адресу банка-владельца аккаунта */
-	ErrorClientBankOwnerNotMatchAccount = 60142
-
 	/** Ошибка проверки сигнатуры */
 	ErrorSignVerify = 60200
 
@@ -596,7 +593,6 @@ var ErrorCodeMessagesMap = map[int]string{
 	ErrorClientBankBikNotMatchAccount:             "БИК указанного клиентского банка не соответствует БИКу банка, который проставил юридический тип аккаунта",
 	ErrorUpdateClientBankContractTypesForbidden:   "Изменение доступных типов контрактов клиентского банка доступно только его банку владельцу",
 	ErrorClientBankBikNotPresent:                  "БИК клиентского банка не предоставлен",
-	ErrorClientBankOwnerNotMatchAccount:           "Адрес клиентского банка не соответствует адресу банка-владельца аккаунта",
 	ErrorSignVerify:                               "Ошибка проверки сигнатуры",
 	ErrorFundsNotEnough:                           "Недостаточно средств",
 	ErrorValidateDefault:                          "Ошибка валидации",
@@ -781,7 +777,6 @@ var ErrorStringCodeMap = map[string]int{
 	"ErrorClientBankBikNotMatchAccount":             ErrorClientBankBikNotMatchAccount,
 	"ErrorUpdateClientBankContractTypesForbidden":   ErrorUpdateClientBankContractTypesForbidden,
 	"ErrorClientBankBikNotPresent":                  ErrorClientBankBikNotPresent,
-	"ErrorClientBankOwnerNotMatchAccount":           ErrorClientBankOwnerNotMatchAccount,
 	"ErrorSignVerify":                               ErrorSignVerify,
 	"ErrorFundsNotEnough":                           ErrorFundsNotEnough,
 	"ErrorValidateDefault":                          ErrorValidateDefault,

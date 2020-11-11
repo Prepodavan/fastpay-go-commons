@@ -116,11 +116,17 @@ const (
 	/** Переданный тип контракта не доступен указанному аккаунту */
 	ErrorAccountContractTypeForbidden = 60138
 
-	/** Изменение доступных типов контрактов аккаунта доступно только клиентскому банку, который проставил его юридический тип */
-	ErrorUpdateAccountContractTypesForbidden = 60139
+	/** БИК указанного клиентского банка не соответствует БИКу банка, который проставил юридический тип аккаунта */
+	ErrorClientBankBikNotMatchAccount = 60139
 
 	/** Изменение доступных типов контрактов клиентского банка доступно только его банку владельцу */
 	ErrorUpdateClientBankContractTypesForbidden = 60140
+
+	/** БИК клиентского банка не предоставлен */
+	ErrorClientBankBikNotPresent = 60141
+
+	/** Адрес клиентского банка не соответствует адресу банка-владельца аккаунта */
+	ErrorClientBankOwnerNotMatchAccount = 60142
 
 	/** Ошибка проверки сигнатуры */
 	ErrorSignVerify = 60200
@@ -587,8 +593,10 @@ var ErrorCodeMessagesMap = map[int]string{
 	ErrorIncorrectCurrencyCodeReceiverAccount:     "Некорректный код валюты получателя",
 	ErrorClientBankContractTypeForbidden:          "Переданный тип контракта не доступен указанному клиентскому банку",
 	ErrorAccountContractTypeForbidden:             "Переданный тип контракта не доступен указанному аккаунту",
-	ErrorUpdateAccountContractTypesForbidden:      "Изменение доступных типов контрактов аккаунта доступно только его клиентскому банку, который проставил его юридический тип",
+	ErrorClientBankBikNotMatchAccount:             "БИК указанного клиентского банка не соответствует БИКу банка, который проставил юридический тип аккаунта",
 	ErrorUpdateClientBankContractTypesForbidden:   "Изменение доступных типов контрактов клиентского банка доступно только его банку владельцу",
+	ErrorClientBankBikNotPresent:                  "БИК клиентского банка не предоставлен",
+	ErrorClientBankOwnerNotMatchAccount:           "Адрес клиентского банка не соответствует адресу банка-владельца аккаунта",
 	ErrorSignVerify:                               "Ошибка проверки сигнатуры",
 	ErrorFundsNotEnough:                           "Недостаточно средств",
 	ErrorValidateDefault:                          "Ошибка валидации",
@@ -770,8 +778,10 @@ var ErrorStringCodeMap = map[string]int{
 	"ErrorIncorrectCurrencyCodeReceiverAccount":     ErrorIncorrectCurrencyCodeReceiverAccount,
 	"ErrorClientBankContractTypeForbidden":          ErrorClientBankContractTypeForbidden,
 	"ErrorAccountContractTypeForbidden":             ErrorAccountContractTypeForbidden,
-	"ErrorUpdateAccountContractTypesForbidden":      ErrorUpdateAccountContractTypesForbidden,
+	"ErrorClientBankBikNotMatchAccount":             ErrorClientBankBikNotMatchAccount,
 	"ErrorUpdateClientBankContractTypesForbidden":   ErrorUpdateClientBankContractTypesForbidden,
+	"ErrorClientBankBikNotPresent":                  ErrorClientBankBikNotPresent,
+	"ErrorClientBankOwnerNotMatchAccount":           ErrorClientBankOwnerNotMatchAccount,
 	"ErrorSignVerify":                               ErrorSignVerify,
 	"ErrorFundsNotEnough":                           ErrorFundsNotEnough,
 	"ErrorValidateDefault":                          ErrorValidateDefault,

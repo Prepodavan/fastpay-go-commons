@@ -439,9 +439,17 @@ func CheckArgs(args string, request interface{}) error {
 
 // Проверка аккаунта на соответствие валюты по его адресу
 func CheckAccountCurrencyCode(stub shim.ChaincodeStubInterface, address string, currencyCode int) error {
-	account, err := GetAccountByAddress(stub, address)
-	if err != nil {
-		return err
+	return CheckAccountCurrencyCodeWithAccount(stub, address, currencyCode, nil)
+}
+
+// Проверка аккаунта на соответствие валюты по его адресу либо аккаунту
+func CheckAccountCurrencyCodeWithAccount(stub shim.ChaincodeStubInterface, address string, currencyCode int, account *models.Account) error {
+	if account == nil {
+		var err error = nil
+		account, err = GetAccountByAddress(stub, address)
+		if err != nil {
+			return err
+		}
 	}
 
 	if account.CurrencyCode != currencyCode {

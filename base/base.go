@@ -824,6 +824,10 @@ func GetChaincodeCurrencyCode() string {
 	return currencyCode
 }
 
+func GetInvoiceIdSafeDeal(safeDealId, escrowAddress string) string {
+	return fmt.Sprintf("%s_%s", safeDealId, escrowAddress)
+}
+
 func GetChaincodeName() string {
 	name, currencyCode := GetChaincodeNameCurrencyCode()
 

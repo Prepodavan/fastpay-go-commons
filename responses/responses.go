@@ -3,7 +3,6 @@ package responses
 import (
 	"github.com/SolarLabRU/fastpay-go-commons/enums/state_enum"
 	"github.com/SolarLabRU/fastpay-go-commons/models"
-	"github.com/SolarLabRU/fastpay-go-commons/requests"
 )
 
 type BankResponse struct {
@@ -12,8 +11,7 @@ type BankResponse struct {
 }
 
 type MakeSafeDealDepositResponse struct {
-	Data                     []models.EventBatchItem    `json:"data"`
-	NeedMakeTransferRequests []requests.TransferRequest `json:"transferRequests"`
+	Data []models.EventBatchItem `json:"data"`
 	BaseResponse
 }
 

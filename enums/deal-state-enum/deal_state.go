@@ -12,6 +12,7 @@ const (
 	ContractTerminated   DealState = 6
 	ContractExecuted     DealState = 7
 	ContractDisputeOpen  DealState = 8
+	ContractNotCompleted DealState = 9
 )
 
 func (state DealState) Str() string {

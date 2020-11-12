@@ -404,6 +404,7 @@ type LimitsAccount struct {
 type Deal struct {
 	Id                    string                            `json:"id"`
 	OfferId               string                            `json:"offerId"`
+	SenderBank            string                            `json:"senderBank"`
 	Owner                 string                            `json:"owner"`
 	State                 deal_state_enum.DealState         `json:"state"`
 	Terms                 TermsDeal                         `json:"terms"`

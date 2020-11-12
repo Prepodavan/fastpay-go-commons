@@ -10,6 +10,7 @@ const (
 	Expired
 	Paid
 	ClarificationRequested
+	Rejected
 )
 
 func (invoiceState InvoiceState) Str() string {

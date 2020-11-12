@@ -25,20 +25,20 @@ import (
 )
 
 type Account struct {
-	Address                    string                                                              `json:"address"`
-	State                      state_enum.State                                                    `json:"state"`
-	CurrencyCode               int                                                                 `json:"currencyCode"`
-	JuridicalType              juridical_type_enum.JuridicalType                                   `json:"juridicalType"`
-	BikBankSetterJuridicalType string                                                              `json:"bikBankSetterJuridicalType"`
-	IdentityType               identity_type_enum.IdentityType                                     `json:"identityType"`
-	Owner                      string                                                              `json:"owner"`
-	Type                       account_type_enum.AccountType                                       `json:"type"`
-	AvailableContractTypes     []currency_exchange_contract_type_enum.CurrencyExchangeContractType `json:"availableContractTypes"`
-	Identifiers                []string                                                            `json:"identifiers"`
-	Encrypted                  bool                                                                `json:"encrypted"`
-	Created                    int64                                                               `json:"created"`
-	PublicKey                  string                                                              `json:"publicKey"`
-	DocType                    string                                                              `json:"docType"`
+	Address                string                                                              `json:"address"`
+	State                  state_enum.State                                                    `json:"state"`
+	CurrencyCode           int                                                                 `json:"currencyCode"`
+	JuridicalType          juridical_type_enum.JuridicalType                                   `json:"juridicalType"`
+	ClientBankAddress      string                                                              `json:"clientBankAddress"`
+	IdentityType           identity_type_enum.IdentityType                                     `json:"identityType"`
+	Owner                  string                                                              `json:"owner"`
+	Type                   account_type_enum.AccountType                                       `json:"type"`
+	AvailableContractTypes []currency_exchange_contract_type_enum.CurrencyExchangeContractType `json:"availableContractTypes"`
+	Identifiers            []string                                                            `json:"identifiers"`
+	Encrypted              bool                                                                `json:"encrypted"`
+	Created                int64                                                               `json:"created"`
+	PublicKey              string                                                              `json:"publicKey"`
+	DocType                string                                                              `json:"docType"`
 }
 
 type Arbitrator struct {

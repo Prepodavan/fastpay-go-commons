@@ -17,7 +17,6 @@ type CreateAccountRequest struct {
 	Type              account_type_enum.AccountType     `json:"type"`
 	Identifiers       []string                          `json:"identifiers" valid:"validHex64~ErrorIdentifierNotFolowingRegex"`
 	PublicKey         string                            `json:"publicKey"`
-	ClientBankAddress string                            `json:"clientBankAddress"`
 	Owner             string                            `json:"owner"`
 	MsgHash           string                            `json:"msgHash"`
 	Sig               SignDto                           `json:"sig"`

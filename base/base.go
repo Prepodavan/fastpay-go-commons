@@ -910,6 +910,27 @@ func ConcatEvents(events []models.EventBatchItem, event interface{}, eventName s
 	return events
 }
 
+// Метод получения адреса аккаунта по его идентификатору
+func GetAccountAddressByIdentifier(stub shim.ChaincodeStubInterface, identifier string) (string, error) {
+
+	request := requests.GetByIdentifierRequest{
+		Identifier: identifier,
+	}
+
+	response, err := InvokeChaincode(stub, ChaincodeAccountsName, "getAddressByIdentifier", request)
+	if err != nil {
+		return "", err
+	}
+
+	var accountResponse responses.AccountAddressResponse
+	err = json.Unmarshal(response, &accountResponse)
+	if err != nil {
+		return "", CreateError(cc_errors.ErrorJsonUnmarshal, fmt.Sprintf("Ошибка десериализации ответа после вызова чейнкода accounts. %s", err.Error()))
+	}
+
+	return accountResponse.Data, nil
+}
+
 func PrettyPrint(data interface{}) {
 	var p []byte
 	//    var err := error

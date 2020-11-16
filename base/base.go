@@ -44,11 +44,21 @@ func init() {
 }
 
 const (
-	ChaincodeBankName       = "banks"
-	ChaincodeAccountsName   = "accounts"
-	ChaincodeClientBankName = "client-banks"
-	compositeExpSignKey     = "typeExpSign~sign"
-	EventBatchName          = "EventBatch"
+	ChaincodeNameAccounts          = "accounts"
+	ChaincodeNameBank              = "banks"
+	ChaincodeNameClientBank        = "client-banks"
+	ChaincodeNameCrossCustomers    = "cross-customers"
+	ChaincodeNameCrossTransactions = "cross-transactions"
+	ChaincodeNameCurrencies        = "currencies"
+	ChaincodeNameExchangeContracts = "currency-exchange-contracts"
+	ChaincodeNameSafeDeal          = "safe-deal"
+	ChaincodeNameClearing          = "clearing_"
+	ChaincodeNameInvoices          = "invoices_"
+	ChaincodeNameLimits            = "limits_"
+	ChaincodeNameTransactions      = "transactions_"
+
+	compositeExpSignKey = "typeExpSign~sign"
+	EventBatchName      = "EventBatch"
 )
 
 // Метод получения банка отправителя
@@ -77,7 +87,7 @@ func GetClientBank(ctx contractapi.TransactionContextInterface, address string) 
 		Address: address,
 	}
 
-	response, err := InvokeChaincode(stub, ChaincodeClientBankName, "getClientBankByAddress", request)
+	response, err := InvokeChaincode(stub, ChaincodeNameClientBank, "getClientBankByAddress", request)
 	if err != nil {
 		return nil, err
 	}
@@ -154,7 +164,7 @@ func GetBankByRemoteContract(stub shim.ChaincodeStubInterface, mspId string, add
 		MSPId:   mspId,
 	}
 
-	response, err := InvokeChaincode(stub, ChaincodeBankName, "getBankByMspIdAddress", request)
+	response, err := InvokeChaincode(stub, ChaincodeNameBank, "getBankByMspIdAddress", request)
 	if err != nil {
 		return nil, err
 	}
@@ -175,7 +185,7 @@ func GetBankByAddress(stub shim.ChaincodeStubInterface, address string) (*models
 		Address: address,
 	}
 
-	response, err := InvokeChaincode(stub, ChaincodeBankName, "getByAddress", request)
+	response, err := InvokeChaincode(stub, ChaincodeNameBank, "getByAddress", request)
 	if err != nil {
 		return nil, err
 	}
@@ -796,7 +806,7 @@ func GetAccountByIdentifier(stub shim.ChaincodeStubInterface, identifier string)
 		Identifier: identifier,
 	}
 
-	response, err := InvokeChaincode(stub, ChaincodeAccountsName, "getByIdentifier", request)
+	response, err := InvokeChaincode(stub, ChaincodeNameAccounts, "getByIdentifier", request)
 	if err != nil {
 		return nil, err
 	}
@@ -817,7 +827,7 @@ func GetAccountByAddress(stub shim.ChaincodeStubInterface, address string) (*mod
 		Address: address,
 	}
 
-	response, err := InvokeChaincode(stub, ChaincodeAccountsName, "getByAddress", request)
+	response, err := InvokeChaincode(stub, ChaincodeNameAccounts, "getByAddress", request)
 	if err != nil {
 		return nil, err
 	}
@@ -917,7 +927,7 @@ func GetAccountAddressByIdentifier(stub shim.ChaincodeStubInterface, identifier 
 		Identifier: identifier,
 	}
 
-	response, err := InvokeChaincode(stub, ChaincodeAccountsName, "getAddressByIdentifier", request)
+	response, err := InvokeChaincode(stub, ChaincodeNameAccounts, "getAddressByIdentifier", request)
 	if err != nil {
 		return "", err
 	}

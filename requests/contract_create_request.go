@@ -14,7 +14,7 @@ type ContractCreateRequest struct {
 	CurrencyInfoSell     models.CurrencyInfo                                                       `json:"currencyInfoSell"`
 	CurrencyInfoBuy      models.CurrencyInfo                                                       `json:"currencyInfoBuy"`
 	Category             currency_exchange_contract_category_enum.CurrencyExchangeContractCategory `json:"category" valid:"required"`
-	Type                 currency_exchange_contract_type_enum.CurrencyExchangeContractType         `json:"type" valid:"required"`
+	Type                 currency_exchange_contract_type_enum.CurrencyExchangeContractType         `json:"type" valid:"range(0|3)"`
 	Price                float64                                                                   `json:"price" valid:"required~ErrorAmountNotPassed,range(0|9223372036854775807)"`
 	FractionalCommission float64                                                                   `json:"fractionalCommission" valid:"range(0|1)"`
 	MaxCommission        int64                                                                     `json:"maxCommission" valid:"range(0|9223372036854775807)"`

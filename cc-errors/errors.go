@@ -26,7 +26,7 @@ const (
 	/** Валюта существует */
 	ErrorCurrencyExist = 60104
 
-	/** Валюта не может быть созданна так как не существет чейнкодов для работы с ней */
+	/** Валюта не может быть созданна так как не существует чейнкодов для работы с ней */
 	ErrorCurrencyCreateConflict = 60105
 
 	/** Требуется передать идентификатор получателя */
@@ -110,10 +110,10 @@ const (
 	/** Некорректный код валюты получателя */
 	ErrorIncorrectCurrencyCodeReceiverAccount = 60136
 
-	/** Переданный тип контракта не доступен указанному клиентскому банку */
+	/** Переданный тип контракта недоступен указанному клиентскому банку */
 	ErrorClientBankContractTypeForbidden = 60137
 
-	/** Переданный тип контракта не доступен указанному аккаунту */
+	/** Переданный тип контракта недоступен указанному аккаунту */
 	ErrorAccountContractTypeForbidden = 60138
 
 	/** Адрес клиентского банка не соответствует заявленному в аккаунте */
@@ -443,7 +443,7 @@ const (
 	/** Депозит не найден */
 	ErrorDepositNotFound = 60602
 
-	/** Метод чейнкода не доступен для использования */
+	/** Метод чейнкода недоступен для использования */
 	ErrorForbiddenForExternal = 60603
 
 	/** Ошибка валидации контракта */
@@ -494,7 +494,7 @@ const (
 	/* В сделке не задействован физический актив */
 	ErrorPhysicalAssetNotPresent = 61005
 
-	/* Внести данные об частичном исполнении сделки может только первый заявитель об исполнении сделки */
+	/* Внести данные о частичном исполнении сделки может только первый заявитель об исполнении сделки */
 	ErrorPartialPerformOrder = 61006
 
 	/* В предложении можно указать только адрес аккаунта продажи */
@@ -512,7 +512,7 @@ const (
 	/* Курс не соответствует заявленному в предложении */
 	ErrorPriceNotMatchOffer = 61011
 
-	/* Количество актива не соответствует интервалу минимального и максимального количества. */
+	/* Количество актива не соответствуют интервалу минимального и максимального количества */
 	ErrorAssetAmountNotCorrespondMaxMinInterval = 61012
 
 	/* Количество актива инициатора не соответствует минимальному и максимальному значению */
@@ -530,19 +530,19 @@ const (
 	/** Действие запрещено, до тех пор, когда все приглашения не будут приняты */
 	ErrorNotAcceptedAllInvitations = 61017
 
-	/** Невалидная конфигурация машины состояний для безапасной сделки */
+	/** Невалидная конфигурация машины состояний для безопасной сделки */
 	ErrorSettingsFSMSafeDeal = 61018
 
-	/** Сделка с переданным идентификатором уже существет. */
+	/** Сделка с переданным идентификатором уже существует */
 	ErrorSafeDealExists = 61019
 
 	/** Неверный адрес акцептанта безопасной сделки */
 	ErrorNotValidAddressAcceptor = 61020
 
-	/** Адрес аккаута не является контрагентом сделки */
+	/** Адрес аккаунта не является контрагентом сделки */
 	ErrorAddressNotCounterpartDeal = 61021
 
-	/** Адрес аккаута не является приглашенным или контрагентом сделки */
+	/** Адрес аккаунта не является приглашенным или контрагентом сделки */
 	ErrorAddressNotParticipantOrCounterpartDeal = 61022
 
 	/** Запрещено приглашать арбитра аккаунтом, который не является участником сделки */
@@ -560,19 +560,19 @@ const (
 	/** Текущий контрагент уже предложил расторнуть сделку */
 	ErrorCounterpartMadeCancelChoice = 61027
 
-	/** Операция запрещена аккаунту, который не явлется 2ым участником или арбитром сделки */
+	/** Операция запрещена для аккаунта, который не является акцептантом или арбитром */
 	ErrorNotValidAddressAcceptorOrArbitrator = 61028
 
-	/** Операция запрещена аккаунту, который не явлется инициатором */
+	/** Операция запрещена для аккаунта, который не является инициатором */
 	ErrorNotValidAddressInitiator = 61029
 
-	/** Данный контрагент уже был приглашен */
+	/** Переданный контрагент уже был приглашен */
 	ErrorCounterpartWasInvited = 61030
 
 	/** Участник не был приглашен */
 	ErrorParticipantNotInvited = 61031
 
-	/** Операция запрещена аккаунту, который не явлется владельцем сделки */
+	/** Операция запрещена для аккаунта, который не является владельцем сделки */
 	ErrorNotValidAddressOwner = 61032
 
 	/** Приглашено достаточно участников с такой ролью */
@@ -587,7 +587,7 @@ const (
 	/** Некорректная сумма сделки */
 	ErrorIncorrectSafeDealAmount = 61036
 
-	/** Эскроу-счет безопасной сделики не найден или уже был пополнен */
+	/** Эскроу-счет безопасной сделки не найден или уже был пополнен */
 	ErrorSafeDealEscrowNotFound = 61037
 
 	/** Адрес инициатора не может совпадать с адресом акцептанта */
@@ -599,7 +599,7 @@ const (
 	/** Эскроу-счет не задействован в текущей безопасной сделке */
 	ErrorEscrowAccountNotBelongSafeDeal = 61040
 
-	/** Эскроу-аккаунт имеет некорректный код валюты для оплаты депозита */
+	/** Аккаунт имеет некорректный код валюты для оплаты эскроу-счета */
 	ErrorEscrowAccountIncorrectCurrencyCodeForPaymentDeposit = 61041
 
 	/** Аккаунт владельца сделки не доступен */
@@ -614,7 +614,7 @@ const (
 	/** Аккаунт арбитра сделки не доступен */
 	ErrorArbitratorSafeDealAccountNotAvailable = 61045
 
-	/** Аккаунт учатсника сделки не доступен */
+	/** Аккаунт участника сделки не доступен */
 	ErrorParticipantSafeDealAccountNotAvailable = 61046
 
 	/** Аккаунт приглашенного участником сделки не доступен */
@@ -633,7 +633,7 @@ var ErrorCodeMessagesMap = map[int]string{
 	ErrorEditIdentifiedAccountStatusForbidden:                "Изменение статуса идентифицированного аккаунта доступно банку, который определил его юридический тип",
 	ErrorBankWithSuchBikExist:                                "Банк с таким БИК уже существует",
 	ErrorCurrencyExist:                                       "Валюта существует",
-	ErrorCurrencyCreateConflict:                              "Валюта не может быть созданна так как не существет чейнкодов для работы с ней",
+	ErrorCurrencyCreateConflict:                              "Валюта не может быть созданна так как не существует чейнкодов для работы с ней",
 	ErrorReceiverIdentificatorRequired:                       "Требуется передать идентификатор получателя",
 	ErrorClientBankWithdrawForbidden:                         "Списание средств недоступно для клиентского банка",
 	ErrorClientBankWithdrawRejectForbidden:                   "Операция отмены списания средств недоступна для клиентского банка",
@@ -660,8 +660,8 @@ var ErrorCodeMessagesMap = map[int]string{
 	ErrorEditUnidentifiedAccountStatusForbidden:              "Изменение статуса неидентифицированного аккаунта доступно банку владельцу",
 	ErrorIncorrectCurrencyCodeSenderAccount:                  "Некорректный код валюты отправителя",
 	ErrorIncorrectCurrencyCodeReceiverAccount:                "Некорректный код валюты получателя",
-	ErrorClientBankContractTypeForbidden:                     "Переданный тип контракта не доступен указанному клиентскому банку",
-	ErrorAccountContractTypeForbidden:                        "Переданный тип контракта не доступен указанному аккаунту",
+	ErrorClientBankContractTypeForbidden:                     "Переданный тип контракта недоступен указанному клиентскому банку",
+	ErrorAccountContractTypeForbidden:                        "Переданный тип контракта недоступен указанному аккаунту",
 	ErrorClientBankAddressNotMatchAccount:                    "Адрес клиентского банка не соответствует заявленному в аккаунте",
 	ErrorUpdateClientBankContractTypesForbidden:              "Изменение доступных типов контрактов клиентского банка доступно только его банку владельцу",
 	ErrorSignVerify:                                          "Ошибка проверки сигнатуры",
@@ -739,30 +739,30 @@ var ErrorCodeMessagesMap = map[int]string{
 	ErrorSignUsed:                                            "Подпись уже была использована",
 	ErrorChangeStateSafeDealForbidden:                        "Действие запрещено на текущем этапе сделки",
 	ErrorSettingsFSMSafeDeal:                                 "Невалидная конфигурация машины состояний для безопасной сделки",
-	ErrorSafeDealExists:                                      "Сделка с переданным идентификатором уже существет.",
-	ErrorNotValidAddressAcceptor:                             "Запрещено принимать заявку аккаунтом, который не явлется 2ым участником сделки",
-	ErrorAddressNotCounterpartDeal:                           "Адрес аккаута не является контрагентом сделки",
+	ErrorSafeDealExists:                                      "Сделка с переданным идентификатором уже существет",
+	ErrorNotValidAddressAcceptor:                             "Неверный адрес акцептанта безопасной сделки",
+	ErrorAddressNotCounterpartDeal:                           "Адрес аккаунта не является контрагентом сделки",
 	ErrorCounterpartMadeChoice:                               "Текущий контрагент уже проголосовал за расторжение(заключение) сделки",
-	ErrorNotValidAddressAcceptorOrArbitrator:                 "Операция запрещена аккаунту, который не явлется 2ым участником или арбитром",
-	ErrorNotValidAddressInitiator:                            "Операция запрещена аккаунту, который не явлется инициатором",
-	ErrorCounterpartWasInvited:                               "Данный контрагент уже был приглашен",
+	ErrorNotValidAddressAcceptorOrArbitrator:                 "Операция запрещена для аккаунта, который не является акцептантом или арбитром",
+	ErrorNotValidAddressInitiator:                            "Операция запрещена для аккаунта, который не является инициатором",
+	ErrorCounterpartWasInvited:                               "Переданный контрагент уже был приглашен",
 	ErrorParticipantNotInvited:                               "Участник не был приглашен",
-	ErrorNotValidAddressOwner:                                "Операция запрещена аккаунту, который не явлется владельцем сделки",
+	ErrorNotValidAddressOwner:                                "Операция запрещена для аккаунта, который не является владельцем сделки",
 	ErrorEnoughParticipants:                                  "Приглашено достаточно участников с такой ролью",
 	ErrorIncorrectSafeDealAmount:                             "Некорректная сумма сделки",
-	ErrorSafeDealEscrowNotFound:                              "Эскроу-счет безопасной сделики не найден или уже был пополнен",
+	ErrorSafeDealEscrowNotFound:                              "Эскроу-счет безопасной сделки не найден или уже был пополнен",
 	ErrorIncorrectCurrencyCodeAccount:                        "Некорректный код валюты аккаунта",
 	ErrorArbitratorExist:                                     "Арбитр уже добавлен",
 	ErrorArbitratorNotExist:                                  "Арбитра не существует",
 	ErrorArbitratorCannotPartialPerform:                      "Арбитр не может частично исполнить сделку",
 	ErrorPhysicalAssetNotPresent:                             "В сделке не задействован физический актив",
-	ErrorPartialPerformOrder:                                 "Внести данные об частичном исполнении сделки может только первый заявитель об исполнении сделки",
+	ErrorPartialPerformOrder:                                 "Внести данные о частичном исполнении сделки может только первый заявитель об исполнении сделки",
 	ErrorOfferAccountSellOnly:                                "В предложении можно указать только адрес аккаунта продажи",
 	ErrorContractNotOffer:                                    "Переданный контракт не является предложением",
 	ErrorOfferOwnerMissing:                                   "В сделке не указан адрес владельца предложения",
 	ErrorCurrencyNotMatchOffer:                               "Коды валют не соответствует заявленным в предложении",
 	ErrorPriceNotMatchOffer:                                  "Курс не соответствует заявленному в предложении",
-	ErrorAssetAmountNotCorrespondMaxMinInterval:              "Количество актива не соответствует интервалу минимального и максимального количества",
+	ErrorAssetAmountNotCorrespondMaxMinInterval:              "Количество актива не соответствуют интервалу минимального и максимального количества",
 	ErrorPhysicalAssetEscrow:                                 "Физический актив не может начисляться на эскроу-счет",
 	ErrorAmountNotCorrespondPrice:                            "Количество переданного актива не соответствует переданному курсу",
 	ErrorSafeDealNotFound:                                    "Безопасная сделка не найдена",
@@ -818,9 +818,9 @@ var ErrorCodeMessagesMap = map[int]string{
 	ErrorObligatoryCommissionExceedsFullCommission:           "Сумма обязательной комиссии не может превышать, сумму комиссии, которая оплачивается за участие арбитра",
 	ErrorCounterpartMadePerformChoice:                        "Текущий контрагент уже проголосовал за заключение сделки",
 	ErrorCounterpartMadeCancelChoice:                         "Текущий контрагент уже предложил расторнуть сделку",
-	ErrorForbiddenForExternal:                                "Метод чейнкода не доступен для использования",
+	ErrorForbiddenForExternal:                                "Метод чейнкода недоступен для использования",
 	ErrorEscrowAccountNotBelongSafeDeal:                      "Эскроу-счет не задействован в текущей безопасной сделке",
-	ErrorAddressNotParticipantOrCounterpartDeal:              "Адрес аккаута не является приглашенным или контрагентом сделки",
+	ErrorAddressNotParticipantOrCounterpartDeal:              "Адрес аккаунта не является приглашенным или контрагентом сделки",
 	ErrorEscrowAccountIncorrectCurrencyCodeForPaymentDeposit: "Эскроу-аккаунт имеет некорректный код валюты для оплаты депозита",
 	ErrorNotAcceptedAllInvitations:                           "Действие запрещено, до тех пор, когда все приглашения не будут приняты",
 	ErrorOwnerSafeDealAccountNotAvailable:                    "Аккаунт владельца сделки не доступен",
@@ -831,7 +831,7 @@ var ErrorCodeMessagesMap = map[int]string{
 	ErrorAmountAcceptorNotCorrespondMaxMinInterval:           "Количество актива акцептанта не соответствует минимальному и максимальному значению",
 	ErrorIncorrectCurrencyCodeAccountInitiator:               "Некорректный код валюты аккаунта инициатора",
 	ErrorIncorrectCurrencyCodeAccountAcceptor:                "Некорректный код валюты аккаунта акцептора",
-	ErrorParticipantSafeDealAccountNotAvailable:              "Аккаунт учатсника сделки не доступен",
+	ErrorParticipantSafeDealAccountNotAvailable:              "Аккаунт участника сделки не доступен",
 	ErrorInvitedSafeDealAccountNotAvailable:                  "Аккаунт приглашенного участника сделки не доступен",
 }
 

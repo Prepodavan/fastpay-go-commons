@@ -8,5 +8,6 @@ type ExecuteContractRequest struct {
 	To            string                             `json:"to" valid:"validHex40or64~ErrorAddressNotFollowingRegex"`
 	Amount        int64                              `json:"amount" valid:"required~ErrorAmountNotPassed"`
 	TransactionId string                             `json:"transactionId" valid:"required~ErrorTransactionIdNotPassed,uuidv4"`
+	InvoiceNumber string                             `json:"invoiceNumber" valid:"maxstringlength(255)~ErrorNumberInvoiceNotFolowingRegex"`
 	Payload       string                             `json:"payload"`
 }

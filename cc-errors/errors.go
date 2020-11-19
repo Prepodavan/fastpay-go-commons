@@ -802,7 +802,7 @@ var ErrorCodeMessagesMap = map[int]string{
 	ErrorClearingBadClaimsLiabilities:                        "Клиринг. Расхождение требований и обязательств",
 	ErrorClearingInfoNotFound:                                "Клиринг. Информация о клиринге не найдена",
 	ErrorCertificateBankAddressNotFound:                      "Сертификат. Отсутвует атрибут address в сертификате",
-	ErrorClientBankExists:                                    "лиентский банк с указанными параметрами уже существует в системе",
+	ErrorClientBankExists:                                    "Клиентский банк с указанными параметрами уже существует в системе",
 	ErrorClientBankNotFound:                                  "Информация о клиентском банке не найдена",
 	ErrorClientBankOwnerNotEqualSender:                       "Опорный банк(отправитель) не является владельцем клиентского банка",
 	ErrorLimitTypeIncorrect:                                  "Некорректное значение типа лимита",

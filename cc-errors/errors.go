@@ -122,6 +122,9 @@ const (
 	/** Изменение доступных типов контрактов клиентского банка доступно только его банку владельцу */
 	ErrorUpdateClientBankContractTypesForbidden = 60140
 
+	/** Для оплаты счёта необходимо передать адрес аккаунта получателя */
+	ErrorAddressToNotPassedForPaymentInvoice = 60141
+
 	/** Ошибка проверки сигнатуры */
 	ErrorSignVerify = 60200
 
@@ -833,6 +836,7 @@ var ErrorCodeMessagesMap = map[int]string{
 	ErrorIncorrectCurrencyCodeAccountAcceptor:                "Некорректный код валюты аккаунта акцептора",
 	ErrorParticipantSafeDealAccountNotAvailable:              "Аккаунт участника сделки недоступен",
 	ErrorInvitedSafeDealAccountNotAvailable:                  "Аккаунт приглашенного участника сделки недоступен",
+	ErrorAddressToNotPassedForPaymentInvoice:                 "Для оплаты счёта необходимо передать адрес аккаунта получателя",
 }
 
 var ErrorStringCodeMap = map[string]int{
@@ -1041,4 +1045,5 @@ var ErrorStringCodeMap = map[string]int{
 	"ErrorIncorrectCurrencyCodeAccountAcceptor":                ErrorIncorrectCurrencyCodeAccountAcceptor,
 	"ErrorParticipantSafeDealAccountNotAvailable":              ErrorParticipantSafeDealAccountNotAvailable,
 	"ErrorInvitedSafeDealAccountNotAvailable":                  ErrorInvitedSafeDealAccountNotAvailable,
+	"ErrorAddressToNotPassedForPaymentInvoice":                 ErrorAddressToNotPassedForPaymentInvoice,
 }

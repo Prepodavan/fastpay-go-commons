@@ -15,6 +15,7 @@ type CrossTransferRequest struct {
 	CustomerIdentifier  string                               `json:"customerIdentifier" valid:"validHex64~ErrorIdentifierNotFolowingRegex"`
 	CountryCode         string                               `json:"countryCode" valid:"stringlength(3|3)"`
 	Payload             string                               `json:"payload"`
+	InvoiceNumber       string                               `json:"invoiceNumber" valid:"maxstringlength(255)~ErrorNumberInvoiceNotFolowingRegex"`
 	MsgHash             string                               `json:"msgHash" valid:"required"`
 	Sig                 SignDto                              `json:"sig" valid:"required"`
 	Exp                 int64                                `json:"exp" valid:"required~ErrorTimestampNotPassed"`

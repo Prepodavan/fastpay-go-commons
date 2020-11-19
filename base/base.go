@@ -289,7 +289,7 @@ func CheckTechnicalAccountSignWithMsg(ctx contractapi.TransactionContextInterfac
 		}
 	}
 
-	return CheckTechnicalAccountSignByAddress(ctx, technicalSignRequest, bankSender.Address)
+	return CheckTechnicalAccountSignWithMsgByAddress(ctx, technicalSignRequest, request, bankSender.Address)
 }
 
 func CheckTechnicalAccountSignWithMsgByAddress(ctx contractapi.TransactionContextInterface, technicalSignRequest requests.TechnicalSignRequest, request requests.BaseMsgHashRequest, address string) error {

@@ -102,11 +102,12 @@ type TransactionHistoryEvent struct {
 }
 
 type ExecutedTransactionCurrencyExchangeContractItem struct {
-	From         string                                                 `json:"from"`
-	To           string                                                 `json:"to"`
-	CurrencyCode int                                                    `json:"currencyCode"`
-	Amount       int64                                                  `json:"amount"`
-	Payload      cross_transaction_payload_enum.CrossTransactionPayload `json:"payload"`
+	From          string                                                 `json:"from"`
+	To            string                                                 `json:"to"`
+	CurrencyCode  int                                                    `json:"currencyCode"`
+	Amount        int64                                                  `json:"amount"`
+	InvoiceNumber string                                                 `json:"invoiceNumber"`
+	Payload       cross_transaction_payload_enum.CrossTransactionPayload `json:"payload"`
 }
 
 type CrossTransactionHistory struct {

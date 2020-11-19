@@ -1,6 +1,8 @@
 package base
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -277,6 +279,34 @@ func CheckTechnicalAccountSignByAddress(ctx contractapi.TransactionContextInterf
 	return nil
 }
 
+func CheckTechnicalAccountSignWithMsg(ctx contractapi.TransactionContextInterface, technicalSignRequest requests.TechnicalSignRequest, request requests.BaseMsgHashRequest, bankSender *models.Bank) error {
+
+	if bankSender == nil {
+		var err error = nil
+		bankSender, err = GetSenderBank(ctx)
+		if err != nil {
+			return err
+		}
+	}
+
+	return CheckTechnicalAccountSignByAddress(ctx, technicalSignRequest, bankSender.Address)
+}
+
+func CheckTechnicalAccountSignWithMsgByAddress(ctx contractapi.TransactionContextInterface, technicalSignRequest requests.TechnicalSignRequest, request requests.BaseMsgHashRequest, address string) error {
+
+	err := CheckSignWithMsg(technicalSignRequest.TechnicalAddress, request, technicalSignRequest.TechnicalSig)
+	if err != nil {
+		return err
+	}
+
+	// TODO Убрать проверку если в сертификате не будет указыватся адрес банка отправителя
+	if address != technicalSignRequest.TechnicalAddress {
+		return CreateDefaultError(cc_errors.ErrorAccountTechnicalNotEqlSender)
+	}
+
+	return nil
+}
+
 func CheckClientBankTechnicalSignAndAvailableWithBank(ctx contractapi.TransactionContextInterface, request requests.TechnicalSignRequest, senderClientBank *responses.ClientBankItemResponse) error {
 
 	err := CheckSign(request.TechnicalAddress, request.TechnicalMsgHash, request.TechnicalSig)
@@ -292,8 +322,27 @@ func CheckClientBankTechnicalSignAndAvailableWithBank(ctx contractapi.Transactio
 	return nil
 }
 
+func CheckClientBankTechnicalSignWithMsgAndAvailableWithBank(ctx contractapi.TransactionContextInterface, technicalSignRequest requests.TechnicalSignRequest, request requests.BaseMsgHashRequest, senderClientBank *responses.ClientBankItemResponse) error {
+
+	err := CheckSignWithMsg(technicalSignRequest.TechnicalAddress, request, technicalSignRequest.TechnicalSig)
+	if err != nil {
+		return err
+	}
+
+	err = SenderClientBankIsAvailable(ctx, senderClientBank, technicalSignRequest.TechnicalAddress)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func CheckClientBankTechnicalSignAndAvailable(ctx contractapi.TransactionContextInterface, request requests.TechnicalSignRequest) error {
 	return CheckClientBankTechnicalSignAndAvailableWithBank(ctx, request, nil)
+}
+
+func CheckClientBankTechnicalSignWithMsgAndAvailable(ctx contractapi.TransactionContextInterface, technicalSignRequest requests.TechnicalSignRequest, request requests.BaseMsgHashRequest) error {
+	return CheckClientBankTechnicalSignWithMsgAndAvailableWithBank(ctx, technicalSignRequest, request, nil)
 }
 
 func CheckAccessAndAvailableWithBank(ctx contractapi.TransactionContextInterface, bank *models.Bank, role access_role_enum.AccessRole) error {
@@ -628,6 +677,45 @@ func CheckSign(address, msgHash string, sign requests.SignDto) error {
 	return nil
 }
 
+// Метод проверки сигнатуры и контрольной суммы запроса
+func CheckSignWithMsg(address string, request requests.BaseMsgHashRequest, sign requests.SignDto) error {
+	if sign.R == "" || sign.S == "" || sign.V == 0 {
+		return CreateError(cc_errors.ErrorValidateDefault, "Сигнатура не передана")
+	}
+
+	msgHash := calculateMsgHash(request.String())
+
+	isSigned, err := crypto.IsSigned(address, msgHash, sign.R, sign.S, sign.V)
+
+	if err != nil {
+		return CreateDefaultError(cc_errors.ErrorSignVerify)
+	}
+
+	if !isSigned {
+		return CreateDefaultError(cc_errors.ErrorSignVerify)
+	}
+
+	return nil
+}
+
+func CheckSignAndMsgWithExpiration(stub shim.ChaincodeStubInterface, address string, request requests.BaseMsgHashRequest, sign requests.SignDto, expiration int64, now int64) error {
+	if expiration == 0 {
+		return CreateError(cc_errors.ErrorValidateDefault, "Поле Exp не передано")
+	}
+
+	err := CheckSignWithMsg(address, request, sign)
+	if err != nil {
+		return err
+	}
+
+	err = CheckSignExpiration(stub, sign, expiration, now)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // Метод проверки сигнатуры и ее времени действия
 func CheckSignAndExpiration(stub shim.ChaincodeStubInterface, address, msgHash string, sign requests.SignDto, expiration int64, now int64) error {
 
@@ -950,4 +1038,9 @@ func PrettyPrint(data interface{}) {
 		return
 	}
 	fmt.Printf("%s \n", p)
+}
+
+func calculateMsgHash(msgString string) string {
+	hashAsBytes := sha256.Sum256([]byte(msgString))
+	return hex.EncodeToString(hashAsBytes[:])
 }

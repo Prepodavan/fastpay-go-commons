@@ -3,7 +3,7 @@ package models
 import (
 	"sort"
 
-	access_role_enum "github.com/SolarLabRU/fastpay-go-commons/enums/access-role-enum"
+	"github.com/SolarLabRU/fastpay-go-commons/enums/access-role-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/account-type-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/cross-transaction-payload-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/cross-transaction-status-enum"
@@ -130,6 +130,7 @@ type CrossTransactionHistory struct {
 	ErrorCode            int                                                  `json:"errorCode"`
 	ErrorMessage         string                                               `json:"errorMessage"`
 	Data                 string                                               `json:"data"`
+	InvoiceNumber        string                                               `json:"invoiceNumber"`
 	TransactionHistories []TransactionHistory                                 `json:"transactionHistories"`
 }
 

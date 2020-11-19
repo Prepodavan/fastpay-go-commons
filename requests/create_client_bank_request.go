@@ -1,5 +1,7 @@
 package requests
 
+import "fmt"
+
 type CreateClientBankRequest struct {
 	TechnicalSignRequest
 	Address         string            `json:"address" valid:"required~ErrorBankAddressNotPassed"`
@@ -12,4 +14,8 @@ func (createClientBankRequest *CreateClientBankRequest) SetDefaults() {
 	if createClientBankRequest.Params == nil {
 		createClientBankRequest.Params = make(map[string]string)
 	}
+}
+
+func (request *CreateClientBankRequest) MsgHash() string {
+	return fmt.Sprintf("create%s%s%s", request.Address, request.BankDisplayName, request.CountryCode)
 }

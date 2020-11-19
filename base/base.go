@@ -279,6 +279,34 @@ func CheckTechnicalAccountSignByAddress(ctx contractapi.TransactionContextInterf
 	return nil
 }
 
+func CheckTechnicalAccountSignWithMsg(ctx contractapi.TransactionContextInterface, technicalSignRequest requests.TechnicalSignRequest, request requests.BaseMsgHashRequest, bankSender *models.Bank) error {
+
+	if bankSender == nil {
+		var err error = nil
+		bankSender, err = GetSenderBank(ctx)
+		if err != nil {
+			return err
+		}
+	}
+
+	return CheckTechnicalAccountSignByAddress(ctx, technicalSignRequest, bankSender.Address)
+}
+
+func CheckTechnicalAccountSignWithMsgByAddress(ctx contractapi.TransactionContextInterface, technicalSignRequest requests.TechnicalSignRequest, request requests.BaseMsgHashRequest, address string) error {
+
+	err := CheckSignWithMsg(technicalSignRequest.TechnicalAddress, request, technicalSignRequest.TechnicalSig)
+	if err != nil {
+		return err
+	}
+
+	// TODO Убрать проверку если в сертификате не будет указыватся адрес банка отправителя
+	if address != technicalSignRequest.TechnicalAddress {
+		return CreateDefaultError(cc_errors.ErrorAccountTechnicalNotEqlSender)
+	}
+
+	return nil
+}
+
 func CheckClientBankTechnicalSignAndAvailableWithBank(ctx contractapi.TransactionContextInterface, request requests.TechnicalSignRequest, senderClientBank *responses.ClientBankItemResponse) error {
 
 	err := CheckSign(request.TechnicalAddress, request.TechnicalMsgHash, request.TechnicalSig)
@@ -296,7 +324,7 @@ func CheckClientBankTechnicalSignAndAvailableWithBank(ctx contractapi.Transactio
 
 func CheckClientBankTechnicalSignWithMsgAndAvailableWithBank(ctx contractapi.TransactionContextInterface, technicalSignRequest requests.TechnicalSignRequest, request requests.BaseMsgHashRequest, senderClientBank *responses.ClientBankItemResponse) error {
 
-	err := CheckSignAndMsg(technicalSignRequest.TechnicalAddress, request, technicalSignRequest.TechnicalSig)
+	err := CheckSignWithMsg(technicalSignRequest.TechnicalAddress, request, technicalSignRequest.TechnicalSig)
 	if err != nil {
 		return err
 	}
@@ -646,7 +674,7 @@ func CheckSign(address, msgHash string, sign requests.SignDto) error {
 }
 
 // Метод проверки сигнатуры и контрольной суммы запроса
-func CheckSignAndMsg(address string, request requests.BaseMsgHashRequest, sign requests.SignDto) error {
+func CheckSignWithMsg(address string, request requests.BaseMsgHashRequest, sign requests.SignDto) error {
 	if sign.R == "" || sign.S == "" || sign.V == 0 {
 		return CreateError(cc_errors.ErrorValidateDefault, "Сигнатура не передана")
 	}
@@ -671,7 +699,7 @@ func CheckSignAndMsgWithExpiration(stub shim.ChaincodeStubInterface, address str
 		return CreateError(cc_errors.ErrorValidateDefault, "Поле Exp не передано")
 	}
 
-	err := CheckSignAndMsg(address, request, sign)
+	err := CheckSignWithMsg(address, request, sign)
 	if err != nil {
 		return err
 	}

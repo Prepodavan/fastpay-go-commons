@@ -16,6 +16,6 @@ func (createClientBankRequest *CreateClientBankRequest) SetDefaults() {
 	}
 }
 
-func (request *CreateClientBankRequest) MsgHash() string {
+func (request *CreateClientBankRequest) String() string {
 	return fmt.Sprintf("create%s%s%s", request.Address, request.BankDisplayName, request.CountryCode)
 }

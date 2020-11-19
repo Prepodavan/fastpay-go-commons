@@ -11,6 +11,6 @@ type UpdateJuridicalRequest struct {
 	JuridicalType juridical_type_enum.JuridicalType `json:"juridicalType" valid:"required~ErrorJuridicalTypeNotPassed"`
 }
 
-func (request *UpdateJuridicalRequest) MsgHash() string {
+func (request *UpdateJuridicalRequest) String() string {
 	return fmt.Sprintf("updateJuridical%s%v", request.Address, request.JuridicalType)
 }

@@ -683,7 +683,7 @@ func CheckSignWithMsg(address string, request requests.BaseMsgHashRequest, sign 
 		return CreateError(cc_errors.ErrorValidateDefault, "Сигнатура не передана")
 	}
 
-	msgHash := calculateMsgHash(request.MsgHash())
+	msgHash := calculateMsgHash(request.String())
 
 	isSigned, err := crypto.IsSigned(address, msgHash, sign.R, sign.S, sign.V)
 

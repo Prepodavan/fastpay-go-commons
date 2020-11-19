@@ -9,6 +9,6 @@ type CreateCustomerRequest struct {
 	BankAddress         string `json:"bankAddress" valid:"required~ErrorBankAddressNotPassed"`
 }
 
-func (request *CreateCustomerRequest) MsgHash() string {
+func (request *CreateCustomerRequest) String() string {
 	return fmt.Sprintf("createCustomer%s%s%s", request.BankAddress, request.Identifier, request.CustomerDisplayName)
 }

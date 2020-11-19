@@ -7,6 +7,6 @@ type ExecuteClearingRequest struct {
 	CurrencyCode int `json:"currencyCode" valid:"required~ErrorCurrencyCodeNotPassed,range(0|999)~ErrorCurrencyCodeRange"`
 }
 
-func (request *ExecuteClearingRequest) MsgHash() string {
+func (request *ExecuteClearingRequest) String() string {
 	return fmt.Sprintf("execute%v", request.CurrencyCode)
 }

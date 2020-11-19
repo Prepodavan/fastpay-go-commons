@@ -9,6 +9,6 @@ type SetIssueLimitRequest struct {
 	CurrencyCode int    `json:"currencyCode" valid:"required~ErrorCurrencyCodeNotPassed,range(0|999)~ErrorCurrencyCodeRange"`
 }
 
-func (request *SetIssueLimitRequest) MsgHash() string {
+func (request *SetIssueLimitRequest) String() string {
 	return fmt.Sprintf("setIssueLimitBank%v%s%v", request.CurrencyCode, request.Address, request.Value)
 }

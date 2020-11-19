@@ -7,6 +7,6 @@ type SetAvailablePlatformsRequest struct {
 	AvailablePlatforms string `json:"availablePlatforms" valid:"required"`
 }
 
-func (request *SetAvailablePlatformsRequest) MsgHash() string {
+func (request *SetAvailablePlatformsRequest) String() string {
 	return fmt.Sprintf("setAvailablePlatforms%s", request.AvailablePlatforms)
 }

@@ -6,6 +6,6 @@ type RemoveRegulatorRequest struct {
 	AddRegulatorRequest
 }
 
-func (request *RemoveRegulatorRequest) MsgHash() string {
+func (request *RemoveRegulatorRequest) String() string {
 	return fmt.Sprintf("removeRegulator%s", request.Address)
 }

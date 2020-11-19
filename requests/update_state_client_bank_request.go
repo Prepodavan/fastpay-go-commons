@@ -11,6 +11,6 @@ type UpdateStateClientBankRequest struct {
 	Address string           `json:"address" valid:"required~ErrorBankAddressNotPassed"`
 }
 
-func (request *UpdateStateClientBankRequest) MsgHash() string {
+func (request *UpdateStateClientBankRequest) String() string {
 	return fmt.Sprintf("updateState%s%v", request.Address, request.State)
 }

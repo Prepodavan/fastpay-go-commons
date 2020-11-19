@@ -7,6 +7,6 @@ type SetBankConfRequest struct {
 	Conf string `json:"conf" valid:"required"`
 }
 
-func (request *SetBankConfRequest) MsgHash() string {
+func (request *SetBankConfRequest) String() string {
 	return fmt.Sprintf("setBankConf%s", request.Conf)
 }

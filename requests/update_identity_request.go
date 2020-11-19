@@ -12,6 +12,6 @@ type UpdateIdentityRequest struct {
 }
 
 
-func (request *UpdateIdentityRequest) MsgHash() string {
+func (request *UpdateIdentityRequest) String() string {
 	return fmt.Sprintf("updateIdentity%s%v", request.Address, request.IdentityType)
 }

@@ -8,6 +8,6 @@ type SetEnabledByCodeRequest struct {
 	Enabled bool `json:"enabled"`
 }
 
-func (request *SetEnabledByCodeRequest) MsgHash() string {
+func (request *SetEnabledByCodeRequest) String() string {
 	return fmt.Sprintf("setEnabledByCode%v%v", request.Code, request.Enabled)
 }

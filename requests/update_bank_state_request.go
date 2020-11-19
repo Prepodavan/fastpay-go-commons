@@ -11,6 +11,6 @@ type UpdateBankStateRequest struct {
 	State   state_enum.State `json:"state" valid:"required"`
 }
 
-func (request *UpdateBankStateRequest) MsgHash() string {
+func (request *UpdateBankStateRequest) String() string {
 	return fmt.Sprintf("updateState%s%v", request.Address, request.State)
 }

@@ -294,6 +294,21 @@ func CheckClientBankTechnicalSignAndAvailableWithBank(ctx contractapi.Transactio
 	return nil
 }
 
+func CheckClientBankTechnicalSignWithMsgAndAvailableWithBank(ctx contractapi.TransactionContextInterface, technicalSignRequest requests.TechnicalSignRequest, request requests.BaseMsgHashRequest, senderClientBank *responses.ClientBankItemResponse) error {
+
+	err := CheckSignAndMsg(technicalSignRequest.TechnicalAddress, request, technicalSignRequest.TechnicalSig)
+	if err != nil {
+		return err
+	}
+
+	err = SenderClientBankIsAvailable(ctx, senderClientBank, technicalSignRequest.TechnicalAddress)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func CheckClientBankTechnicalSignAndAvailable(ctx contractapi.TransactionContextInterface, request requests.TechnicalSignRequest) error {
 	return CheckClientBankTechnicalSignAndAvailableWithBank(ctx, request, nil)
 }

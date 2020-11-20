@@ -628,6 +628,9 @@ const (
 
 	/** Некорректный код валюты аккаунта акцептора */
 	ErrorIncorrectCurrencyCodeAccountAcceptor = 61049
+
+	/** Предложение не активно */
+	ErrorOfferNotActive = 61050
 )
 
 var ErrorCodeMessagesMap = map[int]string{
@@ -837,6 +840,7 @@ var ErrorCodeMessagesMap = map[int]string{
 	ErrorParticipantSafeDealAccountNotAvailable:              "Аккаунт участника сделки недоступен",
 	ErrorInvitedSafeDealAccountNotAvailable:                  "Аккаунт приглашенного участника сделки недоступен",
 	ErrorAddressToNotPassedForPaymentInvoice:                 "Для оплаты счёта необходимо передать адрес аккаунта получателя",
+	ErrorOfferNotActive:                                      "Предложение не активно",
 }
 
 var ErrorStringCodeMap = map[string]int{
@@ -1046,4 +1050,5 @@ var ErrorStringCodeMap = map[string]int{
 	"ErrorParticipantSafeDealAccountNotAvailable":              ErrorParticipantSafeDealAccountNotAvailable,
 	"ErrorInvitedSafeDealAccountNotAvailable":                  ErrorInvitedSafeDealAccountNotAvailable,
 	"ErrorAddressToNotPassedForPaymentInvoice":                 ErrorAddressToNotPassedForPaymentInvoice,
+	"ErrorOfferNotActive":                                      ErrorOfferNotActive,
 }

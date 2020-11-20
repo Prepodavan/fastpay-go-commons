@@ -426,16 +426,17 @@ type TransferSafeDeal struct {
 }
 
 type TermsContractConclude struct {
-	AddressFrom      string                               `json:"addressFrom"`
-	AddressTo        string                               `json:"addressTo"`
-	EscrowAddress    string                               `json:"escrowAddress"`
-	MemberTypeTo     member_deal_type_enum.MemberDealType `json:"memberTypeTo"`
-	TxId             string                               `json:"txId"`
-	IsComplete       bool                                 `json:"isComplete"`
-	CurrencyInfo     CurrencyDealInfo                     `json:"currencyInfo"`
-	ObligatoryAmount int64                                `json:"obligatoryAmount"`
-	CurrentAmount    int64                                `json:"currentAmount"`
-	NeedAmount       int64                                `json:"needAmount"`
+	AddressFrom               string                               `json:"addressFrom"`
+	AddressTo                 string                               `json:"addressTo"`
+	EscrowAddress             string                               `json:"escrowAddress"`
+	MemberTypeTo              member_deal_type_enum.MemberDealType `json:"memberTypeTo"`
+	TxId                      string                               `json:"txId"`
+	IsComplete                bool                                 `json:"isComplete"`
+	IsCompleteByCrossTransfer bool                                 `json:"isCompleteByCrossTransfer"`
+	CurrencyInfo              CurrencyDealInfo                     `json:"currencyInfo"`
+	ObligatoryAmount          int64                                `json:"obligatoryAmount"`
+	CurrentAmount             int64                                `json:"currentAmount"`
+	NeedAmount                int64                                `json:"needAmount"`
 }
 
 type Invitation struct {

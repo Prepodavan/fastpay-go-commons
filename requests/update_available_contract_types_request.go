@@ -3,6 +3,7 @@ package requests
 import (
 	"fmt"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/currency-exchange-contract-type-enum"
+	"strconv"
 )
 
 type UpdateAvailableContractTypes struct {
@@ -16,7 +17,7 @@ func (request *UpdateAvailableContractTypes) String() string {
 	concatenatedTypes := ""
 
 	for _, v := range request.AvailableContractTypes {
-		concatenatedTypes += string(int(v))
+		concatenatedTypes += strconv.Itoa(int(v))
 	}
 
 	return fmt.Sprintf("updateAvailableContractTypes%s%s", request.Address, concatenatedTypes)

@@ -631,6 +631,9 @@ const (
 
 	/** Предложение не активно */
 	ErrorOfferNotActive = 61050
+
+	/** Участник уже принял или отклонил приглашение */
+	ErrorParticipantAcceptedRejectedInvitation = 61051
 )
 
 var ErrorCodeMessagesMap = map[int]string{
@@ -841,6 +844,7 @@ var ErrorCodeMessagesMap = map[int]string{
 	ErrorInvitedSafeDealAccountNotAvailable:                  "Аккаунт приглашенного участника сделки недоступен",
 	ErrorAddressToNotPassedForPaymentInvoice:                 "Для оплаты счёта необходимо передать адрес аккаунта получателя",
 	ErrorOfferNotActive:                                      "Предложение не активно",
+	ErrorParticipantAcceptedRejectedInvitation:               " Участник уже принял или отклонил приглашение",
 }
 
 var ErrorStringCodeMap = map[string]int{
@@ -1051,4 +1055,5 @@ var ErrorStringCodeMap = map[string]int{
 	"ErrorInvitedSafeDealAccountNotAvailable":                  ErrorInvitedSafeDealAccountNotAvailable,
 	"ErrorAddressToNotPassedForPaymentInvoice":                 ErrorAddressToNotPassedForPaymentInvoice,
 	"ErrorOfferNotActive":                                      ErrorOfferNotActive,
+	"ErrorParticipantAcceptedRejectedInvitation":               ErrorParticipantAcceptedRejectedInvitation,
 }

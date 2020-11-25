@@ -844,7 +844,7 @@ var ErrorCodeMessagesMap = map[int]string{
 	ErrorInvitedSafeDealAccountNotAvailable:                  "Аккаунт приглашенного участника сделки недоступен",
 	ErrorAddressToNotPassedForPaymentInvoice:                 "Для оплаты счёта необходимо передать адрес аккаунта получателя",
 	ErrorOfferNotActive:                                      "Предложение не активно",
-	ErrorParticipantAcceptedRejectedInvitation:               " Участник уже принял или отклонил приглашение",
+	ErrorParticipantAcceptedRejectedInvitation:               "Участник уже принял или отклонил приглашение",
 }
 
 var ErrorStringCodeMap = map[string]int{

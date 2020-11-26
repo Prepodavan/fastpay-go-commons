@@ -433,6 +433,7 @@ type TermsContractConclude struct {
 	TxId                      string                               `json:"txId"`
 	IsComplete                bool                                 `json:"isComplete"`
 	IsCompleteByCrossTransfer bool                                 `json:"isCompleteByCrossTransfer"`
+	IsInvoiceCreate           bool                                 `json:"isInvoiceCreate"`
 	CurrencyInfo              CurrencyDealInfo                     `json:"currencyInfo"`
 	ObligatoryAmount          int64                                `json:"obligatoryAmount"`
 	CurrentAmount             int64                                `json:"currentAmount"`

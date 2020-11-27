@@ -16,6 +16,11 @@ type MakeSafeDealDepositResponse struct {
 	BaseResponse
 }
 
+type InvoiceCreateResponse struct {
+	IsInvoiceCreate bool `json:"isInvoiceCreate"`
+	BaseResponse
+}
+
 type AccountResponse struct {
 	Data models.Account `json:"data"`
 	BaseResponse

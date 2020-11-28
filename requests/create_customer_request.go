@@ -1,7 +1,14 @@
 package requests
 
+import "fmt"
+
 type CreateCustomerRequest struct {
+	TechnicalSignRequest
 	Identifier          string `json:"identifier" valid:"required~ErrorIdentifierNotPassed,validHex64~ErrorIdentifierNotFolowingRegex"`
 	CustomerDisplayName string `json:"customerDisplayName"`
-	BankId              string `json:"bankId" valid:"required~ErrorBankIdNotPassed"`
+	BankAddress         string `json:"bankAddress" valid:"required~ErrorBankAddressNotPassed"`
+}
+
+func (request *CreateCustomerRequest) String() string {
+	return fmt.Sprintf("createCustomer%s%s%s", request.BankAddress, request.Identifier, request.CustomerDisplayName)
 }

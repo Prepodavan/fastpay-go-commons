@@ -1,10 +1,14 @@
 package models
 
 import (
+	"sort"
+
+	"github.com/SolarLabRU/fastpay-go-commons/enums/access-role-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/account-type-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/cross-transaction-payload-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/cross-transaction-status-enum"
-	"github.com/SolarLabRU/fastpay-go-commons/enums/currency-exchange-contracts-type-enum"
+	"github.com/SolarLabRU/fastpay-go-commons/enums/currency-exchange-contract-category-enum"
+	"github.com/SolarLabRU/fastpay-go-commons/enums/currency-exchange-contract-type-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/currency-type-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/deal-state-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/deal-transfer-status-enum"
@@ -18,23 +22,23 @@ import (
 	"github.com/SolarLabRU/fastpay-go-commons/enums/state_enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/transaction-status-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/transaction-type-enum"
-	"sort"
 )
 
 type Account struct {
-	Address                    string                            `json:"address"`
-	State                      state_enum.State                  `json:"state"`
-	CurrencyCode               int                               `json:"currencyCode"`
-	JuridicalType              juridical_type_enum.JuridicalType `json:"juridicalType"`
-	BikBankSetterJuridicalType string                            `json:"bikBankSetterJuridicalType"`
-	IdentityType               identity_type_enum.IdentityType   `json:"identityType"`
-	Owner                      string                            `json:"owner"`
-	Type                       account_type_enum.AccountType     `json:"type"`
-	Identifiers                []string                          `json:"identifiers"`
-	Encrypted                  bool                              `json:"encrypted"`
-	Created                    int64                             `json:"created"`
-	PublicKey                  string                            `json:"publicKey"`
-	DocType                    string                            `json:"docType"`
+	Address                string                                                              `json:"address"`
+	State                  state_enum.State                                                    `json:"state"`
+	CurrencyCode           int                                                                 `json:"currencyCode"`
+	JuridicalType          juridical_type_enum.JuridicalType                                   `json:"juridicalType"`
+	ClientBankAddress      string                                                              `json:"clientBankAddress"`
+	IdentityType           identity_type_enum.IdentityType                                     `json:"identityType"`
+	Owner                  string                                                              `json:"owner"`
+	Type                   account_type_enum.AccountType                                       `json:"type"`
+	AvailableContractTypes []currency_exchange_contract_type_enum.CurrencyExchangeContractType `json:"availableContractTypes"`
+	Identifiers            []string                                                            `json:"identifiers"`
+	Encrypted              bool                                                                `json:"encrypted"`
+	Created                int64                                                               `json:"created"`
+	PublicKey              string                                                              `json:"publicKey"`
+	DocType                string                                                              `json:"docType"`
 }
 
 type Arbitrator struct {
@@ -44,17 +48,17 @@ type Arbitrator struct {
 }
 
 type Bank struct {
-	Address     string           `json:"address"`
-	Name        string           `json:"name"`
-	BIK         string           `json:"bik"`
-	State       state_enum.State `json:"state"`
-	CreatedBy   string           `json:"createdBy"`
-	IsOwner     bool             `json:"isOwner"`
-	Encrypted   bool             `json:"encrypted"`
-	IsRegulator bool             `json:"isRegulator"`
-	MSPId       string           `json:"mspId"`
-	Conf        string           `json:"conf"`
-	DocType     string           `json:"docType"`
+	Address                string                                                              `json:"address"`
+	Name                   string                                                              `json:"name"`
+	BIK                    string                                                              `json:"bik"`
+	State                  state_enum.State                                                    `json:"state"`
+	CreatedBy              string                                                              `json:"createdBy"`
+	Encrypted              bool                                                                `json:"encrypted"`
+	MSPId                  string                                                              `json:"mspId"`
+	Roles                  []access_role_enum.AccessRole                                       `json:"roles"`
+	AvailableContractTypes []currency_exchange_contract_type_enum.CurrencyExchangeContractType `json:"availableContractTypes"`
+	Conf                   string                                                              `json:"conf"`
+	DocType                string                                                              `json:"docType"`
 }
 
 type Currency struct {
@@ -98,11 +102,12 @@ type TransactionHistoryEvent struct {
 }
 
 type ExecutedTransactionCurrencyExchangeContractItem struct {
-	From         string                                                 `json:"from"`
-	To           string                                                 `json:"to"`
-	CurrencyCode int                                                    `json:"currencyCode"`
-	Amount       int64                                                  `json:"amount"`
-	Payload      cross_transaction_payload_enum.CrossTransactionPayload `json:"payload"`
+	From          string                                                 `json:"from"`
+	To            string                                                 `json:"to"`
+	CurrencyCode  int                                                    `json:"currencyCode"`
+	Amount        int64                                                  `json:"amount"`
+	InvoiceNumber string                                                 `json:"invoiceNumber"`
+	Payload       cross_transaction_payload_enum.CrossTransactionPayload `json:"payload"`
 }
 
 type CrossTransactionHistory struct {
@@ -120,12 +125,13 @@ type CrossTransactionHistory struct {
 	CountryCode          string                                               `json:"countryCode"`
 	Details              []ExecutedTransactionCurrencyExchangeContractItem    `json:"details"`
 	SenderAddress        string                                               `json:"senderAddress"`
-	BankId               string                                               `json:"bankId"`
+	BankAddress          string                                               `json:"bankAddress"`
 	Status               cross_transaction_status_enum.CrossTransactionStatus `json:"status"`
 	TxId                 string                                               `json:"txId"`
 	ErrorCode            int                                                  `json:"errorCode"`
 	ErrorMessage         string                                               `json:"errorMessage"`
 	Data                 string                                               `json:"data"`
+	InvoiceNumber        string                                               `json:"invoiceNumber"`
 	TransactionHistories []TransactionHistory                                 `json:"transactionHistories"`
 }
 
@@ -217,13 +223,14 @@ type ClaimsAggregate struct {
 }
 
 type ClientBank struct {
-	BankId          string            `json:"bankId"`
-	BankDisplayName string            `json:"bankDisplayName"`
-	State           state_enum.State  `json:"state"`
-	CountryCode     string            `json:"countryCode"`
-	Owner           string            `json:"owner"`
-	Params          map[string]string `json:"params"`
-	DocType         string            `json:"docType"`
+	Address                string                                                              `json:"address"`
+	BankDisplayName        string                                                              `json:"bankDisplayName"`
+	State                  state_enum.State                                                    `json:"state"`
+	CountryCode            string                                                              `json:"countryCode"`
+	Owner                  string                                                              `json:"owner"`
+	AvailableContractTypes []currency_exchange_contract_type_enum.CurrencyExchangeContractType `json:"availableContractTypes"`
+	Params                 map[string]string                                                   `json:"params"`
+	DocType                string                                                              `json:"docType"`
 }
 
 func (cb *ClientBank) GetSortParamsKeys() []string {
@@ -238,7 +245,7 @@ func (cb *ClientBank) GetSortParamsKeys() []string {
 
 type Customer struct {
 	Identifier          string `json:"identifier"`
-	BankId              string `json:"bankId"`
+	BankAddress         string `json:"bankAddress"`
 	BankDisplayName     string `json:"bankDisplayName"`
 	CountryCode         string `json:"countryCode"`
 	CustomerDisplayName string `json:"customerDisplayName"`
@@ -246,29 +253,26 @@ type Customer struct {
 }
 
 type CurrencyExchangeContractMutable struct {
-	Id                   string                                                              `json:"id" valid:"required"`
-	AddressAccountSell   string                                                              `json:"addressAccountSell" valid:"validHex40~ErrorAddressNotFollowingRegex"`
-	AddressAccountBuy    string                                                              `json:"addressAccountBuy" valid:"validHex40~ErrorAddressNotFollowingRegex"`
-	AddressCommission    string                                                              `json:"addressCommission" valid:"validHex40~ErrorAddressNotFollowingRegex"`
-	CurrencyCodeSell     int                                                                 `json:"currencyCodeSell" valid:"range(0|999)~ErrorCurrencyCodeRange"`
-	CurrencyCodeBuy      int                                                                 `json:"currencyCodeBuy" valid:"range(0|999)~ErrorCurrencyCodeRange"`
-	CurrencySymbolSell   string                                                              `json:"currencySymbolSell"`
-	CurrencySymbolBuy    string                                                              `json:"currencySymbolBuy"`
-	CurrencyUnitSell     string                                                              `json:"currencyUnitSell"`
-	CurrencyUnitBuy      string                                                              `json:"currencyUnitBuy"`
-	Type                 currency_exchange_contracts_type_enum.CurrencyExchangeContractsType `json:"type"`
-	Price                float64                                                             `json:"price" valid:"range(0|9223372036854775807)"`
-	FractionalCommission float64                                                             `json:"fractionalCommission" valid:"range(0|1)"`
-	MaxCommission        int64                                                               `json:"maxCommission" valid:"range(0|9223372036854775807)"`
-	MinAmount            int64                                                               `json:"minAmount" valid:"range(0|9223372036854775807)"`
-	MaxAmount            int64                                                               `json:"maxAmount" valid:"range(0|9223372036854775807)"`
-	StartDate            int64                                                               `json:"startDate" valid:"range(0|9223372036854775807)"`
-	EndDate              int64                                                               `json:"endDate" valid:"range(0|9223372036854775807)"`
+	Id                   string                                                                    `json:"id" valid:"required"`
+	AddressAccountSell   string                                                                    `json:"addressAccountSell" valid:"validHex40~ErrorAddressNotFollowingRegex"`
+	AddressAccountBuy    string                                                                    `json:"addressAccountBuy" valid:"validHex40~ErrorAddressNotFollowingRegex"`
+	AddressCommission    string                                                                    `json:"addressCommission" valid:"validHex40~ErrorAddressNotFollowingRegex"`
+	CurrencyInfoSell     CurrencyInfo                                                              `json:"currencyInfoSell"`
+	CurrencyInfoBuy      CurrencyInfo                                                              `json:"currencyInfoBuy"`
+	Category             currency_exchange_contract_category_enum.CurrencyExchangeContractCategory `json:"category"`
+	Type                 currency_exchange_contract_type_enum.CurrencyExchangeContractType         `json:"type"`
+	Price                float64                                                                   `json:"price" valid:"range(0|9223372036854775807)"`
+	FractionalCommission float64                                                                   `json:"fractionalCommission" valid:"range(0|1)"`
+	MaxCommission        int64                                                                     `json:"maxCommission" valid:"range(0|9223372036854775807)"`
+	MinAmount            int64                                                                     `json:"minAmount" valid:"range(0|9223372036854775807)"`
+	MaxAmount            int64                                                                     `json:"maxAmount" valid:"range(0|9223372036854775807)"`
+	StartDate            int64                                                                     `json:"startDate" valid:"range(0|9223372036854775807)"`
+	EndDate              int64                                                                     `json:"endDate" valid:"range(0|9223372036854775807)"`
 }
 
 type CurrencyExchangeContract struct {
 	CurrencyExchangeContractMutable
-	BankId          string `json:"bankId"`
+	BankAddress     string `json:"bankAddress"`
 	BankDisplayName string `json:"bankDisplayName"`
 	DocType         string `json:"docType"`
 }
@@ -276,6 +280,15 @@ type CurrencyExchangeContract struct {
 type BaseEvent struct {
 	ChaincodeName string `json:"chaincodeName"`
 	FunctionName  string `json:"functionName"`
+}
+
+type EventBatch struct {
+	Events []EventBatchItem `json:"events"`
+}
+
+type EventBatchItem struct {
+	EventName string      `json:"eventName"`
+	Data      interface{} `json:"data"`
 }
 
 type CurrencyEvent struct {
@@ -393,6 +406,7 @@ type LimitsAccount struct {
 type Deal struct {
 	Id                    string                            `json:"id"`
 	OfferId               string                            `json:"offerId"`
+	SenderBank            string                            `json:"senderBank"`
 	Owner                 string                            `json:"owner"`
 	State                 deal_state_enum.DealState         `json:"state"`
 	Terms                 TermsDeal                         `json:"terms"`
@@ -412,15 +426,18 @@ type TransferSafeDeal struct {
 }
 
 type TermsContractConclude struct {
-	AddressFrom      string                               `json:"addressFrom"`
-	AddressTo        string                               `json:"addressTo"`
-	MemberTypeTo     member_deal_type_enum.MemberDealType `json:"memberTypeTo"`
-	TxIds            []string                             `json:"txIds"`
-	IsComplete       bool                                 `json:"isComplete"`
-	CurrencyInfo     CurrencyDealInfo                     `json:"currencyInfo"`
-	ObligatoryAmount int64                                `json:"obligatoryAmount"`
-	CurrentAmount    int64                                `json:"currentAmount"`
-	NeedAmount       int64                                `json:"needAmount"`
+	AddressFrom               string                               `json:"addressFrom"`
+	AddressTo                 string                               `json:"addressTo"`
+	EscrowAddress             string                               `json:"escrowAddress"`
+	MemberTypeTo              member_deal_type_enum.MemberDealType `json:"memberTypeTo"`
+	TxId                      string                               `json:"txId"`
+	IsComplete                bool                                 `json:"isComplete"`
+	IsCompleteByCrossTransfer bool                                 `json:"isCompleteByCrossTransfer"`
+	IsInvoiceCreate           bool                                 `json:"isInvoiceCreate"`
+	CurrencyInfo              CurrencyDealInfo                     `json:"currencyInfo"`
+	ObligatoryAmount          int64                                `json:"obligatoryAmount"`
+	CurrentAmount             int64                                `json:"currentAmount"`
+	NeedAmount                int64                                `json:"needAmount"`
 }
 
 type Invitation struct {
@@ -449,16 +466,23 @@ type TermsDeal struct {
 	Price                  float64                                    `json:"price" valid:"required,range(0|9223372036854775807)~ErrorAmountNegative"`
 	MinAmount              int64                                      `json:"minAmount" valid:"required,range(0|9223372036854775807)~ErrorAmountNegative"`
 	MaxAmount              int64                                      `json:"maxAmount" valid:"required,range(0|9223372036854775807)~ErrorAmountNegative"`
-	AddressAcceptor        string                                     `json:"addressAcceptor" valid:"validHex40~ErrorAddressNotFollowingRegex"`
+	AddressAcceptor        string                                     `json:"addressAcceptor" valid:"validHex40or64~ErrorAddressNotFollowingRegex"`
 	CurrencyInfoAcceptor   CurrencyDealInfo                           `json:"currencyInfoAcceptor" valid:"required"`
 	OperationTypeAcceptor  operation_deal_type_enum.OperationDealType `json:"operationTypeAcceptor" valid:"required,range(0|2)"`
 	AmountAcceptor         int64                                      `json:"amountAcceptor" valid:"optional,range(0|9223372036854775807)~ErrorAmountNegative"`
 }
 
+// TODO: В случае, если CurrencyDealInfo не будет в дальнейшем расходится с CurrencyInfo - поправить сущности безопасных сделок
 type CurrencyDealInfo struct {
 	Code int    `json:"code" valid:"range(0|999)~ErrorCurrencyCodeRange"`
 	Name string `json:"name" valid:"required"`
 	Unit string `json:"unit"`
+}
+
+type CurrencyInfo struct {
+	Code   int    `json:"code" valid:"range(0|999)~ErrorCurrencyCodeRange"`
+	Symbol string `json:"symbol"`
+	Unit   string `json:"unit"`
 }
 
 type SafeDealEvent struct {

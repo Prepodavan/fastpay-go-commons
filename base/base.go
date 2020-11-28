@@ -1,6 +1,8 @@
 package base
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -13,6 +15,7 @@ import (
 	"github.com/SolarLabRU/fastpay-go-commons/cc-errors"
 	"github.com/SolarLabRU/fastpay-go-commons/crypto"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/access-role-enum"
+	"github.com/SolarLabRU/fastpay-go-commons/enums/currency-exchange-contract-type-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/state_enum"
 	"github.com/SolarLabRU/fastpay-go-commons/logger"
 	"github.com/SolarLabRU/fastpay-go-commons/models"
@@ -43,10 +46,21 @@ func init() {
 }
 
 const (
-	ChaincodeBankName       = "banks"
-	ChaincodeAccountsName   = "accounts"
-	ChaincodeClientBankName = "client-banks"
-	compositeExpSignKey     = "typeExpSign~sign"
+	ChaincodeNameAccounts          = "accounts"
+	ChaincodeNameBank              = "banks"
+	ChaincodeNameClientBank        = "client-banks"
+	ChaincodeNameCrossCustomers    = "cross-customers"
+	ChaincodeNameCrossTransactions = "cross-transactions"
+	ChaincodeNameCurrencies        = "currencies"
+	ChaincodeNameExchangeContracts = "currency-exchange-contracts"
+	ChaincodeNameSafeDeal          = "safe-deal"
+	ChaincodeNameClearing          = "clearing_"
+	ChaincodeNameInvoices          = "invoices_"
+	ChaincodeNameLimits            = "limits_"
+	ChaincodeNameTransactions      = "transactions_"
+
+	compositeExpSignKey = "typeExpSign~sign"
+	EventBatchName      = "EventBatch"
 )
 
 // Метод получения банка отправителя
@@ -68,14 +82,14 @@ func GetSenderBank(ctx contractapi.TransactionContextInterface) (*models.Bank, e
 	return GetBankByRemoteContract(stub, mspId, address)
 }
 
-func GetClientBank(ctx contractapi.TransactionContextInterface, bankId string) (*responses.ClientBankItemResponse, error) {
+func GetClientBank(ctx contractapi.TransactionContextInterface, address string) (*responses.ClientBankItemResponse, error) {
 	stub := ctx.GetStub()
 
-	request := requests.GetClientBankByIdRequest{
-		BankId: bankId,
+	request := requests.GetClientBankByAddressRequest{
+		Address: address,
 	}
 
-	response, err := InvokeChaincode(stub, ChaincodeClientBankName, "getClientBankById", request)
+	response, err := InvokeChaincode(stub, ChaincodeNameClientBank, "getClientBankByAddress", request)
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +111,7 @@ func GetSenderAddressFromCertificate(identity cid.ClientIdentity) (string, error
 	//address, isFound, _ = func() (string, bool, error) { return "263093b1c21f98c5f9b6433bf9bbb97bb87b6e79", true, nil }() // TODO Убрать
 
 	if !isFound {
-		return "", CreateError(cc_errors.ErrorCertificateNotValid, "Отсутвует атрибут address в сертификате")
+		return "", CreateDefaultError(cc_errors.ErrorCertificateBankAddressNotFound)
 	}
 
 	return address, nil
@@ -120,7 +134,7 @@ func InvokeChaincode(stub shim.ChaincodeStubInterface, chaincodeName string, nam
 
 	if response.GetStatus() == 500 {
 		fmt.Println("Ошибка при вызове чейнкода: ", response.GetMessage())
-
+		fmt.Println("Ошибка при вызове чейнкода. Payload: ", string(response.GetPayload()))
 		return nil, parseErrorFromAnotherChaincode(response.GetMessage())
 	}
 
@@ -152,7 +166,28 @@ func GetBankByRemoteContract(stub shim.ChaincodeStubInterface, mspId string, add
 		MSPId:   mspId,
 	}
 
-	response, err := InvokeChaincode(stub, ChaincodeBankName, "getBankByMspIdAddress", request)
+	response, err := InvokeChaincode(stub, ChaincodeNameBank, "getBankByMspIdAddress", request)
+	if err != nil {
+		return nil, err
+	}
+
+	var bankResponse responses.BankResponse
+	err = json.Unmarshal(response, &bankResponse)
+
+	if err != nil {
+		return nil, CreateError(cc_errors.ErrorJsonUnmarshal, fmt.Sprintf("Ошибка десерилизации ответа после вызова чейнкода banks. %s", err.Error()))
+	}
+
+	return &bankResponse.Data, nil
+}
+
+// Метод получения банка по адресу
+func GetBankByAddress(stub shim.ChaincodeStubInterface, address string) (*models.Bank, error) {
+	request := requests.GetByAddressRequest{
+		Address: address,
+	}
+
+	response, err := InvokeChaincode(stub, ChaincodeNameBank, "getByAddress", request)
 	if err != nil {
 		return nil, err
 	}
@@ -190,10 +225,10 @@ func SenderBankIsAvailableWithBank(ctx contractapi.TransactionContextInterface, 
 	return nil
 }
 
-func SenderClientBankIsAvailable(ctx contractapi.TransactionContextInterface, senderClientBank *responses.ClientBankItemResponse, bankId string) error {
+func SenderClientBankIsAvailable(ctx contractapi.TransactionContextInterface, senderClientBank *responses.ClientBankItemResponse, address string) error {
 	if senderClientBank == nil {
 		var err error = nil
-		senderClientBank, err = GetClientBank(ctx, bankId)
+		senderClientBank, err = GetClientBank(ctx, address)
 		if err != nil {
 			return err
 		}
@@ -210,13 +245,14 @@ func SenderClientBankIsAvailable(ctx contractapi.TransactionContextInterface, se
 	}
 	if senderClientBank.Owner != addressSender {
 		return CreateError(cc_errors.ErrorClientBankOwnerNotEqualSender,
-			fmt.Sprintf("Опорный банк(отправитель)(%s) не является владельцем клиентского банка(%s)", addressSender, senderClientBank.BankId))
+			fmt.Sprintf("Опорный банк(отправитель)(%s) не является владельцем клиентского банка(%s)", addressSender, senderClientBank.Address))
 	}
 
 	return nil
 }
 
 func CheckTechnicalAccountSign(ctx contractapi.TransactionContextInterface, technicalSignRequest requests.TechnicalSignRequest, bankSender *models.Bank) error {
+
 	if bankSender == nil {
 		var err error = nil
 		bankSender, err = GetSenderBank(ctx)
@@ -225,27 +261,100 @@ func CheckTechnicalAccountSign(ctx contractapi.TransactionContextInterface, tech
 		}
 	}
 
+	return CheckTechnicalAccountSignByAddress(ctx, technicalSignRequest, bankSender.Address)
+}
+
+func CheckTechnicalAccountSignByAddress(ctx contractapi.TransactionContextInterface, technicalSignRequest requests.TechnicalSignRequest, address string) error {
+
 	err := CheckSign(technicalSignRequest.TechnicalAddress, technicalSignRequest.TechnicalMsgHash, technicalSignRequest.TechnicalSig)
 	if err != nil {
 		return err
 	}
 
 	// TODO Убрать проверку если в сертификате не будет указыватся адрес банка отправителя
-	if bankSender.Address != technicalSignRequest.TechnicalAddress {
-		return CreateError(cc_errors.ErrorAccountTechnicalNotEqlSender,
-			"Адрес банка отправителя не совпадает с адресом технического аккаунта")
+	if address != technicalSignRequest.TechnicalAddress {
+		return CreateDefaultError(cc_errors.ErrorAccountTechnicalNotEqlSender)
 	}
 
 	return nil
 }
 
-// Метод проверки доступа к методу чейнкода
-func CheckAccess(ctx contractapi.TransactionContextInterface, role access_role_enum.AccessRole, addressOwnerShip string, checkAvailable bool) error {
-	return CheckAccessWithBank(ctx, nil, role, addressOwnerShip, checkAvailable)
+func CheckTechnicalAccountSignWithMsg(ctx contractapi.TransactionContextInterface, technicalSignRequest requests.TechnicalSignRequest, request requests.BaseMsgHashRequest, bankSender *models.Bank) error {
+
+	if bankSender == nil {
+		var err error = nil
+		bankSender, err = GetSenderBank(ctx)
+		if err != nil {
+			return err
+		}
+	}
+
+	return CheckTechnicalAccountSignWithMsgByAddress(ctx, technicalSignRequest, request, bankSender.Address)
+}
+
+func CheckTechnicalAccountSignWithMsgByAddress(ctx contractapi.TransactionContextInterface, technicalSignRequest requests.TechnicalSignRequest, request requests.BaseMsgHashRequest, address string) error {
+
+	err := CheckSignWithMsg(technicalSignRequest.TechnicalAddress, request, technicalSignRequest.TechnicalSig)
+	if err != nil {
+		return err
+	}
+
+	// TODO Убрать проверку если в сертификате не будет указыватся адрес банка отправителя
+	if address != technicalSignRequest.TechnicalAddress {
+		return CreateDefaultError(cc_errors.ErrorAccountTechnicalNotEqlSender)
+	}
+
+	return nil
+}
+
+func CheckClientBankTechnicalSignAndAvailableWithBank(ctx contractapi.TransactionContextInterface, request requests.TechnicalSignRequest, senderClientBank *responses.ClientBankItemResponse) error {
+
+	err := CheckSign(request.TechnicalAddress, request.TechnicalMsgHash, request.TechnicalSig)
+	if err != nil {
+		return err
+	}
+
+	err = SenderClientBankIsAvailable(ctx, senderClientBank, request.TechnicalAddress)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func CheckClientBankTechnicalSignWithMsgAndAvailableWithBank(ctx contractapi.TransactionContextInterface, technicalSignRequest requests.TechnicalSignRequest, request requests.BaseMsgHashRequest, senderClientBank *responses.ClientBankItemResponse) error {
+
+	err := CheckSignWithMsg(technicalSignRequest.TechnicalAddress, request, technicalSignRequest.TechnicalSig)
+	if err != nil {
+		return err
+	}
+
+	err = SenderClientBankIsAvailable(ctx, senderClientBank, technicalSignRequest.TechnicalAddress)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func CheckClientBankTechnicalSignAndAvailable(ctx contractapi.TransactionContextInterface, request requests.TechnicalSignRequest) error {
+	return CheckClientBankTechnicalSignAndAvailableWithBank(ctx, request, nil)
+}
+
+func CheckClientBankTechnicalSignWithMsgAndAvailable(ctx contractapi.TransactionContextInterface, technicalSignRequest requests.TechnicalSignRequest, request requests.BaseMsgHashRequest) error {
+	return CheckClientBankTechnicalSignWithMsgAndAvailableWithBank(ctx, technicalSignRequest, request, nil)
+}
+
+func CheckAccessAndAvailableWithBank(ctx contractapi.TransactionContextInterface, bank *models.Bank, role access_role_enum.AccessRole) error {
+	return CheckAccessWithBank(ctx, bank, role, true)
+}
+
+func CheckAccessAndAvailable(ctx contractapi.TransactionContextInterface, role access_role_enum.AccessRole) error {
+	return CheckAccessWithBank(ctx, nil, role, true)
 }
 
 // Метод проверки доступа к методу чейнкода с переданым банком отправителя
-func CheckAccessWithBank(ctx contractapi.TransactionContextInterface, bank *models.Bank, role access_role_enum.AccessRole, addressOwnerShip string, checkAvailable bool) error {
+func CheckAccessWithBank(ctx contractapi.TransactionContextInterface, bank *models.Bank, role access_role_enum.AccessRole, checkAvailable bool) error {
 	if role == access_role_enum.Any {
 		return nil
 	}
@@ -265,11 +374,11 @@ func CheckAccessWithBank(ctx contractapi.TransactionContextInterface, bank *mode
 		}
 	}
 
-	currentRoles := getRoles(bank, addressOwnerShip)
+	currentRoles := getRoles(bank)
 	result := currentRoles & role
 
 	if result == 0 {
-		return CreateError(cc_errors.ErrorForbidden, "Недостаточно прав для вызова метода")
+		return CreateDefaultError(cc_errors.ErrorForbidden)
 	}
 
 	return nil
@@ -277,24 +386,9 @@ func CheckAccessWithBank(ctx contractapi.TransactionContextInterface, bank *mode
 
 // Метод проверки, что вызваемый метод вызывался другим чейнкодом
 func CheckCalledChaincode(stub shim.ChaincodeStubInterface, name, function string) (bool, error) {
-	signedProposal, err := stub.GetSignedProposal()
+	nameChaincode, nameFunc, err := GetChaincodeNameCalled(stub)
 	if err != nil {
 		return false, err
-	}
-	stringSignedProposal := string(signedProposal.GetProposalBytes())
-	filterString := regexp.MustCompile(`[^a-zA-Z 0-9\n_-]`).ReplaceAllString(stringSignedProposal, "")
-	filterString2 := regexp.MustCompile(`[\t\r\n]+`).ReplaceAllString(strings.TrimSpace(filterString), "\n")
-	splitResult := strings.Split(filterString2, "\n")
-
-	nameChaincode := "not set"
-	nameFunc := "not set"
-
-	if len(stringSignedProposal) > 0 && len(splitResult) > 2 && stringSignedProposal[len(stringSignedProposal)-1] == '}' { // Если есть входные парметры
-		nameFunc = splitResult[len(splitResult)-2]
-		nameChaincode = splitResult[len(splitResult)-3]
-	} else if len(splitResult) > 1 { // Если нет входных парметров
-		nameFunc = splitResult[len(splitResult)-1]
-		nameChaincode = splitResult[len(splitResult)-2]
 	}
 
 	// TODO Убрать
@@ -314,6 +408,30 @@ func CheckCalledChaincode(stub shim.ChaincodeStubInterface, name, function strin
 	return false, nil
 }
 
+func GetChaincodeNameCalled(stub shim.ChaincodeStubInterface) (string, string, error) {
+	nameChaincode := ""
+	nameFunc := ""
+
+	signedProposal, err := stub.GetSignedProposal()
+	if err != nil {
+		return nameChaincode, nameFunc, err
+	}
+	stringSignedProposal := string(signedProposal.GetProposalBytes())
+	filterString := regexp.MustCompile(`[^a-zA-Z 0-9\n_-]`).ReplaceAllString(stringSignedProposal, "")
+	filterString2 := regexp.MustCompile(`[\t\r\n]+`).ReplaceAllString(strings.TrimSpace(filterString), "\n")
+	splitResult := strings.Split(filterString2, "\n")
+
+	if len(stringSignedProposal) > 0 && len(splitResult) > 2 && stringSignedProposal[len(stringSignedProposal)-1] == '}' { // Если есть входные парметры
+		nameFunc = splitResult[len(splitResult)-2]
+		nameChaincode = splitResult[len(splitResult)-3]
+	} else if len(splitResult) > 1 { // Если нет входных парметров
+		nameFunc = splitResult[len(splitResult)-1]
+		nameChaincode = splitResult[len(splitResult)-2]
+	}
+
+	return nameChaincode, nameFunc, nil
+}
+
 // Метод создания структуры ошибки
 func CreateError(code int, message string) error {
 	baseError := cc_errors.BaseError{
@@ -329,6 +447,27 @@ func CreateErrorWithData(code int, message, data string) error {
 	baseError := cc_errors.BaseError{
 		Code:    code,
 		Message: message,
+		Data:    data,
+	}
+
+	return createError(&baseError)
+}
+
+// Метод создания структуры ошибки с сообщением по умолчанию
+func CreateDefaultError(code int) error {
+	baseError := cc_errors.BaseError{
+		Code:    code,
+		Message: cc_errors.ErrorCodeMessagesMap[code],
+	}
+
+	return createError(&baseError)
+}
+
+// Метод создания структуры ошибки с сообщением по умолчанию с доп. информацией
+func CreateDefaultErrorWithData(code int, data string) error {
+	baseError := cc_errors.BaseError{
+		Code:    code,
+		Message: cc_errors.ErrorCodeMessagesMap[code],
 		Data:    data,
 	}
 
@@ -359,9 +498,17 @@ func CheckArgs(args string, request interface{}) error {
 
 // Проверка аккаунта на соответствие валюты по его адресу
 func CheckAccountCurrencyCode(stub shim.ChaincodeStubInterface, address string, currencyCode int) error {
-	account, err := GetAccountByAddress(stub, address)
-	if err != nil {
-		return err
+	return CheckAccountCurrencyCodeWithAccount(stub, address, currencyCode, nil)
+}
+
+// Проверка аккаунта на соответствие валюты по его адресу либо аккаунту
+func CheckAccountCurrencyCodeWithAccount(stub shim.ChaincodeStubInterface, address string, currencyCode int, account *models.Account) error {
+	if account == nil {
+		var err error = nil
+		account, err = GetAccountByAddress(stub, address)
+		if err != nil {
+			return err
+		}
 	}
 
 	if account.CurrencyCode != currencyCode {
@@ -373,12 +520,22 @@ func CheckAccountCurrencyCode(stub shim.ChaincodeStubInterface, address string, 
 
 // Метод публикации события в чейнкоде
 func PublicEvent(stub shim.ChaincodeStubInterface, event interface{}, eventName string) error {
-	eventAsBytes, err := json.Marshal(event)
+	return PublicEvents(stub, models.EventBatch{
+		Events: []models.EventBatchItem{{
+			EventName: eventName,
+			Data:      event,
+		}},
+	})
+}
+
+// Метод публикации массива событий в чейнкоде
+func PublicEvents(stub shim.ChaincodeStubInterface, events interface{}) error {
+	eventsAsBytes, err := json.Marshal(events)
 	if err != nil {
-		return CreateError(cc_errors.ErrorJsonMarshal, fmt.Sprintf("Ошибка при сериализации события. %s", err.Error()))
+		return CreateError(cc_errors.ErrorJsonMarshal, fmt.Sprintf("Ошибка при сериализации событий. %s", err.Error()))
 	}
 
-	err = stub.SetEvent(eventName, eventAsBytes)
+	err = stub.SetEvent(EventBatchName, eventsAsBytes)
 	if err != nil {
 		return err
 	}
@@ -407,6 +564,18 @@ func GetContractCommission(contract models.CurrencyExchangeContract, amountOutpu
 	}
 
 	return math.Min(calcCommission, float64(contract.MaxCommission))
+}
+
+// Метод проверки, что список доступных типов контрактов содержит определенный
+func CheckContractTypesContains(contractTypes []currency_exchange_contract_type_enum.CurrencyExchangeContractType, contractType currency_exchange_contract_type_enum.CurrencyExchangeContractType) bool {
+
+	for _, itemType := range contractTypes {
+		if itemType == contractType {
+			return true
+		}
+	}
+
+	return false
 }
 
 func ParseError(err error) *cc_errors.BaseError {
@@ -465,18 +634,11 @@ func createError(baseError *cc_errors.BaseError) error {
 }
 
 // Метод получения ролей
-func getRoles(bank *models.Bank, addressOwnerShip string) access_role_enum.AccessRole {
+func getRoles(bank *models.Bank) access_role_enum.AccessRole {
 	roles := access_role_enum.Bank
 
-	if bank.IsOwner {
-		roles |= access_role_enum.Owner
-	}
-	if bank.IsRegulator {
-		roles |= access_role_enum.Regulator
-	}
-
-	if len(addressOwnerShip) > 0 && bank.Address == addressOwnerShip {
-		roles |= access_role_enum.OwnerShip
+	for _, v := range bank.Roles {
+		roles |= v
 	}
 
 	return roles
@@ -498,14 +660,57 @@ func parseErrorFromAnotherChaincode(message string) error {
 
 // Метод проверки сигнатуры
 func CheckSign(address, msgHash string, sign requests.SignDto) error {
+	if msgHash == "" || sign.R == "" || sign.S == "" || sign.V == 0 {
+		return CreateError(cc_errors.ErrorValidateDefault, "Сигнатура не передана")
+	}
+
 	isSigned, err := crypto.IsSigned(address, msgHash, sign.R, sign.S, sign.V)
 
 	if err != nil {
-		return CreateError(cc_errors.ErrorSignVerify, fmt.Sprintf("Ошибка проверки сигнатуры. %s", err.Error()))
+		return CreateDefaultError(cc_errors.ErrorSignVerify)
 	}
 
 	if !isSigned {
-		return CreateError(cc_errors.ErrorSignVerify, "Ошибка проверки сигнатуры.")
+		return CreateDefaultError(cc_errors.ErrorSignVerify)
+	}
+
+	return nil
+}
+
+// Метод проверки сигнатуры и контрольной суммы запроса
+func CheckSignWithMsg(address string, request requests.BaseMsgHashRequest, sign requests.SignDto) error {
+	if sign.R == "" || sign.S == "" || sign.V == 0 {
+		return CreateError(cc_errors.ErrorValidateDefault, "Сигнатура не передана")
+	}
+
+	msgHash := calculateMsgHash(request.String())
+
+	isSigned, err := crypto.IsSigned(address, msgHash, sign.R, sign.S, sign.V)
+
+	if err != nil {
+		return CreateDefaultError(cc_errors.ErrorSignVerify)
+	}
+
+	if !isSigned {
+		return CreateDefaultError(cc_errors.ErrorSignVerify)
+	}
+
+	return nil
+}
+
+func CheckSignAndMsgWithExpiration(stub shim.ChaincodeStubInterface, address string, request requests.BaseMsgHashRequest, sign requests.SignDto, expiration int64, now int64) error {
+	if expiration == 0 {
+		return CreateError(cc_errors.ErrorValidateDefault, "Поле Exp не передано")
+	}
+
+	err := CheckSignWithMsg(address, request, sign)
+	if err != nil {
+		return err
+	}
+
+	err = CheckSignExpiration(stub, sign, expiration, now)
+	if err != nil {
+		return err
 	}
 
 	return nil
@@ -516,10 +721,6 @@ func CheckSignAndExpiration(stub shim.ChaincodeStubInterface, address, msgHash s
 
 	if expiration == 0 {
 		return CreateError(cc_errors.ErrorValidateDefault, "Поле Exp не передано")
-	}
-
-	if msgHash == "" || sign.R == "" || sign.S == "" || sign.V == 0 {
-		return CreateError(cc_errors.ErrorValidateDefault, "Сигнатура не передана")
 	}
 
 	err := CheckSign(address, msgHash, sign)
@@ -623,16 +824,16 @@ func DeleteExpirationSign(stub shim.ChaincodeStubInterface) error {
 
 // Обработка ошибки при валидации запроса
 func processValidationError(err error) error {
-	var errorData cc_errors.Error
+	var errorCode int
 
 	if strings.Contains(err.Error(), ";") {
-		errorData = cc_errors.ErrorMessages[strings.Split(err.Error(), ";")[0]]
+		errorCode = cc_errors.ErrorStringCodeMap[strings.Split(err.Error(), ";")[0]]
 	} else {
-		errorData = cc_errors.ErrorMessages[err.Error()]
+		errorCode = cc_errors.ErrorStringCodeMap[err.Error()]
 	}
 
-	if errorData.Code != 0 {
-		return CreateError(errorData.Code, errorData.Message)
+	if errorCode != 0 {
+		return CreateError(errorCode, cc_errors.ErrorCodeMessagesMap[errorCode])
 	}
 
 	return CreateError(cc_errors.ErrorValidateDefault, fmt.Sprintf("Ошибка валидации: %s", err.Error()))
@@ -693,7 +894,7 @@ func GetAccountByIdentifier(stub shim.ChaincodeStubInterface, identifier string)
 		Identifier: identifier,
 	}
 
-	response, err := InvokeChaincode(stub, ChaincodeAccountsName, "getByIdentifier", request)
+	response, err := InvokeChaincode(stub, ChaincodeNameAccounts, "getByIdentifier", request)
 	if err != nil {
 		return nil, err
 	}
@@ -714,7 +915,7 @@ func GetAccountByAddress(stub shim.ChaincodeStubInterface, address string) (*mod
 		Address: address,
 	}
 
-	response, err := InvokeChaincode(stub, ChaincodeAccountsName, "getByAddress", request)
+	response, err := InvokeChaincode(stub, ChaincodeNameAccounts, "getByAddress", request)
 	if err != nil {
 		return nil, err
 	}
@@ -767,6 +968,10 @@ func GetChaincodeCurrencyCode() string {
 	return currencyCode
 }
 
+func GetInvoiceIdSafeDeal(safeDealId, escrowAddress string) string {
+	return fmt.Sprintf("%s_%s", safeDealId, escrowAddress)
+}
+
 func GetChaincodeName() string {
 	name, currencyCode := GetChaincodeNameCurrencyCode()
 
@@ -777,7 +982,53 @@ func GetChaincodeName() string {
 	return name + "_" + currencyCode
 }
 
-// print the contents of the obj
+func ConcatAndPublicEvents(stub shim.ChaincodeStubInterface, events []models.EventBatchItem, event interface{}, eventName string) error {
+	events = ConcatEvents(events, event, eventName)
+
+	err := PublicEvents(stub, models.EventBatch{
+		Events: events,
+	})
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func ConcatEvents(events []models.EventBatchItem, event interface{}, eventName string) []models.EventBatchItem {
+	if events == nil || len(events) == 0 {
+		events = []models.EventBatchItem{}
+	}
+
+	events = append(events, models.EventBatchItem{
+		EventName: eventName,
+		Data:      event,
+	})
+
+	return events
+}
+
+// Метод получения адреса аккаунта по его идентификатору
+func GetAccountAddressByIdentifier(stub shim.ChaincodeStubInterface, identifier string) (string, error) {
+
+	request := requests.GetByIdentifierRequest{
+		Identifier: identifier,
+	}
+
+	response, err := InvokeChaincode(stub, ChaincodeNameAccounts, "getAddressByIdentifier", request)
+	if err != nil {
+		return "", err
+	}
+
+	var accountResponse responses.AccountAddressResponse
+	err = json.Unmarshal(response, &accountResponse)
+	if err != nil {
+		return "", CreateError(cc_errors.ErrorJsonUnmarshal, fmt.Sprintf("Ошибка десериализации ответа после вызова чейнкода accounts. %s", err.Error()))
+	}
+
+	return accountResponse.Data, nil
+}
+
 func PrettyPrint(data interface{}) {
 	var p []byte
 	//    var err := error
@@ -787,4 +1038,9 @@ func PrettyPrint(data interface{}) {
 		return
 	}
 	fmt.Printf("%s \n", p)
+}
+
+func calculateMsgHash(msgString string) string {
+	hashAsBytes := sha256.Sum256([]byte(msgString))
+	return hex.EncodeToString(hashAsBytes[:])
 }

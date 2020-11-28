@@ -1,12 +1,23 @@
 package responses
 
 import (
+	"github.com/SolarLabRU/fastpay-go-commons/enums/currency-exchange-contract-type-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/state_enum"
 	"github.com/SolarLabRU/fastpay-go-commons/models"
 )
 
 type BankResponse struct {
 	Data models.Bank `json:"data"`
+	BaseResponse
+}
+
+type MakeSafeDealDepositResponse struct {
+	Data []models.EventBatchItem `json:"data"`
+	BaseResponse
+}
+
+type InvoiceCreateResponse struct {
+	IsInvoiceCreate bool `json:"isInvoiceCreate"`
 	BaseResponse
 }
 
@@ -171,12 +182,13 @@ type BankClaimsLiabilitiesResponse struct {
 }
 
 type ClientBankItemResponse struct {
-	BankId          string            `json:"bankId"`
-	BankDisplayName string            `json:"bankDisplayName"`
-	State           state_enum.State  `json:"state"`
-	CountryCode     string            `json:"countryCode"`
-	Params          map[string]string `json:"params"`
-	Owner           string            `json:"owner"`
+	Address                string                                                              `json:"address"`
+	BankDisplayName        string                                                              `json:"bankDisplayName"`
+	AvailableContractTypes []currency_exchange_contract_type_enum.CurrencyExchangeContractType `json:"availableContractTypes"`
+	State                  state_enum.State                                                    `json:"state"`
+	CountryCode            string                                                              `json:"countryCode"`
+	Params                 map[string]string                                                   `json:"params"`
+	Owner                  string                                                              `json:"owner"`
 }
 
 type ClientBankResponse struct {

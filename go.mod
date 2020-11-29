@@ -3,6 +3,7 @@ module github.com/SolarLabRU/fastpay-go-commons
 go 1.13
 
 require (
+	github.com/AlekSi/pointer v1.1.0
 	github.com/asaskevich/govalidator v0.0.0-20200818142706-50839af6027e
 	github.com/golang/protobuf v1.3.2
 	github.com/google/uuid v1.1.2

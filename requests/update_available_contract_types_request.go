@@ -12,6 +12,10 @@ type UpdateAvailableContractTypes struct {
 	AvailableContractTypes []currency_exchange_contract_type_enum.CurrencyExchangeContractType `json:"availableContractTypes"`
 }
 
+func (request *UpdateAvailableContractTypes) GetAddress() string {
+	return request.Address
+}
+
 func (request *UpdateAvailableContractTypes) String() string {
 
 	concatenatedTypes := ""

@@ -11,6 +11,10 @@ type UpdateBankStateRequest struct {
 	State   state_enum.State `json:"state" valid:"required"`
 }
 
+func (request *UpdateBankStateRequest) GetAddress() string {
+	return request.Address
+}
+
 func (request *UpdateBankStateRequest) String() string {
 	return fmt.Sprintf("updateState%s%v", request.Address, request.State)
 }

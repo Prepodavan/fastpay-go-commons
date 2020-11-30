@@ -9,5 +9,10 @@ func (bc *BaseContract) GetIgnoredFunctions() []string {
 		"MustHaveSenderAddress",
 		"SenderAccess",
 		"SenderAvailable",
+		"ValidateTechSign",
+		"ValidateSigned",
+		"TechnicalAddressShouldBeEqualToSenderAddress",
+		"validateSign",
+		"SetDefaults",
 	}
 }

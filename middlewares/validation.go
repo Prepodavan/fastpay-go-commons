@@ -7,7 +7,7 @@ import (
 	"github.com/asaskevich/govalidator"
 )
 
-func (bc *BaseContract) Validate(ctx *txctx.TransactionContext, request interface{}) error {
+func (bc *BaseContract) Validate(ctx txctx.ITransactionContext, request interface{}) error {
 	isValid, err := validation.ValidateStruct(request)
 	if isValid && err == nil {
 		ctx.SetRequest(request)

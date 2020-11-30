@@ -7,14 +7,14 @@ import (
 	"github.com/SolarLabRU/fastpay-go-commons/txctx"
 )
 
-func (bc *BaseContract) MustHaveMSPID(ctx *txctx.TransactionContext) error {
+func (bc *BaseContract) MustHaveMSPID(ctx txctx.ITransactionContext) error {
 	if _, err := ctx.GetClientIdentity().GetMSPID(); err != nil {
 		return ccErrors.NewBaseError(ccErrors.ErrorGetMspId, ccErrors.WithData(err.Error()))
 	}
 	return nil
 }
 
-func (bc *BaseContract) MustHaveSenderAddress(ctx *txctx.TransactionContext) error {
+func (bc *BaseContract) MustHaveSenderAddress(ctx txctx.ITransactionContext) error {
 	_, found, err := ctx.GetClientIdentity().GetAttributeValue("address")
 	baseErr := ccErrors.NewBaseError(
 		0, //TODO
@@ -28,8 +28,8 @@ func (bc *BaseContract) MustHaveSenderAddress(ctx *txctx.TransactionContext) err
 	return baseErr
 }
 
-func (bc *BaseContract) SenderAccess(role roleEnum.AccessRole) func(ctx *txctx.TransactionContext) error {
-	return func(ctx *txctx.TransactionContext) error {
+func (bc *BaseContract) SenderAccess(role roleEnum.AccessRole) func(ctx txctx.ITransactionContext) error {
+	return func(ctx txctx.ITransactionContext) error {
 		if role == roleEnum.Any {
 			return nil
 		}
@@ -45,7 +45,7 @@ func (bc *BaseContract) SenderAccess(role roleEnum.AccessRole) func(ctx *txctx.T
 	}
 }
 
-func (bc *BaseContract) SenderAvailable(ctx *txctx.TransactionContext) error {
+func (bc *BaseContract) SenderAvailable(ctx txctx.ITransactionContext) error {
 	if ctx.GetSenderBank().State != state_enum.Available {
 		return ccErrors.NewBaseError(
 			ccErrors.ErrorBankNotAvailable,

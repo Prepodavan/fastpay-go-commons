@@ -3,7 +3,6 @@ package models
 import (
 	"sort"
 
-	"github.com/SolarLabRU/fastpay-go-commons/enums/access-role-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/account-type-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/cross-transaction-payload-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/cross-transaction-status-enum"
@@ -45,20 +44,6 @@ type Arbitrator struct {
 	Address string `json:"address"`
 	Name    string `json:"name"`
 	DocType string `json:"docType"`
-}
-
-type Bank struct {
-	Address                string                                                              `json:"address"`
-	Name                   string                                                              `json:"name"`
-	BIK                    string                                                              `json:"bik"`
-	State                  state_enum.State                                                    `json:"state"`
-	CreatedBy              string                                                              `json:"createdBy"`
-	Encrypted              bool                                                                `json:"encrypted"`
-	MSPId                  string                                                              `json:"mspId"`
-	Roles                  []access_role_enum.AccessRole                                       `json:"roles"`
-	AvailableContractTypes []currency_exchange_contract_type_enum.CurrencyExchangeContractType `json:"availableContractTypes"`
-	Conf                   string                                                              `json:"conf"`
-	DocType                string                                                              `json:"docType"`
 }
 
 type Currency struct {

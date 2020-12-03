@@ -3,6 +3,7 @@ package txctx
 import (
 	"github.com/SolarLabRU/fastpay-go-commons/models"
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
+	"time"
 )
 
 type TransactionContext struct {
@@ -10,6 +11,15 @@ type TransactionContext struct {
 	Values     map[string]interface{}
 	Request    interface{}
 	SenderBank *models.Bank
+	Timestamp  time.Time
+}
+
+func (ctx *TransactionContext) GetTimestamp() time.Time {
+	return ctx.Timestamp
+}
+
+func (ctx *TransactionContext) SetTimestamp(timestamp time.Time) {
+	ctx.Timestamp = timestamp
 }
 
 func (ctx *TransactionContext) GetSenderBank() *models.Bank {

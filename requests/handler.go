@@ -6,9 +6,9 @@ type handler struct {
 }
 
 func (h *handler) Name() string {
-	return h.name
+	return h.GetName()
 }
 
 func (h *handler) Func() string {
-	return h.fun
+	return h.GetFun()
 }

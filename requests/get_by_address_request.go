@@ -9,6 +9,10 @@ type GetByAddressRequest struct {
 	Address string `json:"address" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
 }
 
+func (g *GetByAddressRequest) Hash() string {
+	return g.Address
+}
+
 func (g *GetByAddressRequest) Handler() rcc.Handler {
 	const fun = "getByAddress"
 	return &handler{

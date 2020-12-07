@@ -21,11 +21,6 @@ type InvoiceCreateResponse struct {
 	BaseResponse
 }
 
-type AccountResponse struct {
-	Data models.Account `json:"data"`
-	BaseResponse
-}
-
 type AccountListResponse struct {
 	Data []models.Account `json:"data"`
 	BaseResponse
@@ -112,16 +107,6 @@ type CurrencyPageResponse struct {
 type CurrencyResponse struct {
 	Data models.Currency `json:"data"`
 	BaseResponse
-}
-
-type AccountBalanceResponse struct {
-	Data AccountBalanceData `json:"data"`
-	BaseResponse
-}
-
-type AccountBalanceData struct {
-	Items []models.AmountOfBank `json:"items"`
-	Total int64                 `json:"total"`
 }
 
 type BankBalanceData struct {
@@ -229,12 +214,6 @@ type CustomersListResponse struct {
 type CustomerResponse struct {
 	Data models.Customer `json:"data"`
 	BaseResponse
-}
-
-type RoutesItem struct {
-	Commission *models.CurrencyContractRoutingItem
-	Middle     *models.CurrencyContractRoutingItem
-	Input      *models.CurrencyContractRoutingItem
 }
 
 type ContractResponse struct {

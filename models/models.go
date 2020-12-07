@@ -3,7 +3,6 @@ package models
 import (
 	"sort"
 
-	"github.com/SolarLabRU/fastpay-go-commons/enums/account-type-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/cross-transaction-payload-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/cross-transaction-status-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/currency-exchange-contract-category-enum"
@@ -11,10 +10,8 @@ import (
 	"github.com/SolarLabRU/fastpay-go-commons/enums/currency-type-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/deal-state-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/deal-transfer-status-enum"
-	"github.com/SolarLabRU/fastpay-go-commons/enums/identity-type-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/invite-status-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/invoice-state-enum"
-	"github.com/SolarLabRU/fastpay-go-commons/enums/juridical-type-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/member-deal-type-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/operation-deal-type-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/safe-deal-deposit-type-enum"
@@ -22,23 +19,6 @@ import (
 	"github.com/SolarLabRU/fastpay-go-commons/enums/transaction-status-enum"
 	"github.com/SolarLabRU/fastpay-go-commons/enums/transaction-type-enum"
 )
-
-type Account struct {
-	Address                string                                                              `json:"address"`
-	State                  state_enum.State                                                    `json:"state"`
-	CurrencyCode           int                                                                 `json:"currencyCode"`
-	JuridicalType          juridical_type_enum.JuridicalType                                   `json:"juridicalType"`
-	ClientBankAddress      string                                                              `json:"clientBankAddress"`
-	IdentityType           identity_type_enum.IdentityType                                     `json:"identityType"`
-	Owner                  string                                                              `json:"owner"`
-	Type                   account_type_enum.AccountType                                       `json:"type"`
-	AvailableContractTypes []currency_exchange_contract_type_enum.CurrencyExchangeContractType `json:"availableContractTypes"`
-	Identifiers            []string                                                            `json:"identifiers"`
-	Encrypted              bool                                                                `json:"encrypted"`
-	Created                int64                                                               `json:"created"`
-	PublicKey              string                                                              `json:"publicKey"`
-	DocType                string                                                              `json:"docType"`
-}
 
 type Arbitrator struct {
 	Address string `json:"address"`
@@ -56,11 +36,6 @@ type Currency struct {
 	Properties map[string]string               `json:"properties"`
 	Enabled    bool                            `json:"enabled"`
 	DocType    string                          `json:"docType"`
-}
-
-type AmountOfBank struct {
-	Address string `json:"address"`
-	Amount  int64  `json:"amount"`
 }
 
 type TransactionHistory struct {
@@ -122,12 +97,6 @@ type CrossTransactionHistory struct {
 
 type CrossTransactionHistoryEvent struct {
 	Data CrossTransactionHistory `json:"history"`
-}
-
-type CurrencyContractRoutingItem struct {
-	CurrencyExchangeContract
-	AmountInput  int64 `json:"amountInput"`
-	AmountOutput int64 `json:"amountOutput"`
 }
 
 type DepositedBalance struct {
@@ -228,15 +197,6 @@ func (cb *ClientBank) GetSortParamsKeys() []string {
 	return keys
 }
 
-type Customer struct {
-	Identifier          string `json:"identifier"`
-	BankAddress         string `json:"bankAddress"`
-	BankDisplayName     string `json:"bankDisplayName"`
-	CountryCode         string `json:"countryCode"`
-	CustomerDisplayName string `json:"customerDisplayName"`
-	DocType             string `json:"docType"`
-}
-
 type CurrencyExchangeContractMutable struct {
 	Id                   string                                                                    `json:"id" valid:"required"`
 	AddressAccountSell   string                                                                    `json:"addressAccountSell" valid:"validHex40~ErrorAddressNotFollowingRegex"`
@@ -253,13 +213,6 @@ type CurrencyExchangeContractMutable struct {
 	MaxAmount            int64                                                                     `json:"maxAmount" valid:"range(0|9223372036854775807)"`
 	StartDate            int64                                                                     `json:"startDate" valid:"range(0|9223372036854775807)"`
 	EndDate              int64                                                                     `json:"endDate" valid:"range(0|9223372036854775807)"`
-}
-
-type CurrencyExchangeContract struct {
-	CurrencyExchangeContractMutable
-	BankAddress     string `json:"bankAddress"`
-	BankDisplayName string `json:"bankDisplayName"`
-	DocType         string `json:"docType"`
 }
 
 type BaseEvent struct {

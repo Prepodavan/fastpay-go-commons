@@ -7,353 +7,353 @@ import (
 )
 
 type BankResponse struct {
-	Data models.Bank `json:"data"`
+	Data models.Bank `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type MakeSafeDealDepositResponse struct {
-	Data []models.EventBatchItem `json:"data"`
+	Data []models.EventBatchItem `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type InvoiceCreateResponse struct {
-	IsInvoiceCreate bool `json:"isInvoiceCreate"`
+	IsInvoiceCreate bool `yaml:"isInvoiceCreate" json:"isInvoiceCreate"`
 	BaseResponse
 }
 
 type AccountListResponse struct {
-	Data []models.Account `json:"data"`
+	Data []models.Account `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type ArbitratorListResponse struct {
-	Data []models.Arbitrator `json:"data"`
+	Data []models.Arbitrator `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type Metadata struct {
-	FetchedRecordsCount int32  `json:"fetchedRecordsCount"`
-	Bookmark            string `json:"bookmark"`
+	FetchedRecordsCount int32  `yaml:"fetchedRecordsCount" json:"fetchedRecordsCount"`
+	Bookmark            string `yaml:"bookmark" json:"bookmark"`
 }
 
 type AccountPageData struct {
-	Metadata Metadata         `json:"metadata"`
-	Items    []models.Account `json:"items"`
+	Metadata Metadata         `yaml:"metadata" json:"metadata"`
+	Items    []models.Account `yaml:"items" json:"items"`
 }
 
 type AccountPageResponse struct {
-	Data AccountPageData `json:"data"`
+	Data AccountPageData `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type SenderAddressData struct {
-	Address string `json:"address"`
+	Address string `yaml:"address" json:"address"`
 }
 
 type SenderAddressResponse struct {
-	Data SenderAddressData `json:"data"`
+	Data SenderAddressData `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type BankListResponse struct {
-	Data []models.Bank `json:"data"`
+	Data []models.Bank `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type BankTotalData struct {
-	Total int `json:"total"`
+	Total int `yaml:"total" json:"total"`
 }
 
 type BankTotalResponse struct {
-	Data BankTotalData `json:"data"`
+	Data BankTotalData `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type BankPageData struct {
-	Metadata Metadata      `json:"metadata"`
-	Items    []models.Bank `json:"items"`
+	Metadata Metadata      `yaml:"metadata" json:"metadata"`
+	Items    []models.Bank `yaml:"items" json:"items"`
 }
 
 type BankPageResponse struct {
-	Data BankPageData `json:"data"`
+	Data BankPageData `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type SenderIsBankResponse struct {
-	Data bool `json:"data"`
+	Data bool `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type GetAvailablePlatformsResponse struct {
-	Data string `json:"data"`
+	Data string `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type CurrencyListResponse struct {
-	Data []models.Currency `json:"data"`
+	Data []models.Currency `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type CurrencyPageData struct {
-	Metadata Metadata          `json:"metadata"`
-	Items    []models.Currency `json:"items"`
+	Metadata Metadata          `yaml:"metadata" json:"metadata"`
+	Items    []models.Currency `yaml:"items" json:"items"`
 }
 
 type CurrencyPageResponse struct {
-	Data CurrencyPageData `json:"data"`
+	Data CurrencyPageData `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type CurrencyResponse struct {
-	Data models.Currency `json:"data"`
+	Data models.Currency `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type BankBalanceData struct {
-	Liabilities []models.AmountOfBank `json:"liabilities"`
-	Claims      []models.AmountOfBank `json:"claims"`
-	Issue       int64                 `json:"issue"`
-	IssueLimit  int64                 `json:"issueLimit"` // TODO убрать если не быдет использоваться
+	Liabilities []models.AmountOfBank `yaml:"liabilities" json:"liabilities"`
+	Claims      []models.AmountOfBank `yaml:"claims" json:"claims"`
+	Issue       int64                 `yaml:"issue" json:"issue"`
+	IssueLimit  int64                 `yaml:"issueLimit" json:"issueLimit"` // TODO убрать если не быдет использоваться
 }
 
 type BankBalanceResponse struct {
-	Data BankBalanceData `json:"data"`
+	Data BankBalanceData `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type ClearingResultResponse struct {
-	Data models.ClearingData `json:"data"`
+	Data models.ClearingData `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type ClearingListResponse struct {
-	Data []models.ClearingData `json:"data"`
+	Data []models.ClearingData `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type ClaimsListResponse struct {
-	Data []models.ClaimsItem `json:"data"`
+	Data []models.ClaimsItem `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type ClearingPageData struct {
-	Metadata Metadata              `json:"metadata"`
-	Items    []models.ClearingData `json:"items"`
+	Metadata Metadata              `yaml:"metadata" json:"metadata"`
+	Items    []models.ClearingData `yaml:"items" json:"items"`
 }
 
 type ClearingPageResponse struct {
-	Data ClearingPageData `json:"data"`
+	Data ClearingPageData `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type ClaimsPageData struct {
-	Metadata Metadata            `json:"metadata"`
-	Items    []models.ClaimsItem `json:"items"`
+	Metadata Metadata            `yaml:"metadata" json:"metadata"`
+	Items    []models.ClaimsItem `yaml:"items" json:"items"`
 }
 
 type ClaimsPageResponse struct {
-	Data ClaimsPageData `json:"data"`
+	Data ClaimsPageData `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type BankClaimsLiabilities struct {
-	Claims      map[string]int64 `json:"claims"`
-	Liabilities map[string]int64 `json:"liabilities"`
+	Claims      map[string]int64 `yaml:"claims" json:"claims"`
+	Liabilities map[string]int64 `yaml:"liabilities" json:"liabilities"`
 }
 
 type BankClaimsLiabilitiesResponse struct {
-	Data BankClaimsLiabilities `json:"data"`
+	Data BankClaimsLiabilities `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type ClientBankItemResponse struct {
-	Address                string                                                              `json:"address"`
-	BankDisplayName        string                                                              `json:"bankDisplayName"`
-	AvailableContractTypes []currency_exchange_contract_type_enum.CurrencyExchangeContractType `json:"availableContractTypes"`
-	State                  state_enum.State                                                    `json:"state"`
-	CountryCode            string                                                              `json:"countryCode"`
-	Params                 map[string]string                                                   `json:"params"`
-	Owner                  string                                                              `json:"owner"`
+	Address                string                                                              `yaml:"address" json:"address"`
+	BankDisplayName        string                                                              `yaml:"bankDisplayName" json:"bankDisplayName"`
+	AvailableContractTypes []currency_exchange_contract_type_enum.CurrencyExchangeContractType `yaml:"availableContractTypes" json:"availableContractTypes"`
+	State                  state_enum.State                                                    `yaml:"state" json:"state"`
+	CountryCode            string                                                              `yaml:"countryCode" json:"countryCode"`
+	Params                 map[string]string                                                   `yaml:"params" json:"params"`
+	Owner                  string                                                              `yaml:"owner" json:"owner"`
 }
 
 type ClientBankResponse struct {
-	Data ClientBankItemResponse `json:"data"`
+	Data ClientBankItemResponse `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type ClientBankPageData struct {
-	Metadata Metadata                 `json:"metadata"`
-	Items    []ClientBankItemResponse `json:"items"`
+	Metadata Metadata                 `yaml:"metadata" json:"metadata"`
+	Items    []ClientBankItemResponse `yaml:"items" json:"items"`
 }
 
 type ClientBankPageResponse struct {
-	Data ClientBankPageData `json:"data"`
+	Data ClientBankPageData `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type ClientBankParam struct {
-	Key   string `json:"key"`
-	Value string `json:"value"`
+	Key   string `yaml:"key" json:"key"`
+	Value string `yaml:"value" json:"value"`
 }
 
 type CustomerPageData struct {
-	Metadata Metadata          `json:"metadata"`
-	Items    []models.Customer `json:"items"`
+	Metadata Metadata          `yaml:"metadata" json:"metadata"`
+	Items    []models.Customer `yaml:"items" json:"items"`
 }
 
 type CustomerPageResponse struct {
-	Data CustomerPageData `json:"data"`
+	Data CustomerPageData `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type CustomersListResponse struct {
-	Data []models.Customer `json:"data"`
+	Data []models.Customer `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type CustomerResponse struct {
-	Data models.Customer `json:"data"`
+	Data models.Customer `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type ContractResponse struct {
-	Data models.CurrencyExchangeContract `json:"data"`
+	Data models.CurrencyExchangeContract `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type CurrencyExchangeContractPageData struct {
-	Metadata Metadata                          `json:"metadata"`
-	Items    []models.CurrencyExchangeContract `json:"items"`
+	Metadata Metadata                          `yaml:"metadata" json:"metadata"`
+	Items    []models.CurrencyExchangeContract `yaml:"items" json:"items"`
 }
 
 type CurrencyExchangeContractPageResponse struct {
-	Data CurrencyExchangeContractPageData `json:"data"`
+	Data CurrencyExchangeContractPageData `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type GetBestRoutesResponse struct {
-	Data [][]models.CurrencyContractRoutingItem `json:"data"`
+	Data [][]models.CurrencyContractRoutingItem `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type WithdrawResultResponse struct {
-	Data *models.WithdrawResult `json:"data"`
+	Data *models.WithdrawResult `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type WithdrawConfirmResponse struct {
-	History models.TransactionHistory `json:"history"`
-	Data    string                    `json:"data"`
+	History models.TransactionHistory `yaml:"history" json:"history"`
+	Data    string                    `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type WithdrawRejectResponse WithdrawConfirmResponse
 
 type TransferResponse struct {
-	History models.TransactionHistory `json:"history"`
-	Data    string                    `json:"data"`
+	History models.TransactionHistory `yaml:"history" json:"history"`
+	Data    string                    `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type TransferBatchResponse struct {
-	Histories []models.TransactionHistory `json:"histories"`
-	Data      string                      `json:"data"`
+	Histories []models.TransactionHistory `yaml:"histories" json:"histories"`
+	Data      string                      `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type TopupResponse struct {
-	Data string `json:"data"`
+	Data string `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type ExecutedTransactionCurrencyExchangeContractData struct {
-	Transactions         []models.ExecutedTransactionCurrencyExchangeContractItem `json:"transactions"`
-	Commission           int64                                                    `json:"commission"`
-	AmountInput          int64                                                    `json:"amountInput"`
-	AmountOutput         int64                                                    `json:"amountOutput"`
-	TransactionHistories []models.TransactionHistory                              `json:"transactionHistories"`
+	Transactions         []models.ExecutedTransactionCurrencyExchangeContractItem `yaml:"transactions" json:"transactions"`
+	Commission           int64                                                    `yaml:"commission" json:"commission"`
+	AmountInput          int64                                                    `yaml:"amountInput" json:"amountInput"`
+	AmountOutput         int64                                                    `yaml:"amountOutput" json:"amountOutput"`
+	TransactionHistories []models.TransactionHistory                              `yaml:"transactionHistories" json:"transactionHistories"`
 }
 
 type ExecutedTransactionCurrencyExchangeContractResponse struct {
-	Data ExecutedTransactionCurrencyExchangeContractData `json:"data"`
+	Data ExecutedTransactionCurrencyExchangeContractData `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type CrossTransactionHistoryPageData struct {
-	Metadata Metadata                         `json:"metadata"`
-	Items    []models.CrossTransactionHistory `json:"items"`
+	Metadata Metadata                         `yaml:"metadata" json:"metadata"`
+	Items    []models.CrossTransactionHistory `yaml:"items" json:"items"`
 }
 
 type CrossTransactionHistoryPageResponse struct {
-	Data CrossTransactionHistoryPageData `json:"data"`
+	Data CrossTransactionHistoryPageData `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type AccountAddressResponse struct {
-	Data string `json:"data"`
+	Data string `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type GetBankBalanceTotalResponseData struct {
-	Bank        models.BankInfo       `json:"bank"`
-	Liabilities []models.AmountOfBank `json:"liabilities"`
-	Claims      []models.AmountOfBank `json:"claims"`
-	Issue       int64                 `json:"issue"`
-	IssueLimit  int64                 `json:"issueLimit"`
+	Bank        models.BankInfo       `yaml:"bank" json:"bank"`
+	Liabilities []models.AmountOfBank `yaml:"liabilities" json:"liabilities"`
+	Claims      []models.AmountOfBank `yaml:"claims" json:"claims"`
+	Issue       int64                 `yaml:"issue" json:"issue"`
+	IssueLimit  int64                 `yaml:"issueLimit" json:"issueLimit"`
 }
 
 type GetBankBalanceTotalResponse struct {
-	Data []GetBankBalanceTotalResponseData `json:"data"`
+	Data []GetBankBalanceTotalResponseData `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type InvoiceResponse struct {
-	Data models.Invoice `json:"data"`
+	Data models.Invoice `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type InvoiceListResponse struct {
-	Data []models.Invoice `json:"data"`
+	Data []models.Invoice `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type InvoicePageData struct {
-	Metadata Metadata         `json:"metadata"`
-	Items    []models.Invoice `json:"items"`
+	Metadata Metadata         `yaml:"metadata" json:"metadata"`
+	Items    []models.Invoice `yaml:"items" json:"items"`
 }
 
 type InvoicePageResponse struct {
-	Data InvoicePageData `json:"data"`
+	Data InvoicePageData `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type LimitData struct {
-	Value int64 `json:"value"`
+	Value int64 `yaml:"value" json:"value"`
 }
 
 type LimitResponse struct {
-	Data LimitData `json:"data"`
+	Data LimitData `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type AccountLimitsData struct {
-	OperationLimit int64 `json:"operationLimit"`
-	BalanceLimit   int64 `json:"balanceLimit"`
-	DailyLimit     int64 `json:"dailyLimit"`
-	MonthlyLimit   int64 `json:"monthlyLimit"`
+	OperationLimit int64 `yaml:"operationLimit" json:"operationLimit"`
+	BalanceLimit   int64 `yaml:"balanceLimit" json:"balanceLimit"`
+	DailyLimit     int64 `yaml:"dailyLimit" json:"dailyLimit"`
+	MonthlyLimit   int64 `yaml:"monthlyLimit" json:"monthlyLimit"`
 }
 
 type AccountLimitsResponse struct {
-	Data AccountLimitsData `json:"data"`
+	Data AccountLimitsData `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type SafeDealResponse struct {
-	Data models.DealResponseData `json:"data"`
+	Data models.DealResponseData `yaml:"data" json:"data"`
 	BaseResponse
 }
 
 type SafeDealDepositResponse struct {
-	Data models.SafeDealDeposit `json:"data"`
+	Data models.SafeDealDeposit `yaml:"data" json:"data"`
 	BaseResponse
 }

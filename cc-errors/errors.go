@@ -1,9 +1,9 @@
 package cc_errors
 
 type BaseError struct {
-	Code    int    `json:"code"`
-	Message string `json:"message"`
-	Data    string `json:"data"`
+	Code    int    `yaml:"code" json:"code"`
+	Message string `yaml:"message" json:"message"`
+	Data    string `yaml:"data" json:"data"`
 }
 
 const (

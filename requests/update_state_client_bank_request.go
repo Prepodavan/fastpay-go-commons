@@ -7,8 +7,8 @@ import (
 
 type UpdateStateClientBankRequest struct {
 	TechnicalSignRequest
-	State   state_enum.State `json:"state" valid:"required"`
-	Address string           `json:"address" valid:"required~ErrorBankAddressNotPassed"`
+	State   state_enum.State `yaml:"state" json:"state" valid:"required"`
+	Address string           `yaml:"address" json:"address" valid:"required~ErrorBankAddressNotPassed"`
 }
 
 func (request *UpdateStateClientBankRequest) String() string {

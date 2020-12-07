@@ -6,7 +6,7 @@ import (
 )
 
 type GetByIdentifierRequest struct {
-	Identifier string `json:"identifier" valid:"required~ErrorIdentifierNotPassed,validHex64~ErrorIdentifierNotFolowingRegex"`
+	Identifier string `yaml:"identifier" json:"identifier" valid:"required~ErrorIdentifierNotPassed,validHex64~ErrorIdentifierNotFolowingRegex"`
 }
 
 func (g *GetByIdentifierRequest) Handler() rcc.Handler {

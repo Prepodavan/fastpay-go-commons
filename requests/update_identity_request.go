@@ -7,10 +7,9 @@ import (
 
 type UpdateIdentityRequest struct {
 	TechnicalSignRequest
-	Address      string                          `json:"address" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
-	IdentityType identity_type_enum.IdentityType `json:"identityType" valid:"required~ErrorIdentityTypeNotPassed"`
+	Address      string                          `yaml:"address" json:"address" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
+	IdentityType identity_type_enum.IdentityType `yaml:"identityType" json:"identityType" valid:"required~ErrorIdentityTypeNotPassed"`
 }
-
 
 func (request *UpdateIdentityRequest) String() string {
 	return fmt.Sprintf("updateIdentity%s%v", request.Address, request.IdentityType)

@@ -1,9 +1,9 @@
 package requests
 
 type TechnicalSignRequest struct {
-	TechnicalMsgHash string  `json:"technicalMsgHash"`
-	TechnicalAddress string  `json:"technicalAddress" valid:"validHex40~ErrorAddressNotFollowingRegex"`
-	TechnicalSig     SignDto `json:"technicalSig"`
+	TechnicalMsgHash string  `yaml:"technicalMsgHash" json:"technicalMsgHash"`
+	TechnicalAddress string  `yaml:"technicalAddress" json:"technicalAddress" valid:"validHex40~ErrorAddressNotFollowingRegex"`
+	TechnicalSig     SignDto `yaml:"technicalSig" json:"technicalSig"`
 }
 
 func (tsr *TechnicalSignRequest) GetTechnicalMsgHash() string {

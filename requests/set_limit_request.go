@@ -5,7 +5,7 @@ import "fmt"
 type SetLimitRequest struct {
 	TechnicalSignRequest
 	GetLimitRequest
-	Value int64 `json:"value" valid:"range(0|9223372036854775807)"`
+	Value int64 `yaml:"value" json:"value" valid:"range(0|9223372036854775807)"`
 }
 
 func (request *SetLimitRequest) String() string {

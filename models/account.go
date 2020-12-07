@@ -11,20 +11,20 @@ import (
 // +k8s:deepcopy-gen=true
 // +gen * set ring linkedlist slice:"Any,Where,Count,Select[AddressOfAccount],Aggregate[AddressOfAccount],All"
 type Account struct {
-	Address                string                                                      `json:"address"`
-	State                  stateEnum.State                                             `json:"state"`
-	CurrencyCode           int                                                         `json:"currencyCode"`
-	JuridicalType          juridicalEnum.JuridicalType                                 `json:"juridicalType"`
-	ClientBankAddress      string                                                      `json:"clientBankAddress"`
-	IdentityType           identityEnum.IdentityType                                   `json:"identityType"`
-	Owner                  string                                                      `json:"owner"`
-	Type                   accountTypeEnum.AccountType                                 `json:"type"`
-	AvailableContractTypes []currencyExchangeContractEnum.CurrencyExchangeContractType `json:"availableContractTypes"`
-	Identifiers            []string                                                    `json:"identifiers"`
-	Encrypted              bool                                                        `json:"encrypted"`
-	Created                int64                                                       `json:"created"`
-	PublicKey              string                                                      `json:"publicKey"`
-	DocType                string                                                      `json:"docType"`
+	Address                string                                                      `yaml:"address" json:"address"`
+	State                  stateEnum.State                                             `yaml:"state" json:"state"`
+	CurrencyCode           int                                                         `yaml:"currencyCode" json:"currencyCode"`
+	JuridicalType          juridicalEnum.JuridicalType                                 `yaml:"juridicalType" json:"juridicalType"`
+	ClientBankAddress      string                                                      `yaml:"clientBankAddress" json:"clientBankAddress"`
+	IdentityType           identityEnum.IdentityType                                   `yaml:"identityType" json:"identityType"`
+	Owner                  string                                                      `yaml:"owner" json:"owner"`
+	Type                   accountTypeEnum.AccountType                                 `yaml:"type" json:"type"`
+	AvailableContractTypes []currencyExchangeContractEnum.CurrencyExchangeContractType `yaml:"availableContractTypes" json:"availableContractTypes"`
+	Identifiers            []string                                                    `yaml:"identifiers" json:"identifiers"`
+	Encrypted              bool                                                        `yaml:"encrypted" json:"encrypted"`
+	Created                int64                                                       `yaml:"created" json:"created"`
+	PublicKey              string                                                      `yaml:"publicKey" json:"publicKey"`
+	DocType                string                                                      `yaml:"docType" json:"docType"`
 }
 
 func (in *Account) Hash() string {

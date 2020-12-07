@@ -1,5 +1,5 @@
 package requests
 
 type GetByBikRequest struct {
-	Bik string `json:"bik" valid:"required"`
+	Bik string `yaml:"bik" json:"bik" valid:"required"`
 }

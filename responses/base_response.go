@@ -1,8 +1,8 @@
 package responses
 
 type BaseResponse struct {
-	ErrorCode     int    `json:"errorCode"`
-	ErrorMessage  string `json:"errorMessage"`
-	TransactionId string `json:"transactionId"`
-	SenderAddress string `json:"senderAddress"`
+	ErrorCode     int    `yaml:"errorCode" json:"errorCode"`
+	ErrorMessage  string `yaml:"errorMessage" json:"errorMessage"`
+	TransactionId string `yaml:"transactionId" json:"transactionId"`
+	SenderAddress string `yaml:"senderAddress" json:"senderAddress"`
 }

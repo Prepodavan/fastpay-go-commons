@@ -6,7 +6,7 @@ import (
 )
 
 type GetByAddressRequest struct {
-	Address string `json:"address" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
+	Address string `yaml:"address" json:"address" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
 }
 
 func (g *GetByAddressRequest) Hash() string {

@@ -1,7 +1,7 @@
 package requests
 
 type TransferBatchRequest struct {
-	Transfers []TransferRequest `json:"transfers" valid:"required"`
+	Transfers []TransferRequest `yaml:"transfers" json:"transfers" valid:"required"`
 }
 
 func (transferRequest *TransferBatchRequest) SetDefaults() {

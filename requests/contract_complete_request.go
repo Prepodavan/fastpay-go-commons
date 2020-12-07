@@ -1,5 +1,5 @@
 package requests
 
 type ContractCompleteRequest struct {
-	Id string `json:"id" valid:"required,uuid"`
+	Id string `yaml:"id" json:"id" valid:"required,uuid"`
 }

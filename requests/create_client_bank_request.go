@@ -4,10 +4,10 @@ import "fmt"
 
 type CreateClientBankRequest struct {
 	TechnicalSignRequest
-	Address         string            `json:"address" valid:"required~ErrorBankAddressNotPassed"`
-	BankDisplayName string            `json:"bankDisplayName" valid:"required~ErrorBankDisplayNameNotPassed"`
-	CountryCode     string            `json:"countryCode"`
-	Params          map[string]string `json:"params"`
+	Address         string            `yaml:"address" json:"address" valid:"required~ErrorBankAddressNotPassed"`
+	BankDisplayName string            `yaml:"bankDisplayName" json:"bankDisplayName" valid:"required~ErrorBankDisplayNameNotPassed"`
+	CountryCode     string            `yaml:"countryCode" json:"countryCode"`
+	Params          map[string]string `yaml:"params" json:"params"`
 }
 
 func (createClientBankRequest *CreateClientBankRequest) SetDefaults() {

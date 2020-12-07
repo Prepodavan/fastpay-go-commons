@@ -4,7 +4,7 @@ import "fmt"
 
 type SetBankConfRequest struct {
 	TechnicalSignRequest
-	Conf string `json:"conf" valid:"required"`
+	Conf string `yaml:"conf" json:"conf" valid:"required"`
 }
 
 func (request *SetBankConfRequest) String() string {

@@ -7,17 +7,17 @@ import (
 )
 
 type Bank struct {
-	Address                string                                  `json:"address"`
-	Name                   string                                  `json:"name"`
-	BIK                    string                                  `json:"bik"`
-	State                  state_enum.State                        `json:"state"`
-	CreatedBy              string                                  `json:"createdBy"`
-	Encrypted              bool                                    `json:"encrypted"`
-	MSPId                  string                                  `json:"mspId"`
-	Roles                  []roleEnum.AccessRole                   `json:"roles"`
-	AvailableContractTypes []typeEnum.CurrencyExchangeContractType `json:"availableContractTypes"`
-	Conf                   string                                  `json:"conf"`
-	DocType                string                                  `json:"docType"`
+	Address                string                                  `yaml:"address" yaml:"address" json:"address"`
+	Name                   string                                  `yaml:"name" json:"name"`
+	BIK                    string                                  `yaml:"bik" json:"bik"`
+	State                  state_enum.State                        `yaml:"state" json:"state"`
+	CreatedBy              string                                  `yaml:"createdBy" json:"createdBy"`
+	Encrypted              bool                                    `yaml:"encrypted" json:"encrypted"`
+	MSPId                  string                                  `yaml:"mspId" json:"mspId"`
+	Roles                  []roleEnum.AccessRole                   `yaml:"roles" json:"roles"`
+	AvailableContractTypes []typeEnum.CurrencyExchangeContractType `yaml:"availableContractTypes" json:"availableContractTypes"`
+	Conf                   string                                  `yaml:"conf" json:"conf"`
+	DocType                string                                  `yaml:"docType" json:"docType"`
 }
 
 func (b *Bank) GetAddress() string {

@@ -7,8 +7,8 @@ import (
 
 type UpdateJuridicalRequest struct {
 	TechnicalSignRequest
-	Address       string                            `json:"address" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
-	JuridicalType juridical_type_enum.JuridicalType `json:"juridicalType" valid:"required~ErrorJuridicalTypeNotPassed"`
+	Address       string                            `yaml:"address" json:"address" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
+	JuridicalType juridical_type_enum.JuridicalType `yaml:"juridicalType" json:"juridicalType" valid:"required~ErrorJuridicalTypeNotPassed"`
 }
 
 func (request *UpdateJuridicalRequest) String() string {

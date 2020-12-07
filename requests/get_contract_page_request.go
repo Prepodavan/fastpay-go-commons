@@ -7,14 +7,14 @@ import (
 )
 
 type GetContractPageRequest struct {
-	PageSize      int32                                                                       `json:"pageSize" valid:"required"`
-	Bookmark      string                                                                      `json:"bookmark"`
-	EndDate       int64                                                                       `json:"endDate" valid:"range(0|9223372036854775807)"`
-	Status        filter_contract_state_enum.FilterContractState                              `json:"status" valid:"range(0|9223372036854775807)"`
-	OperationType operation_deal_type_enum.OperationDealType                                  `json:"operationType" valid:"range(0|9223372036854775807)"`
-	Address       string                                                                      `json:"address" valid:"validHex40~ErrorAddressNotFollowingRegex"`
-	CurrencyCode  int                                                                         `json:"currencyCode" valid:"range(0|999)~ErrorCurrencyCodeRange"`
-	Category      currency_exchange_contract_category_enum.CurrencyExchangeContractCategory `json:"category"`
+	PageSize      int32                                                                     `yaml:"pageSize" json:"pageSize" valid:"required"`
+	Bookmark      string                                                                    `yaml:"bookmark" json:"bookmark"`
+	EndDate       int64                                                                     `yaml:"endDate" json:"endDate" valid:"range(0|9223372036854775807)"`
+	Status        filter_contract_state_enum.FilterContractState                            `yaml:"status" json:"status" valid:"range(0|9223372036854775807)"`
+	OperationType operation_deal_type_enum.OperationDealType                                `yaml:"operationType" json:"operationType" valid:"range(0|9223372036854775807)"`
+	Address       string                                                                    `yaml:"address" json:"address" valid:"validHex40~ErrorAddressNotFollowingRegex"`
+	CurrencyCode  int                                                                       `yaml:"currencyCode" json:"currencyCode" valid:"range(0|999)~ErrorCurrencyCodeRange"`
+	Category      currency_exchange_contract_category_enum.CurrencyExchangeContractCategory `yaml:"category" json:"category"`
 }
 
 func (getContractPage *GetContractPageRequest) SetDefaults() {

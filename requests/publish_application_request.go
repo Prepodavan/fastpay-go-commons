@@ -1,9 +1,9 @@
 package requests
 
 type PublishApplicationRequest struct {
-	Id           string  `json:"id" valid:"required,uuid"`
-	AddressOwner string  `json:"addressOwner" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
-	MsgHash      string  `json:"msgHash" valid:"required"`
-	Sig          SignDto `json:"sig" valid:"required"`
-	Exp          int64   `json:"exp" valid:"required~ErrorTimestampNotPassed"`
+	Id           string  `yaml:"id" json:"id" valid:"required,uuid"`
+	AddressOwner string  `yaml:"addressOwner" json:"addressOwner" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
+	MsgHash      string  `yaml:"msgHash" json:"msgHash" valid:"required"`
+	Sig          SignDto `yaml:"sig" json:"sig" valid:"required"`
+	Exp          int64   `yaml:"exp" json:"exp" valid:"required~ErrorTimestampNotPassed"`
 }

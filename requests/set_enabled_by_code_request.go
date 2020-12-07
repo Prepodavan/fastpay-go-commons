@@ -4,8 +4,8 @@ import "fmt"
 
 type SetEnabledByCodeRequest struct {
 	TechnicalSignRequest
-	Code    int  `json:"code" valid:"required,range(0|9223372036854775807)"`
-	Enabled bool `json:"enabled"`
+	Code    int  `yaml:"code" json:"code" valid:"required,range(0|9223372036854775807)"`
+	Enabled bool `yaml:"enabled" json:"enabled"`
 }
 
 func (request *SetEnabledByCodeRequest) String() string {

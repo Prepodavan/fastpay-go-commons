@@ -9,8 +9,8 @@ type GetPageRequest struct {
 	currencyCodeOption int
 	ccName             string
 	methodName         string
-	PageSize           int32  `json:"pageSize" valid:"required"`
-	Bookmark           string `json:"bookmark"`
+	PageSize           int32  `yaml:"pageSize" json:"pageSize" valid:"required"`
+	Bookmark           string `yaml:"bookmark" json:"bookmark"`
 }
 
 func (g *GetPageRequest) Handler() rcc.Handler {

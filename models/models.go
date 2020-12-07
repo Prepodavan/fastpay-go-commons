@@ -21,128 +21,128 @@ import (
 )
 
 type Arbitrator struct {
-	Address string `json:"address"`
-	Name    string `json:"name"`
-	DocType string `json:"docType"`
+	Address string `yaml:"address" json:"address"`
+	Name    string `yaml:"name" json:"name"`
+	DocType string `yaml:"docType" json:"docType"`
 }
 
 type Currency struct {
-	Code       int                             `json:"code"`
-	Name       string                          `json:"name"`
-	Type       currency_type_enum.CurrencyType `json:"type"`
-	Unit       string                          `json:"unit"`
-	Symbol     string                          `json:"symbol"`
-	Decimals   int                             `json:"decimals"`
-	Properties map[string]string               `json:"properties"`
-	Enabled    bool                            `json:"enabled"`
-	DocType    string                          `json:"docType"`
+	Code       int                             `yaml:"code" json:"code"`
+	Name       string                          `yaml:"name" json:"name"`
+	Type       currency_type_enum.CurrencyType `yaml:"type" json:"type"`
+	Unit       string                          `yaml:"unit" json:"unit"`
+	Symbol     string                          `yaml:"symbol" json:"symbol"`
+	Decimals   int                             `yaml:"decimals" json:"decimals"`
+	Properties map[string]string               `yaml:"properties" json:"properties"`
+	Enabled    bool                            `yaml:"enabled" json:"enabled"`
+	DocType    string                          `yaml:"docType" json:"docType"`
 }
 
 type TransactionHistory struct {
-	TxId          string                                    `json:"txId"`
-	AddressFrom   string                                    `json:"addressFrom"`
-	AddressTo     string                                    `json:"addressTo"`
-	TxType        transaction_type_enum.TransactionType     `json:"txType"`
-	Status        transaction_status_enum.TransactionStatus `json:"status"`
-	Amount        int64                                     `json:"amount"`
-	CurrencyCode  int                                       `json:"currencyCode"`
-	ErrorCode     int                                       `json:"errorCode"`
-	ErrorMessage  string                                    `json:"errorMessage"`
-	Payload       string                                    `json:"payload"`
-	Timestamp     int64                                     `json:"timestamp"`
-	TransactionId string                                    `json:"transactionId"`
-	SenderAddress string                                    `json:"senderAddress"`
-	Data          string                                    `json:"data"`
-	InvoiceNumber string                                    `json:"invoiceNumber"`
-	OrdinalNumber int                                       `json:"ordinalNumber"`
+	TxId          string                                    `yaml:"txId" json:"txId"`
+	AddressFrom   string                                    `yaml:"addressFrom" json:"addressFrom"`
+	AddressTo     string                                    `yaml:"addressTo" json:"addressTo"`
+	TxType        transaction_type_enum.TransactionType     `yaml:"txType" json:"txType"`
+	Status        transaction_status_enum.TransactionStatus `yaml:"status" json:"status"`
+	Amount        int64                                     `yaml:"amount" json:"amount"`
+	CurrencyCode  int                                       `yaml:"currencyCode" json:"currencyCode"`
+	ErrorCode     int                                       `yaml:"errorCode" json:"errorCode"`
+	ErrorMessage  string                                    `yaml:"errorMessage" json:"errorMessage"`
+	Payload       string                                    `yaml:"payload" json:"payload"`
+	Timestamp     int64                                     `yaml:"timestamp" json:"timestamp"`
+	TransactionId string                                    `yaml:"transactionId" json:"transactionId"`
+	SenderAddress string                                    `yaml:"senderAddress" json:"senderAddress"`
+	Data          string                                    `yaml:"data" json:"data"`
+	InvoiceNumber string                                    `yaml:"invoiceNumber" json:"invoiceNumber"`
+	OrdinalNumber int                                       `yaml:"ordinalNumber" json:"ordinalNumber"`
 }
 
 type TransactionHistoryEvent struct {
-	History TransactionHistory `json:"history"`
+	History TransactionHistory `yaml:"history" json:"history"`
 }
 
 type ExecutedTransactionCurrencyExchangeContractItem struct {
-	From          string                                                 `json:"from"`
-	To            string                                                 `json:"to"`
-	CurrencyCode  int                                                    `json:"currencyCode"`
-	Amount        int64                                                  `json:"amount"`
-	InvoiceNumber string                                                 `json:"invoiceNumber"`
-	Payload       cross_transaction_payload_enum.CrossTransactionPayload `json:"payload"`
+	From          string                                                 `yaml:"from" json:"from"`
+	To            string                                                 `yaml:"to" json:"to"`
+	CurrencyCode  int                                                    `yaml:"currencyCode" json:"currencyCode"`
+	Amount        int64                                                  `yaml:"amount" json:"amount"`
+	InvoiceNumber string                                                 `yaml:"invoiceNumber" json:"invoiceNumber"`
+	Payload       cross_transaction_payload_enum.CrossTransactionPayload `yaml:"payload" json:"payload"`
 }
 
 type CrossTransactionHistory struct {
-	Routes               []CurrencyContractRoutingItem                        `json:"routes"`
-	AddressFrom          string                                               `json:"addressFrom"`
-	Timestamp            int64                                                `json:"timestamp"`
-	TransactionId        string                                               `json:"transactionId"`
-	Amount               int64                                                `json:"amount"`
-	Payload              string                                               `json:"payload"`
-	To                   string                                               `json:"to"`
-	EncryptedSecretKeys  []AccountSecretKey                                   `json:"encryptedSecretKeys"`
-	CurrencyCodeFrom     int                                                  `json:"currencyCodeFrom"`
-	CurrencyCodeTo       int                                                  `json:"currencyCodeTo"`
-	CustomerIdentifier   string                                               `json:"customerIdentifier"`
-	CountryCode          string                                               `json:"countryCode"`
-	Details              []ExecutedTransactionCurrencyExchangeContractItem    `json:"details"`
-	SenderAddress        string                                               `json:"senderAddress"`
-	BankAddress          string                                               `json:"bankAddress"`
-	Status               cross_transaction_status_enum.CrossTransactionStatus `json:"status"`
-	TxId                 string                                               `json:"txId"`
-	ErrorCode            int                                                  `json:"errorCode"`
-	ErrorMessage         string                                               `json:"errorMessage"`
-	Data                 string                                               `json:"data"`
-	InvoiceNumber        string                                               `json:"invoiceNumber"`
-	TransactionHistories []TransactionHistory                                 `json:"transactionHistories"`
+	Routes               []CurrencyContractRoutingItem                        `yaml:"routes" json:"routes"`
+	AddressFrom          string                                               `yaml:"addressFrom" json:"addressFrom"`
+	Timestamp            int64                                                `yaml:"timestamp" json:"timestamp"`
+	TransactionId        string                                               `yaml:"transactionId" json:"transactionId"`
+	Amount               int64                                                `yaml:"amount" json:"amount"`
+	Payload              string                                               `yaml:"payload" json:"payload"`
+	To                   string                                               `yaml:"to" json:"to"`
+	EncryptedSecretKeys  []AccountSecretKey                                   `yaml:"encryptedSecretKeys" json:"encryptedSecretKeys"`
+	CurrencyCodeFrom     int                                                  `yaml:"currencyCodeFrom" json:"currencyCodeFrom"`
+	CurrencyCodeTo       int                                                  `yaml:"currencyCodeTo" json:"currencyCodeTo"`
+	CustomerIdentifier   string                                               `yaml:"customerIdentifier" json:"customerIdentifier"`
+	CountryCode          string                                               `yaml:"countryCode" json:"countryCode"`
+	Details              []ExecutedTransactionCurrencyExchangeContractItem    `yaml:"details" json:"details"`
+	SenderAddress        string                                               `yaml:"senderAddress" json:"senderAddress"`
+	BankAddress          string                                               `yaml:"bankAddress" json:"bankAddress"`
+	Status               cross_transaction_status_enum.CrossTransactionStatus `yaml:"status" json:"status"`
+	TxId                 string                                               `yaml:"txId" json:"txId"`
+	ErrorCode            int                                                  `yaml:"errorCode" json:"errorCode"`
+	ErrorMessage         string                                               `yaml:"errorMessage" json:"errorMessage"`
+	Data                 string                                               `yaml:"data" json:"data"`
+	InvoiceNumber        string                                               `yaml:"invoiceNumber" json:"invoiceNumber"`
+	TransactionHistories []TransactionHistory                                 `yaml:"transactionHistories" json:"transactionHistories"`
 }
 
 type CrossTransactionHistoryEvent struct {
-	Data CrossTransactionHistory `json:"history"`
+	Data CrossTransactionHistory `yaml:"history" json:"history"`
 }
 
 type DepositedBalance struct {
 	WithdrawResult
-	IssueBankAddress string           `json:"issueBankAddress"`
-	BanksBalance     map[string]int64 `json:"banksBalance"`
+	IssueBankAddress string           `yaml:"issueBankAddress" json:"issueBankAddress"`
+	BanksBalance     map[string]int64 `yaml:"banksBalance" json:"banksBalance"`
 }
 
 type WithdrawResult struct {
-	AccountAmount    int64  `json:"accountAmount"`
-	IssueBankAmount  int64  `json:"issueBankAmount"`
-	BanksTotalAmount int64  `json:"banksTotalAmount"`
-	TxId             string `json:"txId"`
+	AccountAmount    int64  `yaml:"accountAmount" json:"accountAmount"`
+	IssueBankAmount  int64  `yaml:"issueBankAmount" json:"issueBankAmount"`
+	BanksTotalAmount int64  `yaml:"banksTotalAmount" json:"banksTotalAmount"`
+	TxId             string `yaml:"txId" json:"txId"`
 }
 
 type ClaimsItem struct {
-	CurrencyCode    int    `json:"currencyCode" valid:"required,range(0|999)~ErrorCurrencyCodeRange"`
-	BankClaims      string `json:"bankClaims" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
-	BankLiabilities string `json:"bankLiabilities" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
-	Amount          int64  `json:"amount"`
-	Unconfirmed     int64  `json:"unconfirmed"`
+	CurrencyCode    int    `yaml:"currencyCode" json:"currencyCode" valid:"required,range(0|999)~ErrorCurrencyCodeRange"`
+	BankClaims      string `yaml:"bankClaims" json:"bankClaims" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
+	BankLiabilities string `yaml:"bankLiabilities" json:"bankLiabilities" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
+	Amount          int64  `yaml:"amount" json:"amount"`
+	Unconfirmed     int64  `yaml:"unconfirmed" json:"unconfirmed"`
 }
 
 type ClaimsItemDoc struct {
 	ClaimsItem
-	DocType string `json:"docType"`
-	Id      string `json:"id"`
+	DocType string `yaml:"docType" json:"docType"`
+	Id      string `yaml:"id" json:"id"`
 }
 
 type BankInfo struct {
-	Address string `json:"address"`
-	Name    string `json:"name"`
-	Bik     string `json:"bik"`
+	Address string `yaml:"address" json:"address"`
+	Name    string `yaml:"name" json:"name"`
+	Bik     string `yaml:"bik" json:"bik"`
 }
 
 type ClearingInfo struct {
-	Id          string                   `json:"id"`
-	Banks       map[string]*ClearingBank `json:"banks"`
-	Owner       string                   `json:"owner"`
-	Claims      int64                    `json:"claims"`
-	Liabilities int64                    `json:"liabilities"`
-	History     []ClaimsItem             `json:"history"`
-	Netting     map[string]int64         `json:"netting"`
-	Procedure   []ClaimsItem             `json:"procedure"`
-	Created     int64                    `json:"created"`
-	DocType     string                   `json:"docType"`
+	Id          string                   `yaml:"id" json:"id"`
+	Banks       map[string]*ClearingBank `yaml:"banks" json:"banks"`
+	Owner       string                   `yaml:"owner" json:"owner"`
+	Claims      int64                    `yaml:"claims" json:"claims"`
+	Liabilities int64                    `yaml:"liabilities" json:"liabilities"`
+	History     []ClaimsItem             `yaml:"history" json:"history"`
+	Netting     map[string]int64         `yaml:"netting" json:"netting"`
+	Procedure   []ClaimsItem             `yaml:"procedure" json:"procedure"`
+	Created     int64                    `yaml:"created" json:"created"`
+	DocType     string                   `yaml:"docType" json:"docType"`
 }
 
 func (ci *ClearingInfo) GetSortBanksKeys() []string {
@@ -166,25 +166,25 @@ func (ci *ClearingInfo) GetSortNettingKeys() []string {
 }
 
 type ClearingBank struct {
-	Claims      int64 `json:"claims"`
-	Liabilities int64 `json:"liabilities"`
+	Claims      int64 `yaml:"claims" json:"claims"`
+	Liabilities int64 `yaml:"liabilities" json:"liabilities"`
 }
 
 type ClaimsAggregate struct {
-	Amount      int64    `json:"amount"`
-	Unconfirmed int64    `json:"unconfirmed"`
-	Ids         []string `json:"ids"`
+	Amount      int64    `yaml:"amount" json:"amount"`
+	Unconfirmed int64    `yaml:"unconfirmed" json:"unconfirmed"`
+	Ids         []string `yaml:"ids" json:"ids"`
 }
 
 type ClientBank struct {
-	Address                string                                                              `json:"address"`
-	BankDisplayName        string                                                              `json:"bankDisplayName"`
-	State                  state_enum.State                                                    `json:"state"`
-	CountryCode            string                                                              `json:"countryCode"`
-	Owner                  string                                                              `json:"owner"`
-	AvailableContractTypes []currency_exchange_contract_type_enum.CurrencyExchangeContractType `json:"availableContractTypes"`
-	Params                 map[string]string                                                   `json:"params"`
-	DocType                string                                                              `json:"docType"`
+	Address                string                                                              `yaml:"address" json:"address"`
+	BankDisplayName        string                                                              `yaml:"bankDisplayName" json:"bankDisplayName"`
+	State                  state_enum.State                                                    `yaml:"state" json:"state"`
+	CountryCode            string                                                              `yaml:"countryCode" json:"countryCode"`
+	Owner                  string                                                              `yaml:"owner" json:"owner"`
+	AvailableContractTypes []currency_exchange_contract_type_enum.CurrencyExchangeContractType `yaml:"availableContractTypes" json:"availableContractTypes"`
+	Params                 map[string]string                                                   `yaml:"params" json:"params"`
+	DocType                string                                                              `yaml:"docType" json:"docType"`
 }
 
 func (cb *ClientBank) GetSortParamsKeys() []string {
@@ -198,114 +198,114 @@ func (cb *ClientBank) GetSortParamsKeys() []string {
 }
 
 type CurrencyExchangeContractMutable struct {
-	Id                   string                                                                    `json:"id" valid:"required"`
-	AddressAccountSell   string                                                                    `json:"addressAccountSell" valid:"validHex40~ErrorAddressNotFollowingRegex"`
-	AddressAccountBuy    string                                                                    `json:"addressAccountBuy" valid:"validHex40~ErrorAddressNotFollowingRegex"`
-	AddressCommission    string                                                                    `json:"addressCommission" valid:"validHex40~ErrorAddressNotFollowingRegex"`
-	CurrencyInfoSell     CurrencyInfo                                                              `json:"currencyInfoSell"`
-	CurrencyInfoBuy      CurrencyInfo                                                              `json:"currencyInfoBuy"`
-	Category             currency_exchange_contract_category_enum.CurrencyExchangeContractCategory `json:"category"`
-	Type                 currency_exchange_contract_type_enum.CurrencyExchangeContractType         `json:"type"`
-	Price                float64                                                                   `json:"price" valid:"range(0|9223372036854775807)"`
-	FractionalCommission float64                                                                   `json:"fractionalCommission" valid:"range(0|1)"`
-	MaxCommission        int64                                                                     `json:"maxCommission" valid:"range(0|9223372036854775807)"`
-	MinAmount            int64                                                                     `json:"minAmount" valid:"range(0|9223372036854775807)"`
-	MaxAmount            int64                                                                     `json:"maxAmount" valid:"range(0|9223372036854775807)"`
-	StartDate            int64                                                                     `json:"startDate" valid:"range(0|9223372036854775807)"`
-	EndDate              int64                                                                     `json:"endDate" valid:"range(0|9223372036854775807)"`
+	Id                   string                                                                    `yaml:"id" json:"id" valid:"required"`
+	AddressAccountSell   string                                                                    `yaml:"addressAccountSell" json:"addressAccountSell" valid:"validHex40~ErrorAddressNotFollowingRegex"`
+	AddressAccountBuy    string                                                                    `yaml:"addressAccountBuy" json:"addressAccountBuy" valid:"validHex40~ErrorAddressNotFollowingRegex"`
+	AddressCommission    string                                                                    `yaml:"addressCommission" json:"addressCommission" valid:"validHex40~ErrorAddressNotFollowingRegex"`
+	CurrencyInfoSell     CurrencyInfo                                                              `yaml:"currencyInfoSell" json:"currencyInfoSell"`
+	CurrencyInfoBuy      CurrencyInfo                                                              `yaml:"currencyInfoBuy" json:"currencyInfoBuy"`
+	Category             currency_exchange_contract_category_enum.CurrencyExchangeContractCategory `yaml:"category" json:"category"`
+	Type                 currency_exchange_contract_type_enum.CurrencyExchangeContractType         `yaml:"type" json:"type"`
+	Price                float64                                                                   `yaml:"price" json:"price" valid:"range(0|9223372036854775807)"`
+	FractionalCommission float64                                                                   `yaml:"fractionalCommission" json:"fractionalCommission" valid:"range(0|1)"`
+	MaxCommission        int64                                                                     `yaml:"maxCommission" json:"maxCommission" valid:"range(0|9223372036854775807)"`
+	MinAmount            int64                                                                     `yaml:"minAmount" json:"minAmount" valid:"range(0|9223372036854775807)"`
+	MaxAmount            int64                                                                     `yaml:"maxAmount" json:"maxAmount" valid:"range(0|9223372036854775807)"`
+	StartDate            int64                                                                     `yaml:"startDate" json:"startDate" valid:"range(0|9223372036854775807)"`
+	EndDate              int64                                                                     `yaml:"endDate" json:"endDate" valid:"range(0|9223372036854775807)"`
 }
 
 type BaseEvent struct {
-	ChaincodeName string `json:"chaincodeName"`
-	FunctionName  string `json:"functionName"`
+	ChaincodeName string `yaml:"chaincodeName" json:"chaincodeName"`
+	FunctionName  string `yaml:"functionName" json:"functionName"`
 }
 
 type EventBatch struct {
-	Events []EventBatchItem `json:"events"`
+	Events []EventBatchItem `yaml:"events" json:"events"`
 }
 
 type EventBatchItem struct {
-	EventName string      `json:"eventName"`
-	Data      interface{} `json:"data"`
+	EventName string      `yaml:"eventName" json:"eventName"`
+	Data      interface{} `yaml:"data" json:"data"`
 }
 
 type CurrencyEvent struct {
 	BaseEvent
-	Data Currency `json:"data"`
+	Data Currency `yaml:"data" json:"data"`
 }
 
 type AccountEvent struct {
 	BaseEvent
-	Data Account `json:"data"`
+	Data Account `yaml:"data" json:"data"`
 }
 
 type ArbitratorEvent struct {
 	BaseEvent
-	Data Arbitrator `json:"data"`
+	Data Arbitrator `yaml:"data" json:"data"`
 }
 
 type BankEvent struct {
 	BaseEvent
-	Data Bank `json:"data"`
+	Data Bank `yaml:"data" json:"data"`
 }
 
 type AvailablePlatformsEvent struct {
 	BaseEvent
-	Data string `json:"data"`
+	Data string `yaml:"data" json:"data"`
 }
 
 type TransactionEvent struct {
 	BaseEvent
-	Data []TransactionHistory `json:"data"`
+	Data []TransactionHistory `yaml:"data" json:"data"`
 }
 
 type CrossTransactionEvent struct {
 	BaseEvent
-	Data CrossTransactionHistory `json:"data"`
+	Data CrossTransactionHistory `yaml:"data" json:"data"`
 }
 
 type ClaimsItemResponse struct {
-	CurrencyCode    int      `json:"currencyCode"`
-	BankClaims      BankInfo `json:"bankClaims"`
-	BankLiabilities BankInfo `json:"bankLiabilities"`
-	Amount          int64    `json:"amount"`
-	Unconfirmed     int64    `json:"unconfirmed"`
+	CurrencyCode    int      `yaml:"currencyCode" json:"currencyCode"`
+	BankClaims      BankInfo `yaml:"bankClaims" json:"bankClaims"`
+	BankLiabilities BankInfo `yaml:"bankLiabilities" json:"bankLiabilities"`
+	Amount          int64    `yaml:"amount" json:"amount"`
+	Unconfirmed     int64    `yaml:"unconfirmed" json:"unconfirmed"`
 }
 
 type ClearingData struct {
-	Id          string               `json:"id"`
-	Owner       string               `json:"owner"`
-	Claims      int64                `json:"claims"`
-	Liabilities int64                `json:"liabilities"`
-	History     []ClaimsItemResponse `json:"history"`
-	Netting     []AmountOfBank       `json:"netting"`
-	Procedure   []ClaimsItemResponse `json:"procedure"`
-	Created     int64                `json:"created"`
+	Id          string               `yaml:"id" json:"id"`
+	Owner       string               `yaml:"owner" json:"owner"`
+	Claims      int64                `yaml:"claims" json:"claims"`
+	Liabilities int64                `yaml:"liabilities" json:"liabilities"`
+	History     []ClaimsItemResponse `yaml:"history" json:"history"`
+	Netting     []AmountOfBank       `yaml:"netting" json:"netting"`
+	Procedure   []ClaimsItemResponse `yaml:"procedure" json:"procedure"`
+	Created     int64                `yaml:"created" json:"created"`
 }
 
 type ClearingEvent struct {
 	BaseEvent
-	Data ClearingData `json:"data"`
+	Data ClearingData `yaml:"data" json:"data"`
 }
 
 type ClaimsEvent struct {
 	BaseEvent
-	Data []ClaimsItem `json:"data"`
+	Data []ClaimsItem `yaml:"data" json:"data"`
 }
 
 type ClientBankEvent struct {
 	BaseEvent
-	Data ClientBank `json:"data"`
+	Data ClientBank `yaml:"data" json:"data"`
 }
 
 type CustomerEvent struct {
 	BaseEvent
-	Data Customer `json:"data"`
+	Data Customer `yaml:"data" json:"data"`
 }
 
 type ContractEvent struct {
 	BaseEvent
-	Data CurrencyExchangeContract `json:"data"`
+	Data CurrencyExchangeContract `yaml:"data" json:"data"`
 }
 
 type SetBalanceAccountParam struct {
@@ -317,179 +317,179 @@ type SetBalanceAccountParam struct {
 }
 
 type Invoice struct {
-	Number       string                          `json:"number"`
-	CurrencyCode int                             `json:"currencyCode"`
-	Amount       int64                           `json:"amount"`
-	Description  string                          `json:"description"`
-	Recipient    string                          `json:"recipient"`
-	Payer        string                          `json:"payer"`
-	State        invoice_state_enum.InvoiceState `json:"state"`
-	Created      int64                           `json:"created"`
-	Updated      int64                           `json:"updated"`
-	ErrorCode    int                             `json:"errorCode"`
-	Owner        string                          `json:"owner"`
-	DocType      string                          `json:"docType"`
+	Number       string                          `yaml:"number" json:"number"`
+	CurrencyCode int                             `yaml:"currencyCode" json:"currencyCode"`
+	Amount       int64                           `yaml:"amount" json:"amount"`
+	Description  string                          `yaml:"description" json:"description"`
+	Recipient    string                          `yaml:"recipient" json:"recipient"`
+	Payer        string                          `yaml:"payer" json:"payer"`
+	State        invoice_state_enum.InvoiceState `yaml:"state" json:"state"`
+	Created      int64                           `yaml:"created" json:"created"`
+	Updated      int64                           `yaml:"updated" json:"updated"`
+	ErrorCode    int                             `yaml:"errorCode" json:"errorCode"`
+	Owner        string                          `yaml:"owner" json:"owner"`
+	DocType      string                          `yaml:"docType" json:"docType"`
 }
 
 type InvoiceEvent struct {
 	BaseEvent
-	Data Invoice `json:"data"`
+	Data Invoice `yaml:"data" json:"data"`
 }
 
 type LimitsAccount struct {
-	Daily   int64 `json:"daily"`
-	Monthly int64 `json:"monthly"`
+	Daily   int64 `yaml:"daily" json:"daily"`
+	Monthly int64 `yaml:"monthly" json:"monthly"`
 }
 
 type Deal struct {
-	Id                    string                            `json:"id"`
-	OfferId               string                            `json:"offerId"`
-	SenderBank            string                            `json:"senderBank"`
-	Owner                 string                            `json:"owner"`
-	State                 deal_state_enum.DealState         `json:"state"`
-	Terms                 TermsDeal                         `json:"terms"`
-	ActualTerms           TermsDeal                         `json:"actualTerms"`
-	Invitations           map[string]*Invitation            `json:"invitations"`
-	Participants          map[string]*Participant           `json:"participants"`
-	TermsContractConclude map[string]*TermsContractConclude `json:"termsContractConclude"`
-	NecessaryTransfers    map[string]*TransferSafeDeal      `json:"necessaryTransfers"`
-	DepositHistory        []DepositSafeDealHistory          `json:"depositHistory"`
+	Id                    string                            `yaml:"id" json:"id"`
+	OfferId               string                            `yaml:"offerId" json:"offerId"`
+	SenderBank            string                            `yaml:"senderBank" json:"senderBank"`
+	Owner                 string                            `yaml:"owner" json:"owner"`
+	State                 deal_state_enum.DealState         `yaml:"state" json:"state"`
+	Terms                 TermsDeal                         `yaml:"terms" json:"terms"`
+	ActualTerms           TermsDeal                         `yaml:"actualTerms" json:"actualTerms"`
+	Invitations           map[string]*Invitation            `yaml:"invitations" json:"invitations"`
+	Participants          map[string]*Participant           `yaml:"participants" json:"participants"`
+	TermsContractConclude map[string]*TermsContractConclude `yaml:"termsContractConclude" json:"termsContractConclude"`
+	NecessaryTransfers    map[string]*TransferSafeDeal      `yaml:"necessaryTransfers" json:"necessaryTransfers"`
+	DepositHistory        []DepositSafeDealHistory          `yaml:"depositHistory" json:"depositHistory"`
 }
 
 type TransferSafeDeal struct {
-	AddressFrom  string           `json:"addressFrom"`
-	AddressTo    string           `json:"addressTo"`
-	CurrencyInfo CurrencyDealInfo `json:"currencyInfo"`
-	Amount       int64            `json:"amount" valid:"optional,range(0|9223372036854775807)"`
+	AddressFrom  string           `yaml:"addressFrom" json:"addressFrom"`
+	AddressTo    string           `yaml:"addressTo" json:"addressTo"`
+	CurrencyInfo CurrencyDealInfo `yaml:"currencyInfo" json:"currencyInfo"`
+	Amount       int64            `yaml:"amount" json:"amount" valid:"optional,range(0|9223372036854775807)"`
 }
 
 type TermsContractConclude struct {
-	AddressFrom               string                               `json:"addressFrom"`
-	AddressTo                 string                               `json:"addressTo"`
-	EscrowAddress             string                               `json:"escrowAddress"`
-	MemberTypeTo              member_deal_type_enum.MemberDealType `json:"memberTypeTo"`
-	TxId                      string                               `json:"txId"`
-	IsComplete                bool                                 `json:"isComplete"`
-	IsCompleteByCrossTransfer bool                                 `json:"isCompleteByCrossTransfer"`
-	IsInvoiceCreate           bool                                 `json:"isInvoiceCreate"`
-	CurrencyInfo              CurrencyDealInfo                     `json:"currencyInfo"`
-	ObligatoryAmount          int64                                `json:"obligatoryAmount"`
-	CurrentAmount             int64                                `json:"currentAmount"`
-	NeedAmount                int64                                `json:"needAmount"`
+	AddressFrom               string                               `yaml:"addressFrom" json:"addressFrom"`
+	AddressTo                 string                               `yaml:"addressTo" json:"addressTo"`
+	EscrowAddress             string                               `yaml:"escrowAddress" json:"escrowAddress"`
+	MemberTypeTo              member_deal_type_enum.MemberDealType `yaml:"memberTypeTo" json:"memberTypeTo"`
+	TxId                      string                               `yaml:"txId" json:"txId"`
+	IsComplete                bool                                 `yaml:"isComplete" json:"isComplete"`
+	IsCompleteByCrossTransfer bool                                 `yaml:"isCompleteByCrossTransfer" json:"isCompleteByCrossTransfer"`
+	IsInvoiceCreate           bool                                 `yaml:"isInvoiceCreate" json:"isInvoiceCreate"`
+	CurrencyInfo              CurrencyDealInfo                     `yaml:"currencyInfo" json:"currencyInfo"`
+	ObligatoryAmount          int64                                `yaml:"obligatoryAmount" json:"obligatoryAmount"`
+	CurrentAmount             int64                                `yaml:"currentAmount" json:"currentAmount"`
+	NeedAmount                int64                                `yaml:"needAmount" json:"needAmount"`
 }
 
 type Invitation struct {
-	AddressFrom        string                               `json:"addressFrom"`
-	InviteAddress      string                               `json:"inviteAddress"`
-	InviteCurrencyInfo CurrencyDealInfo                     `json:"inviteCurrencyInfo"`
-	Created            int64                                `json:"created"`
-	InviteStatus       invite_status_enum.InviteStatus      `json:"inviteStatus"`
-	MemberType         member_deal_type_enum.MemberDealType `json:"memberType"`
+	AddressFrom        string                               `yaml:"addressFrom" json:"addressFrom"`
+	InviteAddress      string                               `yaml:"inviteAddress" json:"inviteAddress"`
+	InviteCurrencyInfo CurrencyDealInfo                     `yaml:"inviteCurrencyInfo" json:"inviteCurrencyInfo"`
+	Created            int64                                `yaml:"created" json:"created"`
+	InviteStatus       invite_status_enum.InviteStatus      `yaml:"inviteStatus" json:"inviteStatus"`
+	MemberType         member_deal_type_enum.MemberDealType `yaml:"memberType" json:"memberType"`
 }
 
 type Participant struct {
-	Address        string                                       `json:"address"`
-	CurrencyInfo   CurrencyDealInfo                             `json:"currencyInfo"`
-	MemberType     member_deal_type_enum.MemberDealType         `json:"memberType"`
-	Created        int64                                        `json:"created"`
-	WasInvited     bool                                         `json:"wasInvited"`
-	TransferStatus deal_transfer_status_enum.DealTransferStatus `json:"transferStatus"`
+	Address        string                                       `yaml:"address" json:"address"`
+	CurrencyInfo   CurrencyDealInfo                             `yaml:"currencyInfo" json:"currencyInfo"`
+	MemberType     member_deal_type_enum.MemberDealType         `yaml:"memberType" json:"memberType"`
+	Created        int64                                        `yaml:"created" json:"created"`
+	WasInvited     bool                                         `yaml:"wasInvited" json:"wasInvited"`
+	TransferStatus deal_transfer_status_enum.DealTransferStatus `yaml:"transferStatus" json:"transferStatus"`
 }
 
 type TermsDeal struct {
-	AddressInitiator       string                                     `json:"addressInitiator" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
-	CurrencyInfoInitiator  CurrencyDealInfo                           `json:"currencyInfoInitiator" valid:"required"`
-	AmountInitiator        int64                                      `json:"amountInitiator" valid:"range(0|9223372036854775807)"` // Сумму которую инициатор отдает
-	OperationTypeInitiator operation_deal_type_enum.OperationDealType `json:"operationTypeInitiator" valid:"required,range(0|2)"`   // В каком виде инициатор отдает указанную сумму
-	Price                  float64                                    `json:"price" valid:"required,range(0|9223372036854775807)~ErrorAmountNegative"`
-	MinAmount              int64                                      `json:"minAmount" valid:"required,range(0|9223372036854775807)~ErrorAmountNegative"`
-	MaxAmount              int64                                      `json:"maxAmount" valid:"required,range(0|9223372036854775807)~ErrorAmountNegative"`
-	AddressAcceptor        string                                     `json:"addressAcceptor" valid:"validHex40or64~ErrorAddressNotFollowingRegex"`
-	CurrencyInfoAcceptor   CurrencyDealInfo                           `json:"currencyInfoAcceptor" valid:"required"`
-	OperationTypeAcceptor  operation_deal_type_enum.OperationDealType `json:"operationTypeAcceptor" valid:"required,range(0|2)"`
-	AmountAcceptor         int64                                      `json:"amountAcceptor" valid:"optional,range(0|9223372036854775807)~ErrorAmountNegative"`
+	AddressInitiator       string                                     `yaml:"addressInitiator" json:"addressInitiator" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
+	CurrencyInfoInitiator  CurrencyDealInfo                           `yaml:"currencyInfoInitiator" json:"currencyInfoInitiator" valid:"required"`
+	AmountInitiator        int64                                      `yaml:"amountInitiator" json:"amountInitiator" valid:"range(0|9223372036854775807)"`      // Сумму которую инициатор отдает
+	OperationTypeInitiator operation_deal_type_enum.OperationDealType `yaml:"operationTypeInitiator" json:"operationTypeInitiator" valid:"required,range(0|2)"` // В каком виде инициатор отдает указанную сумму
+	Price                  float64                                    `yaml:"price" json:"price" valid:"required,range(0|9223372036854775807)~ErrorAmountNegative"`
+	MinAmount              int64                                      `yaml:"minAmount" json:"minAmount" valid:"required,range(0|9223372036854775807)~ErrorAmountNegative"`
+	MaxAmount              int64                                      `yaml:"maxAmount" json:"maxAmount" valid:"required,range(0|9223372036854775807)~ErrorAmountNegative"`
+	AddressAcceptor        string                                     `yaml:"addressAcceptor" json:"addressAcceptor" valid:"validHex40or64~ErrorAddressNotFollowingRegex"`
+	CurrencyInfoAcceptor   CurrencyDealInfo                           `yaml:"currencyInfoAcceptor" json:"currencyInfoAcceptor" valid:"required"`
+	OperationTypeAcceptor  operation_deal_type_enum.OperationDealType `yaml:"operationTypeAcceptor" json:"operationTypeAcceptor" valid:"required,range(0|2)"`
+	AmountAcceptor         int64                                      `yaml:"amountAcceptor" json:"amountAcceptor" valid:"optional,range(0|9223372036854775807)~ErrorAmountNegative"`
 }
 
 // TODO: В случае, если CurrencyDealInfo не будет в дальнейшем расходится с CurrencyInfo - поправить сущности безопасных сделок
 type CurrencyDealInfo struct {
-	Code int    `json:"code" valid:"range(0|999)~ErrorCurrencyCodeRange"`
-	Name string `json:"name" valid:"required"`
-	Unit string `json:"unit"`
+	Code int    `yaml:"code" json:"code" valid:"range(0|999)~ErrorCurrencyCodeRange"`
+	Name string `yaml:"name" json:"name" valid:"required"`
+	Unit string `yaml:"unit" json:"unit"`
 }
 
 type CurrencyInfo struct {
-	Code   int    `json:"code" valid:"range(0|999)~ErrorCurrencyCodeRange"`
-	Symbol string `json:"symbol"`
-	Unit   string `json:"unit"`
+	Code   int    `yaml:"code" json:"code" valid:"range(0|999)~ErrorCurrencyCodeRange"`
+	Symbol string `yaml:"symbol" json:"symbol"`
+	Unit   string `yaml:"unit" json:"unit"`
 }
 
 type SafeDealEvent struct {
 	BaseEvent
-	Data DealResponseData `json:"data"`
+	Data DealResponseData `yaml:"data" json:"data"`
 }
 
 type SafeDealDeposit struct {
-	SafeDealId         string                   `json:"safeDealId"`
-	Deposits           []DepositDetails         `json:"deposits"`
-	CurrentBalance     []SetBalanceAccountParam `json:"currentBalance"`
-	ForCompleteBalance []SetBalanceAccountParam `json:"forCompleteBalance"`
-	AddressTo          string                   `json:"addressTo"`
-	CurrencyInfo       CurrencyDealInfo         `json:"currencyInfo"`
-	IsComplete         bool                     `json:"isComplete"`
-	CurrentAmount      int64                    `json:"currentAmount"`
-	NeedAmount         int64                    `json:"needAmount"`
+	SafeDealId         string                   `yaml:"safeDealId" json:"safeDealId"`
+	Deposits           []DepositDetails         `yaml:"deposits" json:"deposits"`
+	CurrentBalance     []SetBalanceAccountParam `yaml:"currentBalance" json:"currentBalance"`
+	ForCompleteBalance []SetBalanceAccountParam `yaml:"forCompleteBalance" json:"forCompleteBalance"`
+	AddressTo          string                   `yaml:"addressTo" json:"addressTo"`
+	CurrencyInfo       CurrencyDealInfo         `yaml:"currencyInfo" json:"currencyInfo"`
+	IsComplete         bool                     `yaml:"isComplete" json:"isComplete"`
+	CurrentAmount      int64                    `yaml:"currentAmount" json:"currentAmount"`
+	NeedAmount         int64                    `yaml:"needAmount" json:"needAmount"`
 }
 
 type DepositDetails struct {
-	AddressFrom string `json:"addressFrom"`
-	Amount      int64  `json:"amount"`
-	TxID        string `json:"txID"`
+	AddressFrom string `yaml:"addressFrom" json:"addressFrom"`
+	Amount      int64  `yaml:"amount" json:"amount"`
+	TxID        string `yaml:"txID" json:"txID"`
 }
 
 type DepositSafeDealHistory struct {
-	AddressFrom   string                                          `json:"addressFrom"`
-	AddressTo     string                                          `json:"addressTo"`
-	CurrencyInfo  CurrencyDealInfo                                `json:"currencyInfo"`
-	Amount        int64                                           `json:"amount"`
-	Type          safe_deal_deposit_type_enum.SafeDealDepositType `json:"type"`
-	TxID          string                                          `json:"txID"`
-	Timestamp     int64                                           `json:"timestamp"`
-	OrdinalNumber int                                             `json:"ordinalNumber"`
+	AddressFrom   string                                          `yaml:"addressFrom" json:"addressFrom"`
+	AddressTo     string                                          `yaml:"addressTo" json:"addressTo"`
+	CurrencyInfo  CurrencyDealInfo                                `yaml:"currencyInfo" json:"currencyInfo"`
+	Amount        int64                                           `yaml:"amount" json:"amount"`
+	Type          safe_deal_deposit_type_enum.SafeDealDepositType `yaml:"type" json:"type"`
+	TxID          string                                          `yaml:"txID" json:"txID"`
+	Timestamp     int64                                           `yaml:"timestamp" json:"timestamp"`
+	OrdinalNumber int                                             `yaml:"ordinalNumber" json:"ordinalNumber"`
 }
 
 type DealResponseData struct {
-	Id                    string                    `json:"id"`
-	OfferId               string                    `json:"offerId"`
-	Owner                 string                    `json:"owner"`
-	State                 deal_state_enum.DealState `json:"state"`
-	Terms                 TermsDeal                 `json:"terms"`
-	ActualTerms           TermsDeal                 `json:"actualTerms"`
-	Invitations           []Invitation              `json:"invitations"`
-	Participants          []Participant             `json:"participants"`
-	TermsContractConclude []TermsContractConclude   `json:"termsContractConclude"`
-	NecessaryTransfers    []TransferSafeDeal        `json:"necessaryTransfers"`
-	DepositHistory        []DepositSafeDealHistory  `json:"depositHistory"`
+	Id                    string                    `yaml:"id" json:"id"`
+	OfferId               string                    `yaml:"offerId" json:"offerId"`
+	Owner                 string                    `yaml:"owner" json:"owner"`
+	State                 deal_state_enum.DealState `yaml:"state" json:"state"`
+	Terms                 TermsDeal                 `yaml:"terms" json:"terms"`
+	ActualTerms           TermsDeal                 `yaml:"actualTerms" json:"actualTerms"`
+	Invitations           []Invitation              `yaml:"invitations" json:"invitations"`
+	Participants          []Participant             `yaml:"participants" json:"participants"`
+	TermsContractConclude []TermsContractConclude   `yaml:"termsContractConclude" json:"termsContractConclude"`
+	NecessaryTransfers    []TransferSafeDeal        `yaml:"necessaryTransfers" json:"necessaryTransfers"`
+	DepositHistory        []DepositSafeDealHistory  `yaml:"depositHistory" json:"depositHistory"`
 }
 
 type AccountBalance struct {
-	AccountBalanceAddress     string `json:"accountBalanceAddress"`
-	AccountBalanceAddressBank string `json:"accountBalanceAddressBank"`
-	Op                        string `json:"op"`
-	Amount                    int64  `json:"amount"`
-	TxID                      string `json:"txID"`
-	DocType                   string `json:"docType"`
+	AccountBalanceAddress     string `yaml:"accountBalanceAddress" json:"accountBalanceAddress"`
+	AccountBalanceAddressBank string `yaml:"accountBalanceAddressBank" json:"accountBalanceAddressBank"`
+	Op                        string `yaml:"op" json:"op"`
+	Amount                    int64  `yaml:"amount" json:"amount"`
+	TxID                      string `yaml:"txID" json:"txID"`
+	DocType                   string `yaml:"docType" json:"docType"`
 }
 
 type TransferHistoryLimit struct {
-	TransferHistoryAddress string `json:"transferHistoryLimitAddress"`
-	YearMonth              int    `json:"yearMonth"`
-	Day                    int    `json:"day"`
-	Value                  int64  `json:"value"`
-	TxID                   string `json:"txID"`
-	DocType                string `json:"docType"`
+	TransferHistoryAddress string `yaml:"transferHistoryLimitAddress" json:"transferHistoryLimitAddress"`
+	YearMonth              int    `yaml:"yearMonth" json:"yearMonth"`
+	Day                    int    `yaml:"day" json:"day"`
+	Value                  int64  `yaml:"value" json:"value"`
+	TxID                   string `yaml:"txID" json:"txID"`
+	DocType                string `yaml:"docType" json:"docType"`
 }
 
 type AccountSecretKey struct {
-	AddressTo          string `json:"addressTo"`
-	EncryptedSecretKey string `json:"encryptedSecretKey"`
+	AddressTo          string `yaml:"addressTo" json:"addressTo"`
+	EncryptedSecretKey string `yaml:"encryptedSecretKey" json:"encryptedSecretKey"`
 }

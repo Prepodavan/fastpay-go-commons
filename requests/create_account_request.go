@@ -9,17 +9,17 @@ import (
 
 type CreateAccountRequest struct {
 	TechnicalSignRequest
-	Address           string                            `json:"address" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
-	State             state_enum.State                  `json:"state"`
-	CurrencyCode      int                               `json:"currencyCode" valid:"required~ErrorCurrencyCodeNotPassed,range(0|999)"`
-	JuridicalType     juridical_type_enum.JuridicalType `json:"juridicalType"`
-	IdentityType      identity_type_enum.IdentityType   `json:"identityType"`
-	Type              account_type_enum.AccountType     `json:"type"`
-	Identifiers       []string                          `json:"identifiers" valid:"validHex64~ErrorIdentifierNotFolowingRegex"`
-	PublicKey         string                            `json:"publicKey"`
-	Owner             string                            `json:"owner"`
-	MsgHash           string                            `json:"msgHash"`
-	Sig               SignDto                           `json:"sig"`
+	Address       string                            `yaml:"address" json:"address" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
+	State         state_enum.State                  `yaml:"state" json:"state"`
+	CurrencyCode  int                               `yaml:"currencyCode" json:"currencyCode" valid:"required~ErrorCurrencyCodeNotPassed,range(0|999)"`
+	JuridicalType juridical_type_enum.JuridicalType `yaml:"juridicalType" json:"juridicalType"`
+	IdentityType  identity_type_enum.IdentityType   `yaml:"identityType" json:"identityType"`
+	Type          account_type_enum.AccountType     `yaml:"type" json:"type"`
+	Identifiers   []string                          `yaml:"identifiers" json:"identifiers" valid:"validHex64~ErrorIdentifierNotFolowingRegex"`
+	PublicKey     string                            `yaml:"publicKey" json:"publicKey"`
+	Owner         string                            `yaml:"owner" json:"owner"`
+	MsgHash       string                            `yaml:"msgHash" json:"msgHash"`
+	Sig           SignDto                           `yaml:"sig" json:"sig"`
 }
 
 func (createAccount *CreateAccountRequest) SetDefaults() {

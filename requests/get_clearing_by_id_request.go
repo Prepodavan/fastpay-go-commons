@@ -1,5 +1,5 @@
 package requests
 
 type GetClearingByIdRequest struct {
-	Id string `json:"id" valid:"required"`
+	Id string `yaml:"id" json:"id" valid:"required"`
 }

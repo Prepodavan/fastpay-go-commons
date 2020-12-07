@@ -4,7 +4,7 @@ import "fmt"
 
 type SetAvailablePlatformsRequest struct {
 	TechnicalSignRequest
-	AvailablePlatforms string `json:"availablePlatforms" valid:"required"`
+	AvailablePlatforms string `yaml:"availablePlatforms" json:"availablePlatforms" valid:"required"`
 }
 
 func (request *SetAvailablePlatformsRequest) String() string {

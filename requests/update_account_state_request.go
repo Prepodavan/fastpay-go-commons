@@ -7,8 +7,8 @@ import (
 
 type UpdateAccountStateRequest struct {
 	TechnicalSignRequest
-	Address string           `json:"address" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
-	State   state_enum.State `json:"state" valid:"required"`
+	Address string           `yaml:"address" json:"address" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
+	State   state_enum.State `yaml:"state" json:"state" valid:"required"`
 }
 
 func (request *UpdateAccountStateRequest) String() string {

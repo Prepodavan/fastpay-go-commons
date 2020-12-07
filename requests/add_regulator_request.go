@@ -4,7 +4,7 @@ import "fmt"
 
 type AddRegulatorRequest struct {
 	TechnicalSignRequest
-	Address string `json:"address" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
+	Address string `yaml:"address" json:"address" valid:"required~ErrorAddressNotPassed,validHex40~ErrorAddressNotFollowingRegex"`
 }
 
 func (request *AddRegulatorRequest) GetAddress() string {

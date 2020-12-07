@@ -6,9 +6,9 @@ import "math"
 // +gen * set ring linkedlist slice:"Any,Where,Count,Aggregate[AddressOfAccountSlice],Aggregate[CurrencyContractRoutingItem],All"
 type CurrencyExchangeContract struct {
 	CurrencyExchangeContractMutable
-	BankAddress     string `json:"bankAddress"`
-	BankDisplayName string `json:"bankDisplayName"`
-	DocType         string `json:"docType"`
+	BankAddress     string `yaml:"bankAddress" json:"bankAddress"`
+	BankDisplayName string `yaml:"bankDisplayName" json:"bankDisplayName"`
+	DocType         string `yaml:"docType" json:"docType"`
 }
 
 func (c *CurrencyExchangeContract) ListAccountsAddresses() AddressOfAccountSlice {

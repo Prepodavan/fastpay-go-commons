@@ -12,6 +12,7 @@ type ITransactionContext interface {
 	SetSenderBank(senderBank *models.Bank)
 	GetRequest() interface{}
 	SetRequest(request interface{})
+	Value(key string) (v interface{})
 	GetValue(key string) (v interface{}, ok bool)
 	SetValue(key string, value interface{})
 	GetTimestamp() time.Time

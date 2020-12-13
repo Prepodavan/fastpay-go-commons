@@ -24,6 +24,8 @@ func (bc *BaseContract) MustHaveSenderAddress(ctx txctx.ITransactionContext) err
 		baseErr.Data = err.Error()
 	case !found:
 		baseErr.Data = "not found"
+	default:
+		return nil
 	}
 	return baseErr
 }
